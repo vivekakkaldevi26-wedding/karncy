@@ -782,8 +782,8 @@ const cardWidth = CARD_WIDTH;
             <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.4rem, 2.2vw, 1.9rem)", fontWeight: 700, color: "var(--foreground)", letterSpacing: "-0.02em", marginBottom: "0.25rem" }}>
               Our Products
             </h2>
-            <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.8rem", color: "var(--muted-foreground)", display: "flex", alignItems: "center", gap: "0.35rem", fontWeight: 500, margin: 0 }}>
-              Scroll to View <ArrowDown size={13} style={{ color: "var(--cta)" }} />
+            <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.95rem", color: "var(--muted-foreground)", display: "flex", alignItems: "center", gap: "0.35rem", fontWeight: 600, margin: 0 }}>
+              Scroll to View <ArrowDown size={14} style={{ color: "var(--cta)" }} />
             </p>
           </div>
         </div>
@@ -1027,7 +1027,7 @@ export default function App() {
           <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", width: SECTION_W, margin: AUTO, paddingTop: "7rem", paddingBottom: "6rem", position: "relative", zIndex: 1 }}>
             <FadeUp>
               <div style={{ display: "flex", alignItems: "center", gap: "0.875rem", marginBottom: "3rem" }}>
-                <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.67rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "var(--primary)" }}>
+                <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.85rem", fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", color: "var(--primary)" }}>
                   Karncy — Your Growth Partner
                 </span>
               </div>
@@ -1041,7 +1041,7 @@ export default function App() {
             <FadeUp delay={0.2}>
               <div style={{ display: "flex", gap: "1.5rem", alignItems: "flex-start", marginBottom: "3rem", maxWidth: "32rem" }}>
                 <div style={{ width: "2px", background: "var(--border)", alignSelf: "stretch", flexShrink: 0, borderRadius: "9999px" }} />
-                <p style={{ fontFamily: "var(--font-sans)", fontSize: "1rem", color: "var(--muted-foreground)", lineHeight: 1.76 }}>
+                <p style={{ fontFamily: "var(--font-sans)", fontSize: "1.08rem", color: "var(--muted-foreground)", lineHeight: 1.76 }}>
                   Embedded financial partner for Indian SMEs — invoice financing, joint ventures, and startup growth.
                 </p>
               </div>
@@ -1056,7 +1056,7 @@ export default function App() {
                     Become an Investor <ArrowRight size={15} />
                   </a>
                 </div>
-                <button onClick={() => scrollTo("compass")} style={{ fontFamily: "var(--font-sans)", fontSize: "0.8rem", color: "var(--muted-foreground)", background: "none", border: "none", cursor: "pointer", textDecoration: "underline", textUnderlineOffset: "4px", textAlign: "left", padding: 0 }}>
+                <button onClick={() => scrollTo("compass")} style={{ fontFamily: "var(--font-sans)", fontSize: "0.95rem", fontWeight: 600, color: "var(--foreground)", background: "none", border: "none", cursor: "pointer", textDecoration: "underline", textUnderlineOffset: "4px", textAlign: "left", padding: 0 }}>
                   Begin the journey instead →
                 </button>
               </div>
@@ -1162,7 +1162,7 @@ export default function App() {
                 </div>
               </FadeUp>
               <FadeUp delay={0.1}>
-                <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.95rem", color: "var(--muted-foreground)", lineHeight: 1.72 }}>
+                <p style={{ fontFamily: "var(--font-sans)", fontSize: "1.08rem", color: "var(--muted-foreground)", lineHeight: 1.72 }}>
                   Each one is its own journey. Choose where you are or let the page carry you through all three.
                 </p>
               </FadeUp>
@@ -1215,7 +1215,7 @@ export default function App() {
                 </div>
               </FadeUp>
               <FadeUp delay={0.1}>
-                <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.95rem", color: "var(--muted-foreground)", lineHeight: 1.72, maxWidth: "30rem" }}>
+                <p style={{ fontFamily: "var(--font-sans)", fontSize: "1.08rem", color: "var(--muted-foreground)", lineHeight: 1.72, maxWidth: "30rem" }}>
                   Capital is the fuel. Operations are the engine. We stay embedded long after the check clears — building the infrastructure your business runs on.
                 </p>
               </FadeUp>
@@ -1283,7 +1283,7 @@ export default function App() {
               <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2.2rem, 4vw, 3.2rem)", fontWeight: 700, letterSpacing: "-0.025em", color: "var(--foreground)", lineHeight: 1.04, marginBottom: "0.75rem" }}>
                 Why choose Karncy?
               </h2>
-              <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.95rem", color: "var(--muted-foreground)", lineHeight: 1.72, maxWidth: "36rem", marginBottom: "3.5rem" }}>
+              <p style={{ fontFamily: "var(--font-sans)", fontSize: "1.08rem", color: "var(--muted-foreground)", lineHeight: 1.72, maxWidth: "36rem", marginBottom: "3.5rem" }}>
                 We are not another capital provider. We are the partner that stays — operationally embedded, transparently accountable, and relentlessly focused on your outcome.
               </p>
             </FadeUp>
@@ -1321,7 +1321,7 @@ export default function App() {
               <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2.2rem, 4vw, 3.2rem)", fontWeight: 700, letterSpacing: "-0.025em", color: "var(--foreground)", lineHeight: 1.04, marginBottom: "0.75rem" }}>
                 Trusted by growing businesses.
               </h2>
-              <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.95rem", color: "var(--muted-foreground)", lineHeight: 1.72, maxWidth: "36rem", marginBottom: "3.5rem" }}>
+              <p style={{ fontFamily: "var(--font-sans)", fontSize: "1.08rem", color: "var(--muted-foreground)", lineHeight: 1.72, maxWidth: "36rem", marginBottom: "3.5rem" }}>
                 From manufacturers and logistics operators to early-stage founders, Karncy has been the partner behind India's quiet growth stories.
               </p>
             </FadeUp>
@@ -1336,7 +1336,7 @@ export default function App() {
               <div className="msme-container" style={{ marginTop: "4rem", paddingTop: "3rem", borderTop: "1px solid var(--border)" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1.75rem" }}>
                   <div style={{ width: "1.5rem", height: "1px", background: "var(--primary)" }} />
-                  <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.67rem", letterSpacing: "0.13em", textTransform: "uppercase", color: "var(--muted-foreground)" }}>
+                  <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.82rem", fontWeight: 600, letterSpacing: "0.13em", textTransform: "uppercase", color: "var(--muted-foreground)" }}>
                     MSME Empowered
                   </span>
                 </div>
@@ -1422,8 +1422,8 @@ export default function App() {
                   <div style={{ paddingTop: "1.25rem", borderTop: "1px solid var(--border)" }}>
                     <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.75rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--foreground)", fontWeight: 600, marginBottom: "0.75rem" }}>Company Details</p>
                     <div style={{ display: "flex", flexDirection: "column", gap: "0.35rem", marginBottom: "1rem" }}>
-                      <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.78rem", color: "var(--muted-foreground)" }}>Karncy Ventures Private Limited</p>
-                      <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.78rem", color: "var(--muted-foreground)" }}>CIN: U65100TG2022PTC164XXXX</p>
+                      <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.92rem", fontWeight: 600, color: "var(--foreground)" }}>Karncy Ventures Private Limited</p>
+                      <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.92rem", fontWeight: 500, color: "var(--muted-foreground)" }}>CIN: U65100TG2022PTC164XXXX</p>
                     </div>
                     <div style={{ display: "flex", gap: "1rem", alignItems: "center", flexWrap: "wrap" }}>
                       <img src={certIso27001} alt="ISO 27001 Certified" style={{ height: "52px", width: "auto", objectFit: "contain", opacity: 0.88 }} />
@@ -1446,7 +1446,7 @@ export default function App() {
 
           {/* Footer bar — no background */}
           <div style={{ borderTop: "1px solid var(--border)", padding: "1.4rem 5%", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "1rem" }}>
-            <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.68rem", color: "var(--muted-foreground)" }}>
+            <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.82rem", fontWeight: 500, color: "var(--muted-foreground)" }}>
               © 2026 Karncy Ventures Private Limited. All rights reserved.
             </span>
             <div style={{ display: "flex", alignItems: "center", gap: "1.5rem" }}>

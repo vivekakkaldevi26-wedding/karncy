@@ -65,8 +65,10 @@ body,
     display: none !important;
   }
 
+  #operations,
+  #why-karncy,
   #social-proof {
-    padding-bottom: 2rem !important;
+    padding-bottom: 5rem !important;
   }
 
   .msme-container {
