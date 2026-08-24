@@ -1003,14 +1003,13 @@ export default function App() {
 
   const sectionBase: React.CSSProperties = { padding: "7rem 0" };
 
-  // 6 why-karncy items — 2 rows × 3 columns
+  // Why Choose Karncy reasons
   const whyReasons = [
     { icon: <Zap size={18} />, title: "Technology-Driven Platform", desc: "Our proprietary underwriting engine and real-time dashboards remove manual delays from every step." },
     { icon: <Clock size={18} />, title: "Faster Approvals", desc: "48-hour underwriting and same-day disbursement. No queues, no ambiguity." },
     { icon: <CheckCircle size={18} />, title: "Transparent Process", desc: "Every decision, fee, and milestone is documented and shared in real time. No hidden charges." },
     { icon: <Star size={18} />, title: "Experienced Management", desc: "Led by finance professionals with decades of combined experience in Indian credit markets." },
     { icon: <BarChart2 size={18} />, title: "Strong Credit Assessment", desc: "Multi-layer risk evaluation using CIBIL scores, GST regularity, and sectoral data." },
-    { icon: <Heart size={18} />, title: "Customer-Centric Approach", desc: "We stay embedded long after the check clears. Your growth is our success." },
   ];
 
   return (
