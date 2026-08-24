@@ -1396,39 +1396,39 @@ export default function App() {
             {/* Right — cream */}
             <FadeUp delay={0.1} style={{ height: "100%" }}>
               <div style={{ padding: "clamp(3rem, 6vw, 7rem) clamp(1.5rem, 5vw, 4rem)", display: "flex", flexDirection: "column", justifyContent: "center", height: "100%", boxSizing: "border-box" }}>
-                <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.75rem", letterSpacing: "0.13em", textTransform: "uppercase", color: "var(--foreground)", fontWeight: 600, marginBottom: "2rem" }}>
+                <p style={{ fontFamily: "var(--font-display)", fontSize: "1.35rem", letterSpacing: "-0.01em", textTransform: "uppercase", color: "#0f172a", fontWeight: 700, marginBottom: "2rem" }}>
                   Reach us
                 </p>
-                <div style={{ display: "flex", flexDirection: "column", gap: "1.75rem", maxWidth: "22rem" }}>
+                <div style={{ display: "flex", flexDirection: "column", gap: "1.75rem", maxWidth: "24rem" }}>
                   {[
-                    { label: "Email", icon: <Mail size={12} style={{ color: "var(--primary)" }} />, value: "hello@karncy.com", href: "mailto:hello@karncy.com" },
-                    { label: "Phone", icon: <Phone size={12} style={{ color: "var(--primary)" }} />, value: "040-42011067", href: "tel:04042011067" },
+                    { label: "Email", icon: <Mail size={14} style={{ color: "var(--primary)" }} />, value: "hello@karncy.com", href: "mailto:hello@karncy.com" },
+                    { label: "Phone", icon: <Phone size={14} style={{ color: "var(--primary)" }} />, value: "040-42011067", href: "tel:04042011067" },
                   ].map((c) => (
                     <div key={c.label}>
-                      <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.67rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--muted-foreground)", marginBottom: "0.35rem" }}>{c.label}</p>
-                      <a href={c.href} style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem", fontFamily: "var(--font-sans)", fontSize: "0.9rem", fontWeight: 500, color: "var(--foreground)", textDecoration: "none" }}>
+                      <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.85rem", letterSpacing: "0.08em", textTransform: "uppercase", color: "#0f172a", fontWeight: 700, marginBottom: "0.35rem" }}>{c.label}</p>
+                      <a href={c.href} style={{ display: "inline-flex", alignItems: "center", gap: "0.45rem", fontFamily: "var(--font-sans)", fontSize: "1.05rem", fontWeight: 700, color: "#0f172a", textDecoration: "none" }}>
                         {c.icon} {c.value}
                       </a>
                     </div>
                   ))}
                   <div>
-                    <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.67rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--muted-foreground)", marginBottom: "0.35rem" }}>Address</p>
-                    <p style={{ display: "flex", alignItems: "flex-start", gap: "0.4rem", fontFamily: "var(--font-sans)", fontSize: "0.9rem", color: "var(--foreground)", lineHeight: 1.6 }}>
-                      <MapPin size={12} style={{ color: "var(--primary)", marginTop: "0.25rem", flexShrink: 0 }} />
+                    <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.85rem", letterSpacing: "0.08em", textTransform: "uppercase", color: "#0f172a", fontWeight: 700, marginBottom: "0.35rem" }}>Address</p>
+                    <p style={{ display: "flex", alignItems: "flex-start", gap: "0.45rem", fontFamily: "var(--font-sans)", fontSize: "1.02rem", fontWeight: 600, color: "#0f172a", lineHeight: 1.6, margin: 0 }}>
+                      <MapPin size={14} style={{ color: "var(--primary)", marginTop: "0.25rem", flexShrink: 0 }} />
                       5th Floor, The Park View, Gachibowli, Hyderabad, 500032
                     </p>
                   </div>
 
                   {/* Company details + certifications */}
-                  <div style={{ paddingTop: "1.25rem", borderTop: "1px solid var(--border)" }}>
-                    <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.75rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--foreground)", fontWeight: 600, marginBottom: "0.75rem" }}>Company Details</p>
-                    <div style={{ display: "flex", flexDirection: "column", gap: "0.35rem", marginBottom: "1rem" }}>
-                      <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.92rem", fontWeight: 600, color: "var(--foreground)" }}>Karncy Ventures Private Limited</p>
-                      <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.92rem", fontWeight: 500, color: "var(--muted-foreground)" }}>CIN: U65100TG2022PTC164XXXX</p>
+                  <div style={{ paddingTop: "1.5rem", borderTop: "1px solid var(--border)" }}>
+                    <p style={{ fontFamily: "var(--font-display)", fontSize: "1.1rem", letterSpacing: "0.05em", textTransform: "uppercase", color: "#0f172a", fontWeight: 700, marginBottom: "0.85rem" }}>Company Details</p>
+                    <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem", marginBottom: "1.25rem" }}>
+                      <p style={{ fontFamily: "var(--font-sans)", fontSize: "1.05rem", fontWeight: 700, color: "#0f172a", margin: 0 }}>Karncy Ventures Private Limited</p>
+                      <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.98rem", fontWeight: 600, color: "#334155", margin: 0 }}>CIN: U65100TG2022PTC164XXXX</p>
                     </div>
                     <div style={{ display: "flex", gap: "1rem", alignItems: "center", flexWrap: "wrap" }}>
-                      <img src={certIso27001} alt="ISO 27001 Certified" style={{ height: "52px", width: "auto", objectFit: "contain", opacity: 0.88 }} />
-                      <img src={certSoc2} alt="SOC 2 Compliance" style={{ height: "56px", width: "auto", objectFit: "contain", opacity: 0.95 }} />
+                      <img src={certIso27001} alt="ISO 27001 Information Security Certified" style={{ height: "54px", width: "auto", objectFit: "contain", opacity: 0.95 }} />
+                      <img src={certSoc2} alt="AICPA SOC 2 Type II Security Certified" style={{ height: "58px", width: "auto", objectFit: "contain", opacity: 1 }} />
                     </div>
                   </div>
 
