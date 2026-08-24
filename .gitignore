@@ -72,6 +72,7 @@ dist/
 build/
 .next/
 .out/
+.vercel/
 
 # IDE / OS
 .DS_Store
@@ -79,3 +80,5 @@ Thumbs.db
 .vscode/
 .idea/
 node_modules
+
+.vercel
