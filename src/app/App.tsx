@@ -1072,7 +1072,7 @@ export default function App() {
         <section style={{ padding: "5rem 0" }}>
           <div style={{ width: SECTION_W, margin: AUTO }}>
             <FadeUp>
-              <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.67rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "var(--muted-foreground)", marginBottom: "2rem" }}>
+              <p style={{ fontFamily: "var(--font-sans)", fontSize: "clamp(0.9rem, 1.5vw, 1.25rem)", fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--muted-foreground)", marginBottom: "2rem" }}>
                 Who are you here for?
               </p>
             </FadeUp>
