@@ -1381,22 +1381,26 @@ export default function App() {
                   <nav style={{ display: "flex", alignItems: "center", gap: "1.25rem", flexWrap: "wrap" }}>
                     {["About", "Investors", "Privacy", "Terms"].map((link, idx, arr) => (
                       <div key={link} style={{ display: "inline-flex", alignItems: "center", gap: "1.25rem" }}>
-                        <a
-                          href="#"
+                        <button
+                          type="button"
+                          onClick={(e) => e.preventDefault()}
                           style={{
                             fontFamily: "var(--font-sans)",
                             fontSize: "0.95rem",
                             fontWeight: 600,
                             color: "#0f172a",
-                            textDecoration: "none",
-                            transition: "color 0.15s",
+                            background: "none",
+                            border: "none",
+                            padding: 0,
+                            cursor: "pointer",
                             lineHeight: 1,
+                            transition: "color 0.15s",
                           }}
-                          onMouseEnter={(e) => ((e.currentTarget as HTMLAnchorElement).style.color = "var(--primary)")}
-                          onMouseLeave={(e) => ((e.currentTarget as HTMLAnchorElement).style.color = "#0f172a")}
+                          onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.color = "var(--primary)")}
+                          onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.color = "#0f172a")}
                         >
                           {link}
-                        </a>
+                        </button>
                         {idx < arr.length - 1 && (
                           <span style={{ width: "1px", height: "14px", background: "rgba(20,20,43,0.18)", display: "inline-block" }} />
                         )}
