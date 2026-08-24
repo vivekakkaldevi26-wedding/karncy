@@ -35,7 +35,7 @@ const CARD_MIN_WIDTH = 320;
 
 const products = {
   invoice: {
-    title: "Invoice Financing",
+    title: "Karncy Financing",
     tagline: "Cash flow, unlocked from paper.",
     cta: "Let's unlock",
     description:
@@ -64,7 +64,7 @@ const products = {
     ],
   },
   ventures: {
-    title: "Joint Ventures",
+    title: "Karncy Ventures",
     tagline: "We don't fund and disappear. We build alongside you.",
     cta: "Let's venture",
     description:
@@ -93,7 +93,7 @@ const products = {
     ],
   },
   startup: {
-    title: "Startup Partnerships",
+    title: "Karncy Equity",
     tagline: "Founders don't need money first. They need a partner first.",
     cta: "Let's partner",
     description:
