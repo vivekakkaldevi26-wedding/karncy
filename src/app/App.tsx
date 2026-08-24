@@ -1375,19 +1375,33 @@ export default function App() {
                   </a>
                 </div>
 
-                {/* Menu — horizontal */}
-                <div style={{ marginTop: "1.5rem", paddingTop: "1.5rem", borderTop: "1px solid var(--border)" }}>
-                  <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.75rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--foreground)", fontWeight: 600, marginBottom: "1rem" }}>Menu</p>
-                  <nav style={{ display: "flex", flexDirection: "row", flexWrap: "wrap", gap: "0.25rem 0" }}>
-                    {["About", "Investors", "Privacy", "Terms"].map((link) => (
-                      <a key={link} href="#" style={{ fontFamily: "var(--font-sans)", fontSize: "0.85rem", fontWeight: 500, color: "var(--foreground)", textDecoration: "none", transition: "color 0.15s", paddingRight: "1.25rem", borderRight: "1px solid var(--border)", marginRight: "1.25rem", lineHeight: 1 }}
-                        onMouseEnter={(e) => ((e.currentTarget as HTMLAnchorElement).style.color = "var(--primary)")}
-                        onMouseLeave={(e) => ((e.currentTarget as HTMLAnchorElement).style.color = "var(--foreground)")}
-                      >
-                        {link}
-                      </a>
+                {/* Menu — horizontal equal alignment */}
+                <div style={{ marginTop: "1.75rem", paddingTop: "1.5rem", borderTop: "1px solid var(--border)" }}>
+                  <p style={{ fontFamily: "var(--font-display)", fontSize: "0.9rem", letterSpacing: "0.08em", textTransform: "uppercase", color: "#0f172a", fontWeight: 700, marginBottom: "1rem" }}>Menu</p>
+                  <nav style={{ display: "flex", alignItems: "center", gap: "1.25rem", flexWrap: "wrap" }}>
+                    {["About", "Investors", "Privacy", "Terms"].map((link, idx, arr) => (
+                      <div key={link} style={{ display: "inline-flex", alignItems: "center", gap: "1.25rem" }}>
+                        <a
+                          href="#"
+                          style={{
+                            fontFamily: "var(--font-sans)",
+                            fontSize: "0.95rem",
+                            fontWeight: 600,
+                            color: "#0f172a",
+                            textDecoration: "none",
+                            transition: "color 0.15s",
+                            lineHeight: 1,
+                          }}
+                          onMouseEnter={(e) => ((e.currentTarget as HTMLAnchorElement).style.color = "var(--primary)")}
+                          onMouseLeave={(e) => ((e.currentTarget as HTMLAnchorElement).style.color = "#0f172a")}
+                        >
+                          {link}
+                        </a>
+                        {idx < arr.length - 1 && (
+                          <span style={{ width: "1px", height: "14px", background: "rgba(20,20,43,0.18)", display: "inline-block" }} />
+                        )}
+                      </div>
                     ))}
-                    <QuickLinksMenu />
                   </nav>
                 </div>
               </div>
