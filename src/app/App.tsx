@@ -720,30 +720,24 @@ const cardWidth = CARD_WIDTH;
     const onWheel = (e: WheelEvent) => {
       if (!isSectionPinned()) return;
 
-      // Prevent native scroll — we handle all movement programmatically
+      const dir = e.deltaY > 0 ? 1 : -1;
+      const curr = activeCardRef.current;
+
+      // When at boundary (last card scrolling down or first card scrolling up),
+      // do not prevent default — let native page scroll carry the user smoothly.
+      if ((dir > 0 && curr >= NUM - 1) || (dir < 0 && curr <= 0)) {
+        return;
+      }
+
       e.preventDefault();
 
-      // Throttle: one snap per gesture, ignore rapid wheel ticks
       if (throttleRef.current) return;
       throttleRef.current = true;
-      setTimeout(() => { throttleRef.current = false; }, 700);
+      setTimeout(() => { throttleRef.current = false; }, 500);
 
-      const dir = e.deltaY > 0 ? 1 : -1;
-      const next = activeCardRef.current + dir;
-      const el = outerRef.current;
-
+      const next = curr + dir;
       if (next >= 0 && next < NUM) {
-        // Snap to adjacent card
         goToCard(next);
-      } else if (next >= NUM) {
-        // Exit downward — scroll just past the section bottom
-        if (el) window.scrollTo({ top: el.getBoundingClientRect().bottom + window.scrollY + 8, behavior: "smooth" });
-      } else {
-        // Exit upward — jump well above the section so isSectionPinned returns false
-        if (el) {
-          const sectionAbsTop = el.getBoundingClientRect().top + window.scrollY;
-          window.scrollTo({ top: Math.max(0, sectionAbsTop - window.innerHeight * 0.5), behavior: "smooth" });
-        }
       }
     };
 
