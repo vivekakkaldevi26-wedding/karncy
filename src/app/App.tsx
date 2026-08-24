@@ -1347,8 +1347,9 @@ export default function App() {
         </section>
 
         {/* ─── Horizon ─────────────────────────────────────────────────── */}
-        <section id="horizon" style={{}}>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 340px), 1fr))" }}>
+        <section id="horizon" style={{ padding: "5rem 0 0" }}>
+          <div style={{ width: SECTION_W, margin: AUTO }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 340px), 1fr))", border: "1px solid var(--border)", borderRadius: "calc(var(--radius) * 2)", overflow: "hidden", marginBottom: "3rem" }}>
             {/* Left — navy */}
             <FadeUp style={{ height: "100%" }}>
               <div style={{ padding: "clamp(3rem, 6vw, 7rem) clamp(1.5rem, 5vw, 15%)", minHeight: "62vh", display: "flex", flexDirection: "column", justifyContent: "center", height: "100%", boxSizing: "border-box" }}>
@@ -1486,7 +1487,8 @@ export default function App() {
               </div>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
       </main>
 
       <AnimatePresence>
