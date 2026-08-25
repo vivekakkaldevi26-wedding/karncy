@@ -724,6 +724,18 @@ function ChaptersScroll({ onOpen }: { onOpen: (id: ProductId) => void }) {
     window.scrollTo({ top: cardScrollY(idx), behavior: "smooth" });
   }, [cardScrollY]);
 
+  // ── Listen for custom event from Section 2 Let's buttons ────────────────
+  useEffect(() => {
+    const handleGoTo = (e: Event) => {
+      const customEvent = e as CustomEvent<{ cardIdx: number }>;
+      if (customEvent.detail && typeof customEvent.detail.cardIdx === "number") {
+        goToCard(customEvent.detail.cardIdx);
+      }
+    };
+    window.addEventListener("goToChapterCard", handleGoTo);
+    return () => window.removeEventListener("goToChapterCard", handleGoTo);
+  }, [goToCard]);
+
   // ── Wheel interception ────────────────────────────────────────────────────
   useEffect(() => {
     const onWheel = (e: WheelEvent) => {
@@ -1442,15 +1454,10 @@ export default function App() {
   const scrollTo = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 
   const scrollToChapterCard = (pid: ProductId) => {
-    const el = document.getElementById("chapters");
-    if (!el) return;
     const cardIdx = (["invoice", "ventures", "startup"] as ProductId[]).indexOf(pid);
-    const NUM = 3;
-    const rect = el.getBoundingClientRect();
-    const sectionTop = rect.top + window.scrollY;
-    const range = el.offsetHeight - window.innerHeight;
-    const targetY = sectionTop + (NUM > 1 ? (cardIdx / (NUM - 1)) * range : 0) + (cardIdx > 0 ? 30 : 5);
-    window.scrollTo({ top: targetY, behavior: "smooth" });
+    if (cardIdx >= 0) {
+      window.dispatchEvent(new CustomEvent("goToChapterCard", { detail: { cardIdx, pid } }));
+    }
   };
 
   const sectionBase: React.CSSProperties = { padding: "7rem 0" };
@@ -1678,7 +1685,7 @@ export default function App() {
         </section>
 
         {/* ─── Our Products (sticky scroll) ────────────────────────────── */}
-        <ChaptersScroll onOpen={(id) => setActiveProduct(id)} />
+        <ChaptersScroll />
 
         {/* ─── Operations ──────────────────────────────────────────────── */}
         <section id="operations" style={sectionBase}>
@@ -1972,9 +1979,6 @@ export default function App() {
       </main>
 
       <AnimatePresence>
-        {activeProduct && (
-          <ProductDetailOverlay id={activeProduct} onClose={() => setActiveProduct(null)} onOpenContact={(type) => setActiveModal(type)} />
-        )}
         {activeModal && (
           <ContactModal type={activeModal} onClose={() => setActiveModal(null)} />
         )}
