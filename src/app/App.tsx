@@ -1548,7 +1548,7 @@ export default function App() {
                       </li>
                     ))}
                   </ul>
-                  <button onClick={() => setActiveModal("funding")} style={{ marginTop: "1.25rem", display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.875rem", fontWeight: 700, padding: "0.75rem 1.75rem", background: "var(--cta)", color: "var(--cta-foreground)", borderRadius: "var(--radius)", border: "none", cursor: "pointer", alignSelf: "flex-start" }}>
+                  <button onClick={() => scrollToChapterCard("invoice")} style={{ marginTop: "1.25rem", display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.875rem", fontWeight: 700, padding: "0.75rem 1.75rem", background: "var(--cta)", color: "var(--cta-foreground)", borderRadius: "var(--radius)", border: "none", cursor: "pointer", alignSelf: "flex-start" }}>
                     Apply for Funding <ArrowRight size={14} />
                   </button>
                 </motion.div>
@@ -1582,7 +1582,7 @@ export default function App() {
                       </li>
                     ))}
                   </ul>
-                  <button onClick={() => setActiveModal("business")} style={{ marginTop: "1.25rem", display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.85rem", fontWeight: 700, padding: "0.75rem 1.75rem", background: "var(--primary)", color: "var(--primary-foreground)", borderRadius: "var(--radius)", border: "none", cursor: "pointer", alignSelf: "flex-start" }}>
+                  <button onClick={() => scrollToChapterCard("ventures")} style={{ marginTop: "1.25rem", display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.85rem", fontWeight: 700, padding: "0.75rem 1.75rem", background: "var(--primary)", color: "var(--primary-foreground)", borderRadius: "var(--radius)", border: "none", cursor: "pointer", alignSelf: "flex-start" }}>
                     Apply for Business <ArrowRight size={14} />
                   </button>
                 </motion.div>
