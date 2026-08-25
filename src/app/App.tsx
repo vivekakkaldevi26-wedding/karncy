@@ -1438,6 +1438,7 @@ export default function App() {
   const scrollTo = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 
   const scrollToChapterCard = (pid: ProductId) => {
+    setActiveProduct(pid);
     const el = document.getElementById("chapters");
     if (!el) return;
     const cardIdx = (["invoice", "ventures", "startup"] as ProductId[]).indexOf(pid);
@@ -1503,10 +1504,10 @@ export default function App() {
             <FadeUp delay={0.3}>
               <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem", maxWidth: "36rem" }}>
                 <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", alignItems: "center" }}>
-                  <button onClick={() => scrollToChapterCard("invoice")} style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.875rem", fontWeight: 700, padding: "0.9rem 2rem", background: "var(--cta)", color: "var(--cta-foreground)", borderRadius: "var(--radius)", border: "none", cursor: "pointer", letterSpacing: "0.01em" }}>
+                  <button onClick={() => setActiveModal("funding")} style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.875rem", fontWeight: 700, padding: "0.9rem 2rem", background: "var(--cta)", color: "var(--cta-foreground)", borderRadius: "var(--radius)", border: "none", cursor: "pointer", letterSpacing: "0.01em" }}>
                     Apply for Funding <ArrowRight size={15} />
                   </button>
-                  <button onClick={() => scrollToChapterCard("ventures")} style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.875rem", fontWeight: 700, padding: "0.9rem 2rem", background: "var(--primary)", color: "var(--primary-foreground)", borderRadius: "var(--radius)", border: "none", cursor: "pointer", letterSpacing: "0.01em" }}>
+                  <button onClick={() => setActiveModal("business")} style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.875rem", fontWeight: 700, padding: "0.9rem 2rem", background: "var(--primary)", color: "var(--primary-foreground)", borderRadius: "var(--radius)", border: "none", cursor: "pointer", letterSpacing: "0.01em" }}>
                     Apply for Business <ArrowRight size={15} />
                   </button>
                 </div>
@@ -1566,7 +1567,7 @@ export default function App() {
                       </li>
                     ))}
                   </ul>
-                  <button onClick={() => scrollToChapterCard("invoice")} style={{ marginTop: "1.25rem", display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.875rem", fontWeight: 700, padding: "0.75rem 1.75rem", background: "var(--cta)", color: "var(--cta-foreground)", borderRadius: "var(--radius)", border: "none", cursor: "pointer", alignSelf: "flex-start" }}>
+                  <button onClick={() => setActiveModal("funding")} style={{ marginTop: "1.25rem", display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.875rem", fontWeight: 700, padding: "0.75rem 1.75rem", background: "var(--cta)", color: "var(--cta-foreground)", borderRadius: "var(--radius)", border: "none", cursor: "pointer", alignSelf: "flex-start" }}>
                     Apply for Funding <ArrowRight size={14} />
                   </button>
                 </motion.div>
@@ -1606,7 +1607,7 @@ export default function App() {
                       </li>
                     ))}
                   </ul>
-                  <button onClick={() => scrollToChapterCard("ventures")} style={{ marginTop: "1.25rem", display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.85rem", fontWeight: 700, padding: "0.75rem 1.75rem", background: "var(--primary)", color: "var(--primary-foreground)", borderRadius: "var(--radius)", border: "none", cursor: "pointer", alignSelf: "flex-start" }}>
+                  <button onClick={() => setActiveModal("business")} style={{ marginTop: "1.25rem", display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.85rem", fontWeight: 700, padding: "0.75rem 1.75rem", background: "var(--primary)", color: "var(--primary-foreground)", borderRadius: "var(--radius)", border: "none", cursor: "pointer", alignSelf: "flex-start" }}>
                     Apply for Business <ArrowRight size={14} />
                   </button>
                 </motion.div>
@@ -1840,10 +1841,10 @@ export default function App() {
                     The journey begins with a conversation. Let's talk about where your business is headed.
                   </p>
                   <div style={{ display: "flex", flexDirection: "column", gap: "0.875rem", alignSelf: "flex-start" }}>
-                    <button onClick={() => scrollToChapterCard("invoice")} style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.875rem", fontWeight: 700, padding: "0.9rem 2.25rem", background: "var(--cta)", color: "var(--cta-foreground)", borderRadius: "var(--radius)", border: "none", cursor: "pointer" }}>
+                    <button onClick={() => setActiveModal("funding")} style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.875rem", fontWeight: 700, padding: "0.9rem 2.25rem", background: "var(--cta)", color: "var(--cta-foreground)", borderRadius: "var(--radius)", border: "none", cursor: "pointer" }}>
                       Apply for Funding <ArrowRight size={14} />
                     </button>
-                    <button onClick={() => scrollToChapterCard("ventures")} style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.875rem", fontWeight: 600, padding: "0.9rem 2.25rem", background: "transparent", color: "var(--primary)", borderRadius: "var(--radius)", border: "1.5px solid var(--primary)", cursor: "pointer" }}>
+                    <button onClick={() => setActiveModal("business")} style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.875rem", fontWeight: 600, padding: "0.9rem 2.25rem", background: "transparent", color: "var(--primary)", borderRadius: "var(--radius)", border: "1.5px solid var(--primary)", cursor: "pointer" }}>
                       Apply for Business <ArrowRight size={14} />
                     </button>
                     <a href="tel:04042011067" style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.875rem", fontWeight: 600, padding: "0.9rem 2.25rem", background: "var(--foreground)", color: "var(--background)", borderRadius: "var(--radius)", border: "none", cursor: "pointer", textDecoration: "none" }}>
