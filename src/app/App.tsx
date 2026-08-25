@@ -1430,12 +1430,12 @@ export default function App() {
         </section>
 
         {/* ─── Horizon ─────────────────────────────────────────────────── */}
-        <section id="horizon" style={{ padding: "5rem 0 0" }}>
-          <div style={{ width: SECTION_W, margin: AUTO }}>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 340px), 1fr))", border: "1px solid var(--border)", borderRadius: "calc(var(--radius) * 2)", overflow: "hidden", marginBottom: "3rem" }}>
+        <section id="horizon" style={{ height: "100vh", display: "flex", flexDirection: "column", boxSizing: "border-box", overflow: "hidden" }}>
+          <div style={{ width: SECTION_W, margin: AUTO, flex: 1, display: "flex", flexDirection: "column", minHeight: 0 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 340px), 1fr))", border: "1px solid var(--border)", borderRadius: "calc(var(--radius) * 2)", overflow: "hidden", flex: 1, minHeight: 0 }}>
               {/* Left — navy */}
               <FadeUp style={{ height: "100%" }}>
-                <div style={{ padding: "clamp(3rem, 6vw, 7rem) clamp(1.5rem, 5vw, 15%)", minHeight: "62vh", display: "flex", flexDirection: "column", justifyContent: "center", height: "100%", boxSizing: "border-box" }}>
+                <div style={{ padding: "clamp(1.5rem, 3vw, 3.5rem) clamp(1.5rem, 5vw, 15%)", display: "flex", flexDirection: "column", justifyContent: "center", height: "100%", boxSizing: "border-box" }}>
                   <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "2rem" }}>
                     <div style={{ width: "1.5rem", height: "1px", background: "var(--primary)" }} />
                     <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.67rem", letterSpacing: "0.13em", textTransform: "uppercase", color: "var(--muted-foreground)" }}>07</span>
@@ -1495,7 +1495,7 @@ export default function App() {
 
               {/* Right — cream */}
               <FadeUp delay={0.1} style={{ height: "100%" }}>
-                <div style={{ padding: "clamp(3rem, 6vw, 7rem) clamp(1.5rem, 5vw, 4rem)", display: "flex", flexDirection: "column", justifyContent: "center", height: "100%", boxSizing: "border-box" }}>
+                <div style={{ padding: "clamp(1.5rem, 3vw, 3.5rem) clamp(1.5rem, 5vw, 4rem)", display: "flex", flexDirection: "column", justifyContent: "center", height: "100%", boxSizing: "border-box" }}>
                   <p style={{ fontFamily: "var(--font-display)", fontSize: "1.35rem", letterSpacing: "-0.01em", textTransform: "uppercase", color: "#0f172a", fontWeight: 700, marginBottom: "2rem" }}>
                     Reach us
                   </p>
@@ -1538,7 +1538,7 @@ export default function App() {
             </div>
 
             {/* Security warning */}
-            <div style={{ background: "rgba(255,105,0,0.06)", borderTop: "1px solid rgba(255,105,0,0.18)", padding: "1.25rem 0" }}>
+            <div style={{ background: "rgba(255,105,0,0.06)", borderTop: "1px solid rgba(255,105,0,0.18)", padding: "0.6rem 0" }}>
               <div style={{ width: SECTION_W, margin: AUTO, display: "flex", alignItems: "flex-start", gap: "0.75rem" }}>
                 <AlertTriangle size={15} style={{ color: "var(--cta)", flexShrink: 0, marginTop: "0.1rem" }} />
                 <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.82rem", fontWeight: 500, color: "var(--foreground)", lineHeight: 1.55, margin: 0 }}>
@@ -1548,7 +1548,7 @@ export default function App() {
             </div>
 
             {/* Footer bar — 70% centered width */}
-            <div style={{ borderTop: "1px solid var(--border)", padding: "1.5rem 0" }}>
+            <div style={{ borderTop: "1px solid var(--border)", padding: "0.75rem 0" }}>
               <div style={{ width: SECTION_W, margin: AUTO, display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "1rem" }}>
                 <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.82rem", fontWeight: 500, color: "var(--muted-foreground)" }}>
                   © 2026 Karncy Ventures Private Limited. All rights reserved.
