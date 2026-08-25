@@ -436,7 +436,7 @@ function TestimonialCarousel() {
           style={{ background: "rgba(255,255,255,0.97)", border: "1px solid var(--border)", borderRadius: "calc(var(--radius) * 2)", padding: "clamp(1.5rem, 5vw, 2.75rem) clamp(1.25rem, 4vw, 3rem)" }}
         >
           {/* Photo / Logo */}
-          <div className="testimonial-photo" style={{ width: "80px", height: "80px", borderRadius: (t as any).isLogo ? "calc(var(--radius) * 1.2)" : "50%", overflow: "hidden", flexShrink: 0, border: "2px solid var(--border)", background: "#ffffff", padding: (t as any).isLogo ? "0.35rem" : 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <div className="testimonial-photo" style={{ width: "80px", height: "80px", borderRadius: "50%", overflow: "hidden", flexShrink: 0, border: "3px solid var(--border)", background: "#ffffff", padding: (t as any).isLogo ? "0.6rem" : 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
             <img
               src={t.photo}
               alt={t.author}
