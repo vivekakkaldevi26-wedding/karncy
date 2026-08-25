@@ -1426,6 +1426,7 @@ export default function App() {
   const scrollTo = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 
   const scrollToChapterCard = (pid: ProductId) => {
+    setActiveProduct(pid);
     const el = document.getElementById("chapters");
     if (!el) return;
     const cardIdx = (["invoice", "ventures", "startup"] as ProductId[]).indexOf(pid);
@@ -1433,7 +1434,7 @@ export default function App() {
     const rect = el.getBoundingClientRect();
     const sectionTop = rect.top + window.scrollY;
     const range = el.offsetHeight - window.innerHeight;
-    const targetY = sectionTop + (NUM > 1 ? (cardIdx / (NUM - 1)) * range : 0) + (cardIdx > 0 ? 25 : 5);
+    const targetY = sectionTop + (NUM > 1 ? (cardIdx / (NUM - 1)) * range : 0) + (cardIdx > 0 ? 30 : 5);
     window.scrollTo({ top: targetY, behavior: "smooth" });
   };
 
@@ -1538,13 +1539,19 @@ export default function App() {
                   </p>
                   <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.45rem", marginTop: "0.5rem" }}>
                     {[
-                      "Invoice Financing — 48-hr turnaround",
-                      "Joint Ventures — active capital partners",
-                      "Startup Partnerships — idea to exit",
-                      "Compliance and operational scaffolding",
+                      { text: "Invoice Financing — 48-hr turnaround", pid: "invoice" as const },
+                      { text: "Joint Ventures — active capital partners", pid: "ventures" as const },
+                      { text: "Startup Partnerships — idea to exit", pid: "startup" as const },
+                      { text: "Compliance and operational scaffolding", pid: "invoice" as const },
                     ].map((item) => (
-                      <li key={item} style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.875rem", color: "var(--muted-foreground)" }}>
-                        <span style={{ color: "var(--cta)", flexShrink: 0 }}>→</span> {item}
+                      <li
+                        key={item.text}
+                        onClick={() => scrollToChapterCard(item.pid)}
+                        style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.875rem", color: "var(--muted-foreground)", cursor: "pointer", transition: "color 0.15s" }}
+                        onMouseEnter={(e) => ((e.currentTarget as HTMLLIElement).style.color = "var(--foreground)")}
+                        onMouseLeave={(e) => ((e.currentTarget as HTMLLIElement).style.color = "var(--muted-foreground)")}
+                      >
+                        <span style={{ color: "var(--cta)", flexShrink: 0 }}>→</span> {item.text}
                       </li>
                     ))}
                   </ul>
@@ -1572,13 +1579,19 @@ export default function App() {
                   </p>
                   <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.45rem", marginTop: "0.5rem" }}>
                     {[
-                      "Curated deal flow — pre-screened opportunities",
-                      "Tranche-based deployment — milestone-protected",
-                      "Monthly MIS and board-ready reporting",
-                      "Returns (ROI) tracked in real-time dashboards",
+                      { text: "Curated deal flow — pre-screened opportunities", pid: "ventures" as const },
+                      { text: "Tranche-based deployment — milestone-protected", pid: "ventures" as const },
+                      { text: "Monthly MIS and board-ready reporting", pid: "ventures" as const },
+                      { text: "Returns (ROI) tracked in real-time dashboards", pid: "ventures" as const },
                     ].map((item) => (
-                      <li key={item} style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.875rem", color: "var(--muted-foreground)" }}>
-                        <span style={{ color: "var(--primary)", flexShrink: 0 }}>→</span> {item}
+                      <li
+                        key={item.text}
+                        onClick={() => scrollToChapterCard(item.pid)}
+                        style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.875rem", color: "var(--muted-foreground)", cursor: "pointer", transition: "color 0.15s" }}
+                        onMouseEnter={(e) => ((e.currentTarget as HTMLLIElement).style.color = "var(--foreground)")}
+                        onMouseLeave={(e) => ((e.currentTarget as HTMLLIElement).style.color = "var(--muted-foreground)")}
+                      >
+                        <span style={{ color: "var(--primary)", flexShrink: 0 }}>→</span> {item.text}
                       </li>
                     ))}
                   </ul>
