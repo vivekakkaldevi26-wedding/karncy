@@ -960,8 +960,6 @@ function QuickLinksMenu({ onSelectProduct }: { onSelectProduct?: (pid: ProductId
     { label: "Karncy Financing", pid: "invoice" },
     { label: "Karncy Ventures", pid: "ventures" },
     { label: "Karncy Equity", pid: "startup" },
-    { label: "Terms & conditions", href: "https://karncy.com/terms-and-conditions/" },
-    { label: "Privacy policy", href: "https://karncy.com/privacy-policy/" },
     { label: "Risk Disclosure policy", href: "https://karncy.com/privacy-policy/" },
     { label: "Blog", href: "https://karncy.com/blogs/" },
     { label: "Careers", href: "https://karncy.com/careers/" },
