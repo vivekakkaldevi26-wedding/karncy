@@ -1072,9 +1072,10 @@ export default function App() {
     if (!el) return;
     const cardIdx = (["invoice", "ventures", "startup"] as ProductId[]).indexOf(pid);
     const NUM = 3;
-    const sectionTop = el.getBoundingClientRect().top + window.scrollY;
+    const rect = el.getBoundingClientRect();
+    const sectionTop = rect.top + window.scrollY;
     const range = el.offsetHeight - window.innerHeight;
-    const targetY = sectionTop + (NUM > 1 ? (cardIdx / (NUM - 1)) * range : 0);
+    const targetY = sectionTop + (NUM > 1 ? (cardIdx / (NUM - 1)) * range : 0) + (cardIdx > 0 ? 25 : 5);
     window.scrollTo({ top: targetY, behavior: "smooth" });
   };
 
@@ -1255,12 +1256,12 @@ export default function App() {
               {(["invoice", "ventures", "startup"] as const).map((pid, i) => {
                 const p = products[pid];
                 return (
-                  <FadeUp key={pid} delay={i * 0.08} style={{ height: "100%" }}>
-                    <motion.button
+                    <motion.div
+                      key={pid}
                       onClick={() => scrollToChapterCard(pid)}
                       whileHover={{ backgroundColor: "rgba(255,105,0,0.03)" }}
                       transition={{ duration: 0.2 }}
-                      style={{ width: "100%", height: "100%", textAlign: "left", padding: "4rem 2.25rem", background: "rgba(255,255,255,0.92)", backdropFilter: "blur(6px)", border: "none", borderRight: i < 2 ? "1px solid var(--border)" : "none", cursor: "pointer", display: "flex", flexDirection: "column" }}
+                      style={{ width: "100%", height: "100%", textAlign: "left", padding: "4rem 2.25rem", background: "rgba(255,255,255,0.92)", backdropFilter: "blur(6px)", borderRight: i < 2 ? "1px solid var(--border)" : "none", cursor: "pointer", display: "flex", flexDirection: "column", boxSizing: "border-box" }}
                     >
                       <div style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: "2.75rem", height: "2.75rem", borderRadius: "calc(var(--radius) * 1.5)", background: "rgba(255,105,0,0.1)", color: "var(--cta)", marginBottom: "1.75rem" }}>
                         {productIcons[pid]}
@@ -1271,11 +1272,19 @@ export default function App() {
                       <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.81rem", color: "var(--muted-foreground)", lineHeight: 1.65, flex: 1, marginBottom: "2rem" }}>
                         {p.tagline}
                       </p>
-                      <span style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", fontSize: "0.875rem", fontWeight: 700, color: "var(--cta-foreground)", fontFamily: "var(--font-sans)", background: "var(--cta)", padding: "0.6rem 1.4rem", borderRadius: "var(--radius)", alignSelf: "flex-start" }}>
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          scrollToChapterCard(pid);
+                        }}
+                        style={{ border: "none", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: "0.5rem", fontSize: "0.875rem", fontWeight: 700, color: "var(--cta-foreground)", fontFamily: "var(--font-sans)", background: "var(--cta)", padding: "0.6rem 1.4rem", borderRadius: "var(--radius)", alignSelf: "flex-start", transition: "transform 0.15s ease" }}
+                        onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.transform = "translateY(-2px)")}
+                        onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.transform = "translateY(0)")}
+                      >
                         {p.cta} <ArrowRight size={13} />
-                      </span>
-                    </motion.button>
-                  </FadeUp>
+                      </button>
+                    </motion.div>
                 );
               })}
             </div>
@@ -1440,8 +1449,9 @@ export default function App() {
                     <div style={{ width: "1.5rem", height: "1px", background: "var(--primary)" }} />
                     <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.67rem", letterSpacing: "0.13em", textTransform: "uppercase", color: "var(--muted-foreground)" }}>07</span>
                   </div>
-                  <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2rem, 3.2vw, 2.8rem)", fontWeight: 700, color: "var(--foreground)", letterSpacing: "-0.025em", lineHeight: 1.1, marginBottom: "1.5rem", maxWidth: "22rem" }}>
-                    India's next enterprises start here.
+                  <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2rem, 3.2vw, 2.8rem)", fontWeight: 700, color: "var(--foreground)", letterSpacing: "-0.025em", lineHeight: 1.15, marginBottom: "1.5rem", maxWidth: "32rem" }}>
+                    <span style={{ display: "block" }}>India's next enterprises</span>
+                    <span style={{ display: "block" }}>start here.</span>
                   </h2>
                   <p style={{ fontFamily: "var(--font-sans)", color: "var(--muted-foreground)", fontSize: "0.88rem", lineHeight: 1.72, marginBottom: "2.5rem", maxWidth: "22rem" }}>
                     The journey begins with a conversation. Let's talk about where your business is headed.
@@ -1505,14 +1515,14 @@ export default function App() {
                       { label: "Phone", icon: <Phone size={14} style={{ color: "var(--primary)" }} />, value: "040-42011067", href: "tel:04042011067" },
                     ].map((c) => (
                       <div key={c.label}>
-                        <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.85rem", letterSpacing: "0.08em", textTransform: "uppercase", color: "#0f172a", fontWeight: 700, marginBottom: "0.35rem" }}>{c.label}</p>
+                        <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.85rem", letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--cta)", fontWeight: 700, marginBottom: "0.35rem" }}>{c.label}</p>
                         <a href={c.href} style={{ display: "inline-flex", alignItems: "center", gap: "0.45rem", fontFamily: "var(--font-sans)", fontSize: "1.05rem", fontWeight: 700, color: "#0f172a", textDecoration: "none" }}>
                           {c.icon} {c.value}
                         </a>
                       </div>
                     ))}
                     <div>
-                      <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.85rem", letterSpacing: "0.08em", textTransform: "uppercase", color: "#0f172a", fontWeight: 700, marginBottom: "0.35rem" }}>Address</p>
+                      <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.85rem", letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--cta)", fontWeight: 700, marginBottom: "0.35rem" }}>Address</p>
                       <p style={{ display: "flex", alignItems: "flex-start", gap: "0.45rem", fontFamily: "var(--font-sans)", fontSize: "1.02rem", fontWeight: 600, color: "#0f172a", lineHeight: 1.6, margin: 0 }}>
                         <MapPin size={14} style={{ color: "var(--primary)", marginTop: "0.25rem", flexShrink: 0 }} />
                         5th Floor, The Park View, Gachibowli, Hyderabad, 500032
@@ -1526,9 +1536,9 @@ export default function App() {
                         <p style={{ fontFamily: "var(--font-sans)", fontSize: "1.05rem", fontWeight: 700, color: "#0f172a", margin: 0 }}>Karncy Ventures Private Limited</p>
                         <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.98rem", fontWeight: 600, color: "#334155", margin: 0 }}>CIN: U65100TG2022PTC164XXXX</p>
                       </div>
-                      <div style={{ display: "flex", gap: "1rem", alignItems: "center", flexWrap: "wrap" }}>
-                        <img src={certIso27001} alt="ISO 27001 Information Security Certified" style={{ height: "54px", width: "auto", objectFit: "contain", opacity: 0.95 }} />
-                        <img src={certSoc2} alt="AICPA SOC 2 Type II Security Certified" style={{ height: "58px", width: "auto", objectFit: "contain", opacity: 1 }} />
+                      <div style={{ display: "flex", gap: "1.25rem", alignItems: "center", flexWrap: "wrap" }}>
+                        <img src={certIso27001} alt="ISO 27001 Information Security Certified" style={{ height: "82px", width: "auto", objectFit: "contain", opacity: 0.95 }} />
+                        <img src={certSoc2} alt="AICPA SOC 2 Type II Security Certified" style={{ height: "88px", width: "auto", objectFit: "contain", opacity: 1 }} />
                       </div>
                     </div>
 
