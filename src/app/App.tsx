@@ -1102,7 +1102,7 @@ function ContactModal({ type, onClose }: { type: ModalType; onClose: () => void 
           overflowY: "auto",
           background: "#ffffff",
           border: "1px solid var(--border)",
-          borderRadius: "calc(var(--radius) * 2.2)",
+          borderRadius: "calc(var(--radius) * 1.2)",
           position: "relative",
           boxShadow: "0 24px 64px rgba(15,23,42,0.25)",
         }}
@@ -1145,14 +1145,13 @@ function ContactModal({ type, onClose }: { type: ModalType; onClose: () => void 
         </button>
 
         {/* Modal Header */}
-        <div style={{ padding: "2rem 2rem 1.25rem", borderBottom: "1px solid var(--border)", background: isFunding ? "rgba(255,105,0,0.03)" : "rgba(13,31,130,0.03)" }}>
-          <div style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.5rem" }}>
-            <span style={{ width: "8px", height: "8px", borderRadius: "50%", background: isFunding ? "var(--cta)" : "var(--primary)" }} />
+        <div style={{ padding: "1.75rem 2rem 1.25rem", borderBottom: "1px solid var(--border)", background: isFunding ? "rgba(255,105,0,0.03)" : "rgba(13,31,130,0.03)" }}>
+          <div style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.4rem" }}>
             <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: isFunding ? "var(--cta)" : "var(--primary)" }}>
               {isFunding ? "Fast 48-Hour Approval" : "Karncy Business Network"}
             </span>
           </div>
-          <h3 style={{ fontFamily: "var(--font-display)", fontSize: "1.5rem", fontWeight: 700, color: "#0f172a", letterSpacing: "-0.02em" }}>
+          <h3 style={{ fontFamily: "var(--font-display)", fontSize: "1.45rem", fontWeight: 700, color: "#0f172a", letterSpacing: "-0.02em" }}>
             {isFunding ? "Apply for Funding" : "Apply for Business"}
           </h3>
           <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.85rem", color: "#64748b", marginTop: "0.25rem", lineHeight: 1.5 }}>
@@ -1163,7 +1162,7 @@ function ContactModal({ type, onClose }: { type: ModalType; onClose: () => void 
         </div>
 
         {/* Modal Body / Form */}
-        <div style={{ padding: "1.75rem 2rem 2rem" }}>
+        <div style={{ padding: "1.5rem 2rem 2rem" }}>
           {submitted ? (
             <motion.div
               initial={{ opacity: 0, y: 10 }}
@@ -1190,7 +1189,7 @@ function ContactModal({ type, onClose }: { type: ModalType; onClose: () => void 
                   background: "#0f172a",
                   color: "#ffffff",
                   border: "none",
-                  borderRadius: "var(--radius)",
+                  borderRadius: "calc(var(--radius) * 0.7)",
                   cursor: "pointer",
                 }}
               >
@@ -1218,7 +1217,7 @@ function ContactModal({ type, onClose }: { type: ModalType; onClose: () => void 
                     color: "#0f172a",
                     background: "#f8fafc",
                     border: "1px solid #cbd5e1",
-                    borderRadius: "calc(var(--radius) * 0.9)",
+                    borderRadius: "calc(var(--radius) * 0.7)",
                     outline: "none",
                     boxSizing: "border-box",
                   }}
@@ -1244,7 +1243,7 @@ function ContactModal({ type, onClose }: { type: ModalType; onClose: () => void 
                     color: "#0f172a",
                     background: "#f8fafc",
                     border: "1px solid #cbd5e1",
-                    borderRadius: "calc(var(--radius) * 0.9)",
+                    borderRadius: "calc(var(--radius) * 0.7)",
                     outline: "none",
                     boxSizing: "border-box",
                   }}
@@ -1270,7 +1269,7 @@ function ContactModal({ type, onClose }: { type: ModalType; onClose: () => void 
                     color: "#0f172a",
                     background: "#f8fafc",
                     border: "1px solid #cbd5e1",
-                    borderRadius: "calc(var(--radius) * 0.9)",
+                    borderRadius: "calc(var(--radius) * 0.7)",
                     outline: "none",
                     boxSizing: "border-box",
                   }}
@@ -1296,7 +1295,7 @@ function ContactModal({ type, onClose }: { type: ModalType; onClose: () => void 
                     color: "#0f172a",
                     background: "#f8fafc",
                     border: "1px solid #cbd5e1",
-                    borderRadius: "calc(var(--radius) * 0.9)",
+                    borderRadius: "calc(var(--radius) * 0.7)",
                     outline: "none",
                     boxSizing: "border-box",
                   }}
@@ -1315,13 +1314,13 @@ function ContactModal({ type, onClose }: { type: ModalType; onClose: () => void 
                     onChange={(e) => setFormData({ ...formData, fundingRequirement: e.target.value })}
                     style={{
                       width: "100%",
-                      padding: "0.7rem 0.9rem",
+                      padding: "0.7rem 2.25rem 0.7rem 0.9rem",
                       fontFamily: "var(--font-sans)",
                       fontSize: "0.9rem",
                       color: "#0f172a",
                       background: "#f8fafc",
                       border: "1px solid #cbd5e1",
-                      borderRadius: "calc(var(--radius) * 0.9)",
+                      borderRadius: "calc(var(--radius) * 0.7)",
                       outline: "none",
                       boxSizing: "border-box",
                       cursor: "pointer",
@@ -1345,13 +1344,13 @@ function ContactModal({ type, onClose }: { type: ModalType; onClose: () => void 
                     onChange={(e) => setFormData({ ...formData, howCanWeHelp: e.target.value })}
                     style={{
                       width: "100%",
-                      padding: "0.7rem 0.9rem",
+                      padding: "0.7rem 2.25rem 0.7rem 0.9rem",
                       fontFamily: "var(--font-sans)",
                       fontSize: "0.9rem",
                       color: "#0f172a",
                       background: "#f8fafc",
                       border: "1px solid #cbd5e1",
-                      borderRadius: "calc(var(--radius) * 0.9)",
+                      borderRadius: "calc(var(--radius) * 0.7)",
                       outline: "none",
                       boxSizing: "border-box",
                       cursor: "pointer",
@@ -1362,7 +1361,6 @@ function ContactModal({ type, onClose }: { type: ModalType; onClose: () => void 
                     <option value="Joint Venture">Joint Venture</option>
                     <option value="Investment">Investment</option>
                     <option value="Invoice Financing">Invoice Financing</option>
-                    <option value="Other">Other</option>
                   </select>
                 </div>
               )}
@@ -1380,7 +1378,7 @@ function ContactModal({ type, onClose }: { type: ModalType; onClose: () => void 
                   color: isFunding ? "var(--cta-foreground)" : "#ffffff",
                   background: isFunding ? "var(--cta)" : "var(--primary)",
                   border: "none",
-                  borderRadius: "calc(var(--radius) * 0.9)",
+                  borderRadius: "calc(var(--radius) * 0.7)",
                   cursor: "pointer",
                   display: "inline-flex",
                   alignItems: "center",
