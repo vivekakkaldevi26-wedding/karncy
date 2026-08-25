@@ -1375,8 +1375,9 @@ export default function App() {
               <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2.2rem, 4vw, 3.2rem)", fontWeight: 700, letterSpacing: "-0.025em", color: "var(--foreground)", lineHeight: 1.04, marginBottom: "0.75rem" }}>
                 Why choose Karncy?
               </h2>
-              <p style={{ fontFamily: "var(--font-sans)", fontSize: "1.08rem", color: "var(--muted-foreground)", lineHeight: 1.72, maxWidth: "36rem", marginBottom: "3.5rem" }}>
-                We are not another capital provider. We are the partner that stays — operationally embedded, transparently accountable, and relentlessly focused on your outcome.
+              <p style={{ fontFamily: "var(--font-sans)", fontSize: "1.08rem", color: "var(--muted-foreground)", lineHeight: 1.72, maxWidth: "52rem", marginBottom: "3.5rem" }}>
+                <span style={{ display: "block" }}>We are not another capital provider. We are the partner that stays —</span>
+                <span style={{ display: "block" }}>operationally embedded, transparently accountable, and relentlessly focused on your outcome.</span>
               </p>
             </FadeUp>
 
