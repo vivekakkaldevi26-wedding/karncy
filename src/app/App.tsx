@@ -1418,6 +1418,7 @@ function SectionLabel({ n }: { n: string }) {
 export default function App() {
   const [activeProduct, setActiveProduct] = useState<ProductId | null>(null);
   const [activeModal, setActiveModal] = useState<ModalType | null>(null);
+  const activeSection = useActiveSection();
 
   useEffect(() => {
     document.body.style.overflow = (activeProduct || activeModal) ? "hidden" : "";
@@ -1457,7 +1458,6 @@ export default function App() {
 
       <ScrollProgressBar />
       <ScrollNav active={activeSection} />
-      {activeModal && <ContactModal type={activeModal} onClose={() => setActiveModal(null)} />}
 
       <main style={{ position: "relative", zIndex: 10 }}>
 
