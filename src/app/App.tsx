@@ -143,6 +143,13 @@ const productIcons: Record<ProductId, React.ReactNode> = {
 
 const testimonials = [
   {
+    quote: "Partnering with Karncy has been one of our best investment decisions. The platform is seamless, transparent, and incredibly efficient. We've seen consistent returns and timely payouts, making it a reliable addition to our financial strategy. Karncy's team is professional and supportive, ensuring our experience is smooth from start to finish. Highly recommend it to anyone looking for smart, secure investment opportunities.",
+    author: "Siva",
+    role: "Manager",
+    company: "Ingrain Systems Private Limited",
+    photo: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=200&w=200&q=80",
+  },
+  {
     quote: "Karncy unlocked working capital against our receivables within 48 hours. The process was cleaner than any bank we had approached in three years of trying.",
     author: "Rahul Mehta",
     role: "CFO",
