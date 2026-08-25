@@ -956,13 +956,13 @@ function QuickLinksMenu({ onSelectProduct }: { onSelectProduct?: (pid: ProductId
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [open]);
 
-  const items: { label: string; pid?: ProductId; href?: string }[] = [
+  const items: { label: string; pid?: ProductId }[] = [
     { label: "Karncy Financing", pid: "invoice" },
     { label: "Karncy Ventures", pid: "ventures" },
     { label: "Karncy Equity", pid: "startup" },
-    { label: "Risk Disclosure policy", href: "https://karncy.com/privacy-policy/" },
-    { label: "Blog", href: "https://karncy.com/blogs/" },
-    { label: "Careers", href: "https://karncy.com/careers/" },
+    { label: "Risk Disclosure policy" },
+    { label: "Blog" },
+    { label: "Careers" },
   ];
 
   return (
@@ -1018,74 +1018,41 @@ function QuickLinksMenu({ onSelectProduct }: { onSelectProduct?: (pid: ProductId
             }}
           >
             {items.map((item) => (
-              item.href ? (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => setOpen(false)}
-                  style={{
-                    fontFamily: "var(--font-sans)",
-                    fontSize: "0.85rem",
-                    fontWeight: 500,
-                    color: "#334155",
-                    textDecoration: "none",
-                    padding: "0.25rem 0.35rem",
-                    borderRadius: "var(--radius)",
-                    transition: "background 0.15s, color 0.15s",
-                    display: "block",
-                  }}
-                  onMouseEnter={(e) => {
-                    const a = e.currentTarget as HTMLAnchorElement;
-                    a.style.color = "var(--primary)";
-                    a.style.background = "rgba(13,31,130,0.05)";
-                  }}
-                  onMouseLeave={(e) => {
-                    const a = e.currentTarget as HTMLAnchorElement;
-                    a.style.color = "#334155";
-                    a.style.background = "transparent";
-                  }}
-                >
-                  {item.label}
-                </a>
-              ) : (
-                <button
-                  key={item.label}
-                  type="button"
-                  onClick={() => {
-                    setOpen(false);
-                    if (item.pid && onSelectProduct) {
-                      onSelectProduct(item.pid);
-                    }
-                  }}
-                  style={{
-                    fontFamily: "var(--font-sans)",
-                    fontSize: "0.85rem",
-                    fontWeight: 500,
-                    color: "#334155",
-                    background: "none",
-                    border: "none",
-                    padding: "0.25rem 0.35rem",
-                    textAlign: "left",
-                    cursor: "pointer",
-                    borderRadius: "var(--radius)",
-                    transition: "background 0.15s, color 0.15s",
-                  }}
-                  onMouseEnter={(e) => {
-                    const btn = e.currentTarget as HTMLButtonElement;
-                    btn.style.color = "var(--primary)";
-                    btn.style.background = "rgba(13,31,130,0.05)";
-                  }}
-                  onMouseLeave={(e) => {
-                    const btn = e.currentTarget as HTMLButtonElement;
-                    btn.style.color = "#334155";
-                    btn.style.background = "transparent";
-                  }}
-                >
-                  {item.label}
-                </button>
-              )
+              <button
+                key={item.label}
+                type="button"
+                onClick={() => {
+                  setOpen(false);
+                  if (item.pid && onSelectProduct) {
+                    onSelectProduct(item.pid);
+                  }
+                }}
+                style={{
+                  fontFamily: "var(--font-sans)",
+                  fontSize: "0.85rem",
+                  fontWeight: 500,
+                  color: "#334155",
+                  background: "none",
+                  border: "none",
+                  padding: "0.25rem 0.35rem",
+                  textAlign: "left",
+                  cursor: "pointer",
+                  borderRadius: "var(--radius)",
+                  transition: "background 0.15s, color 0.15s",
+                }}
+                onMouseEnter={(e) => {
+                  const btn = e.currentTarget as HTMLButtonElement;
+                  btn.style.color = "var(--primary)";
+                  btn.style.background = "rgba(13,31,130,0.05)";
+                }}
+                onMouseLeave={(e) => {
+                  const btn = e.currentTarget as HTMLButtonElement;
+                  btn.style.color = "#334155";
+                  btn.style.background = "transparent";
+                }}
+              >
+                {item.label}
+              </button>
             ))}
           </motion.div>
         )}
