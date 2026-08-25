@@ -959,7 +959,7 @@ function QuickLinksMenu({ onSelectProduct }: { onSelectProduct?: (pid: ProductId
   const items: { label: string; pid?: ProductId; href?: string }[] = [
     { label: "Karncy Financing", pid: "invoice" },
     { label: "Karncy Ventures", pid: "ventures" },
-    { label: "Startup Partnerships", pid: "startup" },
+    { label: "Karncy Equity", pid: "startup" },
     { label: "Terms & conditions", href: "https://karncy.com/terms-and-conditions/" },
     { label: "Privacy policy", href: "https://karncy.com/privacy-policy/" },
     { label: "Risk Disclosure policy", href: "https://karncy.com/privacy-policy/" },
@@ -1586,9 +1586,9 @@ export default function App() {
                   </p>
                   <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.45rem", marginTop: "0.5rem" }}>
                     {[
-                      { text: "Invoice Financing — 48-hr turnaround", pid: "invoice" as const },
-                      { text: "Joint Ventures — active capital partners", pid: "ventures" as const },
-                      { text: "Startup Partnerships — idea to exit", pid: "startup" as const },
+                      { text: "Karncy Financing — 48-hr turnaround", pid: "invoice" as const },
+                      { text: "Karncy Ventures — active capital partners", pid: "ventures" as const },
+                      { text: "Karncy Equity — idea to exit", pid: "startup" as const },
                       { text: "Compliance and operational scaffolding", pid: "invoice" as const },
                     ].map((item) => (
                       <li
