@@ -954,10 +954,15 @@ function QuickLinksMenu({ onSelectProduct }: { onSelectProduct?: (pid: ProductId
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [open]);
 
-  const items: { label: string; pid: ProductId }[] = [
+  const items: { label: string; pid?: ProductId; href?: string }[] = [
     { label: "Invoice Financing", pid: "invoice" },
     { label: "Joint Ventures", pid: "ventures" },
     { label: "Startup Partnerships", pid: "startup" },
+    { label: "Terms & conditions", href: "https://karncy.com/terms-and-conditions/" },
+    { label: "Privacy policy", href: "https://karncy.com/privacy-policy/" },
+    { label: "Risk Disclosure policy", href: "https://karncy.com/privacy-policy/" },
+    { label: "Blog", href: "https://karncy.com/blogs/" },
+    { label: "Careers", href: "https://karncy.com/careers/" },
   ];
 
   return (
@@ -1008,46 +1013,79 @@ function QuickLinksMenu({ onSelectProduct }: { onSelectProduct?: (pid: ProductId
               gap: "0.5rem",
               boxShadow: "0 10px 30px rgba(15,23,42,0.15)",
               zIndex: 60,
-              minWidth: "170px",
+              minWidth: "200px",
               whiteSpace: "nowrap",
             }}
           >
             {items.map((item) => (
-              <button
-                key={item.label}
-                type="button"
-                onClick={() => {
-                  setOpen(false);
-                  if (onSelectProduct) {
-                    onSelectProduct(item.pid);
-                  }
-                }}
-                style={{
-                  fontFamily: "var(--font-sans)",
-                  fontSize: "0.85rem",
-                  fontWeight: 500,
-                  color: "#334155",
-                  background: "none",
-                  border: "none",
-                  padding: "0.25rem 0.35rem",
-                  textAlign: "left",
-                  cursor: "pointer",
-                  borderRadius: "var(--radius)",
-                  transition: "background 0.15s, color 0.15s",
-                }}
-                onMouseEnter={(e) => {
-                  const btn = e.currentTarget as HTMLButtonElement;
-                  btn.style.color = "var(--primary)";
-                  btn.style.background = "rgba(13,31,130,0.05)";
-                }}
-                onMouseLeave={(e) => {
-                  const btn = e.currentTarget as HTMLButtonElement;
-                  btn.style.color = "#334155";
-                  btn.style.background = "transparent";
-                }}
-              >
-                {item.label}
-              </button>
+              item.href ? (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => setOpen(false)}
+                  style={{
+                    fontFamily: "var(--font-sans)",
+                    fontSize: "0.85rem",
+                    fontWeight: 500,
+                    color: "#334155",
+                    textDecoration: "none",
+                    padding: "0.25rem 0.35rem",
+                    borderRadius: "var(--radius)",
+                    transition: "background 0.15s, color 0.15s",
+                    display: "block",
+                  }}
+                  onMouseEnter={(e) => {
+                    const a = e.currentTarget as HTMLAnchorElement;
+                    a.style.color = "var(--primary)";
+                    a.style.background = "rgba(13,31,130,0.05)";
+                  }}
+                  onMouseLeave={(e) => {
+                    const a = e.currentTarget as HTMLAnchorElement;
+                    a.style.color = "#334155";
+                    a.style.background = "transparent";
+                  }}
+                >
+                  {item.label}
+                </a>
+              ) : (
+                <button
+                  key={item.label}
+                  type="button"
+                  onClick={() => {
+                    setOpen(false);
+                    if (item.pid && onSelectProduct) {
+                      onSelectProduct(item.pid);
+                    }
+                  }}
+                  style={{
+                    fontFamily: "var(--font-sans)",
+                    fontSize: "0.85rem",
+                    fontWeight: 500,
+                    color: "#334155",
+                    background: "none",
+                    border: "none",
+                    padding: "0.25rem 0.35rem",
+                    textAlign: "left",
+                    cursor: "pointer",
+                    borderRadius: "var(--radius)",
+                    transition: "background 0.15s, color 0.15s",
+                  }}
+                  onMouseEnter={(e) => {
+                    const btn = e.currentTarget as HTMLButtonElement;
+                    btn.style.color = "var(--primary)";
+                    btn.style.background = "rgba(13,31,130,0.05)";
+                  }}
+                  onMouseLeave={(e) => {
+                    const btn = e.currentTarget as HTMLButtonElement;
+                    btn.style.color = "#334155";
+                    btn.style.background = "transparent";
+                  }}
+                >
+                  {item.label}
+                </button>
+              )
             ))}
           </motion.div>
         )}
@@ -1851,28 +1889,53 @@ export default function App() {
                   <div style={{ marginTop: "1.75rem", paddingTop: "1.5rem", borderTop: "1px solid var(--border)" }}>
                     <p style={{ fontFamily: "var(--font-display)", fontSize: "0.9rem", letterSpacing: "0.08em", textTransform: "uppercase", color: "#0f172a", fontWeight: 700, marginBottom: "1rem" }}>Menu</p>
                     <nav style={{ display: "flex", alignItems: "center", gap: "1.25rem", flexWrap: "wrap" }}>
-                      {["About", "Investors", "Privacy", "Terms"].map((link) => (
-                        <div key={link} style={{ display: "inline-flex", alignItems: "center", gap: "1.25rem" }}>
-                          <button
-                            type="button"
-                            onClick={(e) => e.preventDefault()}
-                            style={{
-                              fontFamily: "var(--font-sans)",
-                              fontSize: "0.95rem",
-                              fontWeight: 600,
-                              color: "#0f172a",
-                              background: "none",
-                              border: "none",
-                              padding: 0,
-                              cursor: "pointer",
-                              lineHeight: 1,
-                              transition: "color 0.15s",
-                            }}
-                            onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.color = "var(--primary)")}
-                            onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.color = "#0f172a")}
-                          >
-                            {link}
-                          </button>
+                      {[
+                        { label: "About", href: "#prologue" },
+                        { label: "Privacy", href: "https://karncy.com/privacy-policy/" },
+                        { label: "Terms", href: "https://karncy.com/terms-and-conditions/" },
+                      ].map((item) => (
+                        <div key={item.label} style={{ display: "inline-flex", alignItems: "center", gap: "1.25rem" }}>
+                          {item.href.startsWith("#") ? (
+                            <a
+                              href={item.href}
+                              onClick={(e) => {
+                                e.preventDefault();
+                                document.getElementById("prologue")?.scrollIntoView({ behavior: "smooth" });
+                              }}
+                              style={{
+                                fontFamily: "var(--font-sans)",
+                                fontSize: "0.95rem",
+                                fontWeight: 600,
+                                color: "#0f172a",
+                                textDecoration: "none",
+                                lineHeight: 1,
+                                transition: "color 0.15s",
+                              }}
+                              onMouseEnter={(e) => ((e.currentTarget as HTMLAnchorElement).style.color = "var(--primary)")}
+                              onMouseLeave={(e) => ((e.currentTarget as HTMLAnchorElement).style.color = "#0f172a")}
+                            >
+                              {item.label}
+                            </a>
+                          ) : (
+                            <a
+                              href={item.href}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              style={{
+                                fontFamily: "var(--font-sans)",
+                                fontSize: "0.95rem",
+                                fontWeight: 600,
+                                color: "#0f172a",
+                                textDecoration: "none",
+                                lineHeight: 1,
+                                transition: "color 0.15s",
+                              }}
+                              onMouseEnter={(e) => ((e.currentTarget as HTMLAnchorElement).style.color = "var(--primary)")}
+                              onMouseLeave={(e) => ((e.currentTarget as HTMLAnchorElement).style.color = "#0f172a")}
+                            >
+                              {item.label}
+                            </a>
+                          )}
                           <span style={{ width: "1px", height: "14px", background: "rgba(20,20,43,0.18)", display: "inline-block" }} />
                         </div>
                       ))}
