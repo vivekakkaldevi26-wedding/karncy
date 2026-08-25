@@ -19,6 +19,7 @@ import msmeScratchgard from "../imports/Logo-2-e1715860301443_1.png";
 import msmeQbic from "../imports/nuzrBBNFnrnekt4aoIu9UgHMz6m1735188281962_200x200_1.png";
 import certSoc2 from "../imports/images-1.png";
 import certIso27001 from "../imports/iso2001-logo-300x200-1.png";
+import ingrainLogo from "../imports/ingrain-logo.jpg";
 
 type ProductId = "invoice" | "ventures" | "startup";
 
@@ -147,7 +148,8 @@ const testimonials = [
     author: "Siva",
     role: "Manager",
     company: "Ingrain Systems Private Limited",
-    photo: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=200&w=200&q=80",
+    photo: ingrainLogo,
+    isLogo: true,
   },
   {
     quote: "Karncy unlocked working capital against our receivables within 48 hours. The process was cleaner than any bank we had approached in three years of trying.",
@@ -433,12 +435,12 @@ function TestimonialCarousel() {
           className="testimonial-card"
           style={{ background: "rgba(255,255,255,0.97)", border: "1px solid var(--border)", borderRadius: "calc(var(--radius) * 2)", padding: "clamp(1.5rem, 5vw, 2.75rem) clamp(1.25rem, 4vw, 3rem)" }}
         >
-          {/* Photo */}
-          <div className="testimonial-photo" style={{ width: "80px", height: "80px", borderRadius: "50%", overflow: "hidden", flexShrink: 0, border: "3px solid var(--border)" }}>
+          {/* Photo / Logo */}
+          <div className="testimonial-photo" style={{ width: "80px", height: "80px", borderRadius: (t as any).isLogo ? "calc(var(--radius) * 1.2)" : "50%", overflow: "hidden", flexShrink: 0, border: "2px solid var(--border)", background: "#ffffff", padding: (t as any).isLogo ? "0.35rem" : 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
             <img
               src={t.photo}
               alt={t.author}
-              style={{ width: "100%", height: "100%", objectFit: "cover" }}
+              style={{ width: "100%", height: "100%", objectFit: (t as any).isLogo ? "contain" : "cover" }}
             />
           </div>
 
