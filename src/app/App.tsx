@@ -870,7 +870,7 @@ function ChaptersScroll({ onOpen }: { onOpen: (id: ProductId) => void }) {
 
 // ─── Product detail overlay ────────────────────────────────────────────────────
 
-function ProductDetailOverlay({ id, onClose }: { id: ProductId; onClose: () => void }) {
+function ProductDetailOverlay({ id, onClose, onOpenContact }: { id: ProductId; onClose: () => void; onOpenContact: (type: ModalType) => void }) {
   const product = products[id];
   return (
     <motion.div
@@ -913,9 +913,15 @@ function ProductDetailOverlay({ id, onClose }: { id: ProductId; onClose: () => v
             ))}
           </div>
           <div style={{ marginTop: "2.25rem", paddingTop: "1.75rem", borderTop: "1px solid var(--border)" }}>
-            <a href="mailto:hello@karncy.com" style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.9rem", fontWeight: 600, padding: "0.875rem 2.25rem", background: "var(--primary)", color: "var(--primary-foreground)", borderRadius: "var(--radius)", textDecoration: "none" }}>
+            <button
+              onClick={() => {
+                onClose();
+                onOpenContact(id === "invoice" ? "funding" : "business");
+              }}
+              style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.9rem", fontWeight: 600, padding: "0.875rem 2.25rem", background: "var(--primary)", color: "var(--primary-foreground)", borderRadius: "var(--radius)", border: "none", cursor: "pointer" }}
+            >
               {product.cta} <ArrowRight size={14} />
-            </a>
+            </button>
           </div>
         </div>
       </motion.div>
@@ -1043,6 +1049,359 @@ function QuickLinksMenu({ onSelectProduct }: { onSelectProduct?: (pid: ProductId
   );
 }
 
+// ─── Contact Form Modal ───────────────────────────────────────────────────────
+
+type ModalType = "funding" | "business";
+
+function ContactModal({ type, onClose }: { type: ModalType; onClose: () => void }) {
+  const [submitted, setSubmitted] = useState(false);
+  const [formData, setFormData] = useState({
+    fullName: "",
+    workEmail: "",
+    phone: "",
+    companyName: "",
+    fundingRequirement: "₹25L–₹50L",
+    howCanWeHelp: "Business Funding",
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmitted(true);
+  };
+
+  const isFunding = type === "funding";
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.2 }}
+      style={{
+        position: "fixed",
+        inset: 0,
+        zIndex: 300,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "1rem",
+        background: "rgba(15,23,42,0.65)",
+        backdropFilter: "blur(12px)",
+      }}
+      onClick={onClose}
+    >
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95, y: 16 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.95, y: 16 }}
+        transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+        style={{
+          width: "100%",
+          maxWidth: "30rem",
+          maxHeight: "90vh",
+          overflowY: "auto",
+          background: "#ffffff",
+          border: "1px solid var(--border)",
+          borderRadius: "calc(var(--radius) * 2.2)",
+          position: "relative",
+          boxShadow: "0 24px 64px rgba(15,23,42,0.25)",
+        }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Close Button */}
+        <button
+          onClick={onClose}
+          type="button"
+          aria-label="Close modal"
+          style={{
+            position: "absolute",
+            top: "1.25rem",
+            right: "1.25rem",
+            zIndex: 10,
+            width: "2rem",
+            height: "2rem",
+            borderRadius: "50%",
+            border: "1px solid var(--border)",
+            background: "#f8fafc",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            cursor: "pointer",
+            color: "var(--muted-foreground)",
+            transition: "background 0.15s, color 0.15s",
+          }}
+          onMouseEnter={(e) => {
+            const btn = e.currentTarget as HTMLButtonElement;
+            btn.style.background = "#e2e8f0";
+            btn.style.color = "#0f172a";
+          }}
+          onMouseLeave={(e) => {
+            const btn = e.currentTarget as HTMLButtonElement;
+            btn.style.background = "#f8fafc";
+            btn.style.color = "var(--muted-foreground)";
+          }}
+        >
+          <X size={14} />
+        </button>
+
+        {/* Modal Header */}
+        <div style={{ padding: "2rem 2rem 1.25rem", borderBottom: "1px solid var(--border)", background: isFunding ? "rgba(255,105,0,0.03)" : "rgba(13,31,130,0.03)" }}>
+          <div style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.5rem" }}>
+            <span style={{ width: "8px", height: "8px", borderRadius: "50%", background: isFunding ? "var(--cta)" : "var(--primary)" }} />
+            <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: isFunding ? "var(--cta)" : "var(--primary)" }}>
+              {isFunding ? "Fast 48-Hour Approval" : "Karncy Business Network"}
+            </span>
+          </div>
+          <h3 style={{ fontFamily: "var(--font-display)", fontSize: "1.5rem", fontWeight: 700, color: "#0f172a", letterSpacing: "-0.02em" }}>
+            {isFunding ? "Apply for Funding" : "Apply for Business"}
+          </h3>
+          <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.85rem", color: "#64748b", marginTop: "0.25rem", lineHeight: 1.5 }}>
+            {isFunding
+              ? "Tell us about your business to get working capital unlocked in 48 hours."
+              : "Let's explore growth, joint venture, or investment opportunities together."}
+          </p>
+        </div>
+
+        {/* Modal Body / Form */}
+        <div style={{ padding: "1.75rem 2rem 2rem" }}>
+          {submitted ? (
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              style={{ textAlign: "center", padding: "1.5rem 0" }}
+            >
+              <div style={{ width: "3.5rem", height: "3.5rem", borderRadius: "50%", background: "rgba(22,163,74,0.12)", color: "#16a34a", display: "inline-flex", alignItems: "center", justifyContent: "center", marginBottom: "1.25rem" }}>
+                <CheckCircle size={28} />
+              </div>
+              <h4 style={{ fontFamily: "var(--font-display)", fontSize: "1.3rem", fontWeight: 700, color: "#0f172a", marginBottom: "0.5rem" }}>
+                Application Received!
+              </h4>
+              <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.9rem", color: "#475569", lineHeight: 1.6, marginBottom: "1.75rem" }}>
+                Thank you, <strong>{formData.fullName}</strong>. Our team will review <strong>{formData.companyName}</strong>'s request and contact you at <strong>{formData.workEmail}</strong> within 24 hours.
+              </p>
+              <button
+                type="button"
+                onClick={onClose}
+                style={{
+                  fontFamily: "var(--font-sans)",
+                  fontSize: "0.875rem",
+                  fontWeight: 700,
+                  padding: "0.8rem 2rem",
+                  background: "#0f172a",
+                  color: "#ffffff",
+                  border: "none",
+                  borderRadius: "var(--radius)",
+                  cursor: "pointer",
+                }}
+              >
+                Close Window
+              </button>
+            </motion.div>
+          ) : (
+            <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "1.1rem" }}>
+              {/* Full Name */}
+              <div>
+                <label style={{ display: "block", fontFamily: "var(--font-sans)", fontSize: "0.82rem", fontWeight: 600, color: "#334155", marginBottom: "0.35rem" }}>
+                  Full Name <span style={{ color: "#e11d48" }}>*</span>
+                </label>
+                <input
+                  type="text"
+                  required
+                  placeholder="e.g. Rahul Sharma"
+                  value={formData.fullName}
+                  onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+                  style={{
+                    width: "100%",
+                    padding: "0.7rem 0.9rem",
+                    fontFamily: "var(--font-sans)",
+                    fontSize: "0.9rem",
+                    color: "#0f172a",
+                    background: "#f8fafc",
+                    border: "1px solid #cbd5e1",
+                    borderRadius: "calc(var(--radius) * 0.9)",
+                    outline: "none",
+                    boxSizing: "border-box",
+                  }}
+                />
+              </div>
+
+              {/* Work Email */}
+              <div>
+                <label style={{ display: "block", fontFamily: "var(--font-sans)", fontSize: "0.82rem", fontWeight: 600, color: "#334155", marginBottom: "0.35rem" }}>
+                  Work Email <span style={{ color: "#e11d48" }}>*</span>
+                </label>
+                <input
+                  type="email"
+                  required
+                  placeholder="name@company.com"
+                  value={formData.workEmail}
+                  onChange={(e) => setFormData({ ...formData, workEmail: e.target.value })}
+                  style={{
+                    width: "100%",
+                    padding: "0.7rem 0.9rem",
+                    fontFamily: "var(--font-sans)",
+                    fontSize: "0.9rem",
+                    color: "#0f172a",
+                    background: "#f8fafc",
+                    border: "1px solid #cbd5e1",
+                    borderRadius: "calc(var(--radius) * 0.9)",
+                    outline: "none",
+                    boxSizing: "border-box",
+                  }}
+                />
+              </div>
+
+              {/* Phone Number */}
+              <div>
+                <label style={{ display: "block", fontFamily: "var(--font-sans)", fontSize: "0.82rem", fontWeight: 600, color: "#334155", marginBottom: "0.35rem" }}>
+                  Phone Number <span style={{ color: "#e11d48" }}>*</span>
+                </label>
+                <input
+                  type="tel"
+                  required
+                  placeholder="+91 98765 43210"
+                  value={formData.phone}
+                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                  style={{
+                    width: "100%",
+                    padding: "0.7rem 0.9rem",
+                    fontFamily: "var(--font-sans)",
+                    fontSize: "0.9rem",
+                    color: "#0f172a",
+                    background: "#f8fafc",
+                    border: "1px solid #cbd5e1",
+                    borderRadius: "calc(var(--radius) * 0.9)",
+                    outline: "none",
+                    boxSizing: "border-box",
+                  }}
+                />
+              </div>
+
+              {/* Business / Company Name */}
+              <div>
+                <label style={{ display: "block", fontFamily: "var(--font-sans)", fontSize: "0.82rem", fontWeight: 600, color: "#334155", marginBottom: "0.35rem" }}>
+                  Business / Company Name <span style={{ color: "#e11d48" }}>*</span>
+                </label>
+                <input
+                  type="text"
+                  required
+                  placeholder="e.g. Acme Enterprises Pvt Ltd"
+                  value={formData.companyName}
+                  onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
+                  style={{
+                    width: "100%",
+                    padding: "0.7rem 0.9rem",
+                    fontFamily: "var(--font-sans)",
+                    fontSize: "0.9rem",
+                    color: "#0f172a",
+                    background: "#f8fafc",
+                    border: "1px solid #cbd5e1",
+                    borderRadius: "calc(var(--radius) * 0.9)",
+                    outline: "none",
+                    boxSizing: "border-box",
+                  }}
+                />
+              </div>
+
+              {/* Dropdown Field */}
+              {isFunding ? (
+                <div>
+                  <label style={{ display: "block", fontFamily: "var(--font-sans)", fontSize: "0.82rem", fontWeight: 600, color: "#334155", marginBottom: "0.35rem" }}>
+                    Funding Requirement <span style={{ color: "#e11d48" }}>*</span>
+                  </label>
+                  <select
+                    required
+                    value={formData.fundingRequirement}
+                    onChange={(e) => setFormData({ ...formData, fundingRequirement: e.target.value })}
+                    style={{
+                      width: "100%",
+                      padding: "0.7rem 0.9rem",
+                      fontFamily: "var(--font-sans)",
+                      fontSize: "0.9rem",
+                      color: "#0f172a",
+                      background: "#f8fafc",
+                      border: "1px solid #cbd5e1",
+                      borderRadius: "calc(var(--radius) * 0.9)",
+                      outline: "none",
+                      boxSizing: "border-box",
+                      cursor: "pointer",
+                    }}
+                  >
+                    <option value="₹5L–₹25L">₹5L–₹25L</option>
+                    <option value="₹25L–₹50L">₹25L–₹50L</option>
+                    <option value="₹50L–₹1Cr">₹50L–₹1Cr</option>
+                    <option value="₹1Cr–₹5Cr">₹1Cr–₹5Cr</option>
+                    <option value="₹5Cr+">₹5Cr+</option>
+                  </select>
+                </div>
+              ) : (
+                <div>
+                  <label style={{ display: "block", fontFamily: "var(--font-sans)", fontSize: "0.82rem", fontWeight: 600, color: "#334155", marginBottom: "0.35rem" }}>
+                    How can we help? <span style={{ color: "#e11d48" }}>*</span>
+                  </label>
+                  <select
+                    required
+                    value={formData.howCanWeHelp}
+                    onChange={(e) => setFormData({ ...formData, howCanWeHelp: e.target.value })}
+                    style={{
+                      width: "100%",
+                      padding: "0.7rem 0.9rem",
+                      fontFamily: "var(--font-sans)",
+                      fontSize: "0.9rem",
+                      color: "#0f172a",
+                      background: "#f8fafc",
+                      border: "1px solid #cbd5e1",
+                      borderRadius: "calc(var(--radius) * 0.9)",
+                      outline: "none",
+                      boxSizing: "border-box",
+                      cursor: "pointer",
+                    }}
+                  >
+                    <option value="Business Funding">Business Funding</option>
+                    <option value="Partnership">Partnership</option>
+                    <option value="Joint Venture">Joint Venture</option>
+                    <option value="Investment">Investment</option>
+                    <option value="Invoice Financing">Invoice Financing</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+              )}
+
+              {/* Submit CTA Button */}
+              <button
+                type="submit"
+                style={{
+                  marginTop: "0.5rem",
+                  width: "100%",
+                  padding: "0.85rem 1.5rem",
+                  fontFamily: "var(--font-sans)",
+                  fontSize: "0.95rem",
+                  fontWeight: 700,
+                  color: isFunding ? "var(--cta-foreground)" : "#ffffff",
+                  background: isFunding ? "var(--cta)" : "var(--primary)",
+                  border: "none",
+                  borderRadius: "calc(var(--radius) * 0.9)",
+                  cursor: "pointer",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "0.5rem",
+                  boxShadow: isFunding ? "0 4px 14px rgba(255,105,0,0.25)" : "0 4px 14px rgba(13,31,130,0.25)",
+                  transition: "opacity 0.15s",
+                }}
+                onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.opacity = "0.92")}
+                onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.opacity = "1")}
+              >
+                {isFunding ? "Request Funding" : "Connect With Us"} <ArrowRight size={16} />
+              </button>
+            </form>
+          )}
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+}
+
 // ─── Section label helper ─────────────────────────────────────────────────────
 
 function SectionLabel({ n }: { n: string }) {
@@ -1058,12 +1417,12 @@ function SectionLabel({ n }: { n: string }) {
 
 export default function App() {
   const [activeProduct, setActiveProduct] = useState<ProductId | null>(null);
-  const activeSection = useActiveSection();
+  const [activeModal, setActiveModal] = useState<ModalType | null>(null);
 
   useEffect(() => {
-    document.body.style.overflow = activeProduct ? "hidden" : "";
+    document.body.style.overflow = (activeProduct || activeModal) ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
-  }, [activeProduct]);
+  }, [activeProduct, activeModal]);
 
   const scrollTo = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 
@@ -1098,6 +1457,7 @@ export default function App() {
 
       <ScrollProgressBar />
       <ScrollNav active={activeSection} />
+      {activeModal && <ContactModal type={activeModal} onClose={() => setActiveModal(null)} />}
 
       <main style={{ position: "relative", zIndex: 10 }}>
 
@@ -1133,12 +1493,12 @@ export default function App() {
             <FadeUp delay={0.3}>
               <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem", maxWidth: "36rem" }}>
                 <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", alignItems: "center" }}>
-                  <a href="mailto:hello@karncy.com" style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.875rem", fontWeight: 700, padding: "0.9rem 2rem", background: "var(--cta)", color: "var(--cta-foreground)", borderRadius: "var(--radius)", textDecoration: "none", letterSpacing: "0.01em" }}>
+                  <button onClick={() => setActiveModal("funding")} style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.875rem", fontWeight: 700, padding: "0.9rem 2rem", background: "var(--cta)", color: "var(--cta-foreground)", borderRadius: "var(--radius)", border: "none", cursor: "pointer", letterSpacing: "0.01em" }}>
                     Apply for Funding <ArrowRight size={15} />
-                  </a>
-                  <a href="mailto:investors@karncy.com" style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.875rem", fontWeight: 700, padding: "0.9rem 2rem", background: "var(--primary)", color: "var(--primary-foreground)", borderRadius: "var(--radius)", textDecoration: "none", letterSpacing: "0.01em" }}>
-                    Become an Investor <ArrowRight size={15} />
-                  </a>
+                  </button>
+                  <button onClick={() => setActiveModal("business")} style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.875rem", fontWeight: 700, padding: "0.9rem 2rem", background: "var(--primary)", color: "var(--primary-foreground)", borderRadius: "var(--radius)", border: "none", cursor: "pointer", letterSpacing: "0.01em" }}>
+                    Apply for Business <ArrowRight size={15} />
+                  </button>
                 </div>
                 <button onClick={() => scrollTo("compass")} style={{ fontFamily: "var(--font-sans)", fontSize: "0.95rem", fontWeight: 600, color: "var(--foreground)", background: "none", border: "none", cursor: "pointer", textDecoration: "underline", textUnderlineOffset: "4px", textAlign: "left", padding: 0 }}>
                   Begin the journey instead →
@@ -1190,9 +1550,9 @@ export default function App() {
                       </li>
                     ))}
                   </ul>
-                  <a href="mailto:hello@karncy.com" style={{ marginTop: "1.25rem", display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.875rem", fontWeight: 700, padding: "0.75rem 1.75rem", background: "var(--cta)", color: "var(--cta-foreground)", borderRadius: "var(--radius)", textDecoration: "none", alignSelf: "flex-start" }}>
+                  <button onClick={() => setActiveModal("funding")} style={{ marginTop: "1.25rem", display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.875rem", fontWeight: 700, padding: "0.75rem 1.75rem", background: "var(--cta)", color: "var(--cta-foreground)", borderRadius: "var(--radius)", border: "none", cursor: "pointer", alignSelf: "flex-start" }}>
                     Apply for Funding <ArrowRight size={14} />
-                  </a>
+                  </button>
                 </motion.div>
               </FadeUp>
 
@@ -1224,9 +1584,9 @@ export default function App() {
                       </li>
                     ))}
                   </ul>
-                  <a href="mailto:investors@karncy.com" style={{ marginTop: "1.25rem", display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.85rem", fontWeight: 700, padding: "0.75rem 1.75rem", background: "var(--primary)", color: "var(--primary-foreground)", borderRadius: "var(--radius)", textDecoration: "none", alignSelf: "flex-start" }}>
-                    Become an Investor <ArrowRight size={14} />
-                  </a>
+                  <button onClick={() => setActiveModal("business")} style={{ marginTop: "1.25rem", display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.85rem", fontWeight: 700, padding: "0.75rem 1.75rem", background: "var(--primary)", color: "var(--primary-foreground)", borderRadius: "var(--radius)", border: "none", cursor: "pointer", alignSelf: "flex-start" }}>
+                    Apply for Business <ArrowRight size={14} />
+                  </button>
                 </motion.div>
               </FadeUp>
             </div>
@@ -1458,15 +1818,15 @@ export default function App() {
                     The journey begins with a conversation. Let's talk about where your business is headed.
                   </p>
                   <div style={{ display: "flex", flexDirection: "column", gap: "0.875rem", alignSelf: "flex-start" }}>
-                    <a href="mailto:hello@karncy.com" style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.875rem", fontWeight: 700, padding: "0.9rem 2.25rem", background: "var(--cta)", color: "var(--cta-foreground)", borderRadius: "var(--radius)", textDecoration: "none" }}>
+                    <button onClick={() => setActiveModal("funding")} style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.875rem", fontWeight: 700, padding: "0.9rem 2.25rem", background: "var(--cta)", color: "var(--cta-foreground)", borderRadius: "var(--radius)", border: "none", cursor: "pointer" }}>
                       Apply for Funding <ArrowRight size={14} />
-                    </a>
-                    <a href="mailto:investors@karncy.com" style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.875rem", fontWeight: 600, padding: "0.9rem 2.25rem", background: "transparent", color: "var(--primary)", borderRadius: "var(--radius)", textDecoration: "none", border: "1.5px solid var(--primary)" }}>
-                      Become an Investor <ArrowRight size={14} />
-                    </a>
-                    <a href="mailto:hello@karncy.com" style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.875rem", fontWeight: 600, padding: "0.9rem 2.25rem", background: "var(--foreground)", color: "var(--background)", borderRadius: "var(--radius)", textDecoration: "none" }}>
+                    </button>
+                    <button onClick={() => setActiveModal("business")} style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.875rem", fontWeight: 600, padding: "0.9rem 2.25rem", background: "transparent", color: "var(--primary)", borderRadius: "var(--radius)", border: "1.5px solid var(--primary)", cursor: "pointer" }}>
+                      Apply for Business <ArrowRight size={14} />
+                    </button>
+                    <button onClick={() => setActiveModal("business")} style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.875rem", fontWeight: 600, padding: "0.9rem 2.25rem", background: "var(--foreground)", color: "var(--background)", borderRadius: "var(--radius)", border: "none", cursor: "pointer" }}>
                       <Mail size={14} /> Talk to Karncy directly
-                    </a>
+                    </button>
                   </div>
 
                   {/* Menu — horizontal equal alignment */}
@@ -1604,7 +1964,10 @@ export default function App() {
 
       <AnimatePresence>
         {activeProduct && (
-          <ProductDetailOverlay id={activeProduct} onClose={() => setActiveProduct(null)} />
+          <ProductDetailOverlay id={activeProduct} onClose={() => setActiveProduct(null)} onOpenContact={(type) => setActiveModal(type)} />
+        )}
+        {activeModal && (
+          <ContactModal type={activeModal} onClose={() => setActiveModal(null)} />
         )}
       </AnimatePresence>
     </div>
