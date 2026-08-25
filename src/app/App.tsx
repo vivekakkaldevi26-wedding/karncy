@@ -182,13 +182,13 @@ const testimonials = [
 // ─── Partner logos data ────────────────────────────────────────────────────────
 
 const msmeLogos: { src: string; name: string }[] = [
-  { src: msmeForge,      name: "Forre" },
-  { src: msmeFlashgard,  name: "Flashgard" },
-  { src: msmeApporchid,  name: "Apporchid" },
-  { src: msmeXaqrotor,   name: "Xaqrotor Tek" },
-  { src: msmeOcean,      name: "Ocean" },
-  { src: msmeScratchgard,name: "Scratchgard" },
-  { src: msmeQbic,       name: "Qbic Materials" },
+  { src: msmeForge, name: "Forre" },
+  { src: msmeFlashgard, name: "Flashgard" },
+  { src: msmeApporchid, name: "Apporchid" },
+  { src: msmeXaqrotor, name: "Xaqrotor Tek" },
+  { src: msmeOcean, name: "Ocean" },
+  { src: msmeScratchgard, name: "Scratchgard" },
+  { src: msmeQbic, name: "Qbic Materials" },
 ];
 
 // ─── Hooks ────────────────────────────────────────────────────────────────────
@@ -583,25 +583,25 @@ function ChapterCard({
   cardWidth: string;
 }) {
 
-  
+
   const product = products[productId];
   const idx = (["invoice", "ventures", "startup"] as ProductId[]).indexOf(productId) + 1;
 
   return (
     <motion.div
-      
-  style={{
-  width: cardWidth,
-  minWidth: cardWidth,
-  maxWidth: cardWidth,
-  flexShrink: 0,
-  borderRadius: "calc(var(--radius) * 3)",
-  border: "1px solid rgba(255,255,255,0.55)",
-  overflow: "hidden",
-  display: "grid",
-  gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 300px), 1fr))",
-}}
-      
+
+      style={{
+        width: cardWidth,
+        minWidth: cardWidth,
+        maxWidth: cardWidth,
+        flexShrink: 0,
+        borderRadius: "calc(var(--radius) * 3)",
+        border: "1px solid rgba(255,255,255,0.55)",
+        overflow: "hidden",
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 300px), 1fr))",
+      }}
+
       animate={{ opacity: isActive ? 1 : 0.38, scale: isActive ? 1 : 0.92, y: isActive ? 0 : 18, boxShadow: isActive ? "0 24px 72px rgba(30,58,95,0.18), 0 2px 12px rgba(20,20,43,0.06)" : "0 2px 20px rgba(30,58,95,0.07)" }}
       transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
     >
@@ -667,29 +667,29 @@ function ChaptersScroll({ onOpen }: { onOpen: (id: ProductId) => void }) {
   const throttleRef = useRef(false);
   const ids: ProductId[] = ["invoice", "ventures", "startup"];
   const NUM = ids.length;
-const CARD_GAP = 28;
-const CARD_WIDTH = "clamp(320px, 75vw, 1120px)";
+  const CARD_GAP = 28;
+  const CARD_WIDTH = "clamp(320px, 75vw, 1120px)";
 
-const [viewportWidth, setViewportWidth] = useState(
-  typeof window !== "undefined" ? window.innerWidth : 1440
-);
+  const [viewportWidth, setViewportWidth] = useState(
+    typeof window !== "undefined" ? window.innerWidth : 1440
+  );
 
-useEffect(() => {
-  const handleResize = () => {
-    setViewportWidth(window.innerWidth);
-  };
+  useEffect(() => {
+    const handleResize = () => {
+      setViewportWidth(window.innerWidth);
+    };
 
-  window.addEventListener("resize", handleResize);
+    window.addEventListener("resize", handleResize);
 
-  return () => {
-    window.removeEventListener("resize", handleResize);
-  };
-}, []);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
-const cardWidth = CARD_WIDTH;
+  const cardWidth = CARD_WIDTH;
 
 
-  
+
   //const LEAD = "0px";
 
   // True while the sticky panel is pinned (generous tolerance for subpixels)
@@ -789,54 +789,54 @@ const cardWidth = CARD_WIDTH;
         </div>
 
         {/* Container: left:15vw clips the left bleed; overflow:hidden+flex centers strip vertically */}
-       <div
-  style={{
-    position: "absolute",
-    top: "7rem",
-    bottom: "4rem",
-    left: 0,
-    right: 0,
-    width: "100%",
-    margin: 0,
-    overflow: "hidden",
-    display: "flex",
-    alignItems: "center",
-  }}
->
-
-         
         <div
-  style={{
-    display: "flex",
-    gap: `${CARD_GAP}px`,
-    width: "max-content",
-    flexShrink: 0,
-    transform: `translateX(
+          style={{
+            position: "absolute",
+            top: "7rem",
+            bottom: "4rem",
+            left: 0,
+            right: 0,
+            width: "100%",
+            margin: 0,
+            overflow: "hidden",
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+
+
+          <div
+            style={{
+              display: "flex",
+              gap: `${CARD_GAP}px`,
+              width: "max-content",
+              flexShrink: 0,
+              transform: `translateX(
       calc(
         50vw -
         (${cardWidth} / 2) -
         ${activeCard} * (${cardWidth} + ${CARD_GAP}px)
       )
     )`,
-    transition: "transform 0.6s cubic-bezier(0.22, 1, 0.36, 1)",
-    willChange: "transform",
-  }}
->
+              transition: "transform 0.6s cubic-bezier(0.22, 1, 0.36, 1)",
+              willChange: "transform",
+            }}
+          >
 
 
 
 
-            
+
             {ids.map((pid, i) => (
-          <ChapterCard
-  key={pid}
-  productId={pid}
-  onExplore={() => onOpen(pid)}
-  isActive={activeCard === i}
-  cardWidth={cardWidth}
-/>
+              <ChapterCard
+                key={pid}
+                productId={pid}
+                onExplore={() => onOpen(pid)}
+                isActive={activeCard === i}
+                cardWidth={cardWidth}
+              />
 
-  
+
             ))}
           </div>
         </div>
@@ -925,33 +925,116 @@ function ProductDetailOverlay({ id, onClose }: { id: ProductId; onClose: () => v
 
 // ─── Quick links sub-menu ─────────────────────────────────────────────────────
 
-function QuickLinksMenu() {
+function QuickLinksMenu({ onSelectProduct }: { onSelectProduct?: (pid: ProductId) => void }) {
   const [open, setOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setOpen(false);
+      }
+    };
+    if (open) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [open]);
+
+  const items: { label: string; pid: ProductId }[] = [
+    { label: "Invoice Financing", pid: "invoice" },
+    { label: "Joint Ventures", pid: "ventures" },
+    { label: "Startup Partnerships", pid: "startup" },
+  ];
+
   return (
-    <div>
+    <div ref={menuRef} style={{ position: "relative", display: "inline-flex", alignItems: "center" }}>
       <button
+        type="button"
         onClick={() => setOpen((o) => !o)}
-        style={{ display: "flex", alignItems: "center", gap: "0.35rem", fontFamily: "var(--font-sans)", fontSize: "0.9rem", fontWeight: 500, color: "var(--foreground)", background: "none", border: "none", cursor: "pointer", padding: 0 }}
+        style={{
+          display: "inline-flex",
+          alignItems: "center",
+          gap: "0.35rem",
+          fontFamily: "var(--font-sans)",
+          fontSize: "0.95rem",
+          fontWeight: 600,
+          color: "#0f172a",
+          background: "none",
+          border: "none",
+          cursor: "pointer",
+          padding: 0,
+          lineHeight: 1,
+          transition: "color 0.15s",
+        }}
+        onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.color = "var(--primary)")}
+        onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.color = "#0f172a")}
       >
         Quick links
-        <motion.span animate={{ rotate: open ? 180 : 0 }} transition={{ duration: 0.2 }}>
-          <ChevronDown size={13} style={{ color: "var(--muted-foreground)" }} />
+        <motion.span animate={{ rotate: open ? 180 : 0 }} transition={{ duration: 0.2 }} style={{ display: "inline-flex", alignItems: "center" }}>
+          <ChevronDown size={14} style={{ color: "currentColor" }} />
         </motion.span>
       </button>
       <AnimatePresence>
         {open && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.22 }}
-            style={{ overflow: "hidden", paddingLeft: "0.875rem", marginTop: "0.5rem", display: "flex", flexDirection: "column", gap: "0.5rem", borderLeft: "1px solid var(--border)" }}
+            initial={{ opacity: 0, y: 6, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 6, scale: 0.95 }}
+            transition={{ duration: 0.18 }}
+            style={{
+              position: "absolute",
+              bottom: "calc(100% + 0.5rem)",
+              left: 0,
+              background: "#ffffff",
+              border: "1px solid var(--border)",
+              borderRadius: "calc(var(--radius) * 1.2)",
+              padding: "0.6rem 0.85rem",
+              display: "flex",
+              flexDirection: "column",
+              gap: "0.5rem",
+              boxShadow: "0 10px 30px rgba(15,23,42,0.15)",
+              zIndex: 60,
+              minWidth: "170px",
+              whiteSpace: "nowrap",
+            }}
           >
-            {["Invoice Financing", "Joint Ventures", "Startup Partnerships"].map((sl) => (
-              <a key={sl} href="#" style={{ fontFamily: "var(--font-sans)", fontSize: "0.8rem", color: "var(--muted-foreground)", textDecoration: "none", transition: "color 0.15s" }}
-                onMouseEnter={(e) => ((e.currentTarget as HTMLAnchorElement).style.color = "var(--primary)")}
-                onMouseLeave={(e) => ((e.currentTarget as HTMLAnchorElement).style.color = "var(--muted-foreground)")}
+            {items.map((item) => (
+              <button
+                key={item.label}
+                type="button"
+                onClick={() => {
+                  setOpen(false);
+                  if (onSelectProduct) {
+                    onSelectProduct(item.pid);
+                  }
+                }}
+                style={{
+                  fontFamily: "var(--font-sans)",
+                  fontSize: "0.85rem",
+                  fontWeight: 500,
+                  color: "#334155",
+                  background: "none",
+                  border: "none",
+                  padding: "0.25rem 0.35rem",
+                  textAlign: "left",
+                  cursor: "pointer",
+                  borderRadius: "var(--radius)",
+                  transition: "background 0.15s, color 0.15s",
+                }}
+                onMouseEnter={(e) => {
+                  const btn = e.currentTarget as HTMLButtonElement;
+                  btn.style.color = "var(--primary)";
+                  btn.style.background = "rgba(13,31,130,0.05)";
+                }}
+                onMouseLeave={(e) => {
+                  const btn = e.currentTarget as HTMLButtonElement;
+                  btn.style.color = "#334155";
+                  btn.style.background = "transparent";
+                }}
               >
-                {sl}
-              </a>
+                {item.label}
+              </button>
             ))}
           </motion.div>
         )}
@@ -1091,7 +1174,7 @@ export default function App() {
                   <h3 style={{ fontFamily: "var(--font-display)", fontSize: "1.4rem", fontWeight: 700, color: "var(--foreground)", letterSpacing: "-0.02em" }}>
                     For Businesses
                   </h3>
-                  <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.85rem", color: "var(--muted-foreground)", lineHeight: 1.7 }}>
+                  <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.98rem", color: "var(--muted-foreground)", lineHeight: 1.7 }}>
                     Access invoice financing, joint venture capital, and operational support tailored to Indian SMEs.
                   </p>
                   <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.45rem", marginTop: "0.5rem" }}>
@@ -1101,12 +1184,12 @@ export default function App() {
                       "Startup Partnerships — idea to exit",
                       "Compliance and operational scaffolding",
                     ].map((item) => (
-                      <li key={item} style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.8rem", color: "var(--muted-foreground)" }}>
+                      <li key={item} style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.875rem", color: "var(--muted-foreground)" }}>
                         <span style={{ color: "var(--cta)", flexShrink: 0 }}>→</span> {item}
                       </li>
                     ))}
                   </ul>
-                  <a href="mailto:hello@karncy.com" style={{ marginTop: "1.25rem", display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.85rem", fontWeight: 700, padding: "0.75rem 1.75rem", background: "var(--cta)", color: "var(--cta-foreground)", borderRadius: "var(--radius)", textDecoration: "none", alignSelf: "flex-start" }}>
+                  <a href="mailto:hello@karncy.com" style={{ marginTop: "1.25rem", display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.875rem", fontWeight: 700, padding: "0.75rem 1.75rem", background: "var(--cta)", color: "var(--cta-foreground)", borderRadius: "var(--radius)", textDecoration: "none", alignSelf: "flex-start" }}>
                     Apply for Funding <ArrowRight size={14} />
                   </a>
                 </motion.div>
@@ -1125,7 +1208,7 @@ export default function App() {
                   <h3 style={{ fontFamily: "var(--font-display)", fontSize: "1.4rem", fontWeight: 700, color: "var(--foreground)", letterSpacing: "-0.02em" }}>
                     For Investors
                   </h3>
-                  <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.85rem", color: "var(--muted-foreground)", lineHeight: 1.7 }}>
+                  <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.98rem", color: "var(--muted-foreground)", lineHeight: 1.7 }}>
                     Deploy capital into curated, underwritten SME deals with structured milestones and active oversight.
                   </p>
                   <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.45rem", marginTop: "0.5rem" }}>
@@ -1135,7 +1218,7 @@ export default function App() {
                       "Monthly MIS and board-ready reporting",
                       "Returns (ROI) tracked in real-time dashboards",
                     ].map((item) => (
-                      <li key={item} style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.8rem", color: "var(--muted-foreground)" }}>
+                      <li key={item} style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.875rem", color: "var(--muted-foreground)" }}>
                         <span style={{ color: "var(--primary)", flexShrink: 0 }}>→</span> {item}
                       </li>
                     ))}
@@ -1350,163 +1433,162 @@ export default function App() {
         <section id="horizon" style={{ padding: "5rem 0 0" }}>
           <div style={{ width: SECTION_W, margin: AUTO }}>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 340px), 1fr))", border: "1px solid var(--border)", borderRadius: "calc(var(--radius) * 2)", overflow: "hidden", marginBottom: "3rem" }}>
-            {/* Left — navy */}
-            <FadeUp style={{ height: "100%" }}>
-              <div style={{ padding: "clamp(3rem, 6vw, 7rem) clamp(1.5rem, 5vw, 15%)", minHeight: "62vh", display: "flex", flexDirection: "column", justifyContent: "center", height: "100%", boxSizing: "border-box" }}>
-                <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "2rem" }}>
-                  <div style={{ width: "1.5rem", height: "1px", background: "var(--primary)" }} />
-                  <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.67rem", letterSpacing: "0.13em", textTransform: "uppercase", color: "var(--muted-foreground)" }}>07</span>
-                </div>
-                <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2rem, 3.2vw, 2.8rem)", fontWeight: 700, color: "var(--foreground)", letterSpacing: "-0.025em", lineHeight: 1.1, marginBottom: "1.5rem", maxWidth: "22rem" }}>
-                  India's next enterprises start here.
-                </h2>
-                <p style={{ fontFamily: "var(--font-sans)", color: "var(--muted-foreground)", fontSize: "0.88rem", lineHeight: 1.72, marginBottom: "2.5rem", maxWidth: "22rem" }}>
-                  The journey begins with a conversation. Let's talk about where your business is headed.
-                </p>
-                <div style={{ display: "flex", flexDirection: "column", gap: "0.875rem", alignSelf: "flex-start" }}>
-                  <a href="mailto:hello@karncy.com" style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.875rem", fontWeight: 700, padding: "0.9rem 2.25rem", background: "var(--cta)", color: "var(--cta-foreground)", borderRadius: "var(--radius)", textDecoration: "none" }}>
-                    Apply for Funding <ArrowRight size={14} />
-                  </a>
-                  <a href="mailto:investors@karncy.com" style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.875rem", fontWeight: 600, padding: "0.9rem 2.25rem", background: "transparent", color: "var(--primary)", borderRadius: "var(--radius)", textDecoration: "none", border: "1.5px solid var(--primary)" }}>
-                    Become an Investor <ArrowRight size={14} />
-                  </a>
-                  <a href="mailto:hello@karncy.com" style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.875rem", fontWeight: 600, padding: "0.9rem 2.25rem", background: "var(--foreground)", color: "var(--background)", borderRadius: "var(--radius)", textDecoration: "none" }}>
-                    <Mail size={14} /> Talk to Karncy directly
-                  </a>
-                </div>
+              {/* Left — navy */}
+              <FadeUp style={{ height: "100%" }}>
+                <div style={{ padding: "clamp(3rem, 6vw, 7rem) clamp(1.5rem, 5vw, 15%)", minHeight: "62vh", display: "flex", flexDirection: "column", justifyContent: "center", height: "100%", boxSizing: "border-box" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "2rem" }}>
+                    <div style={{ width: "1.5rem", height: "1px", background: "var(--primary)" }} />
+                    <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.67rem", letterSpacing: "0.13em", textTransform: "uppercase", color: "var(--muted-foreground)" }}>07</span>
+                  </div>
+                  <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2rem, 3.2vw, 2.8rem)", fontWeight: 700, color: "var(--foreground)", letterSpacing: "-0.025em", lineHeight: 1.1, marginBottom: "1.5rem", maxWidth: "22rem" }}>
+                    India's next enterprises start here.
+                  </h2>
+                  <p style={{ fontFamily: "var(--font-sans)", color: "var(--muted-foreground)", fontSize: "0.88rem", lineHeight: 1.72, marginBottom: "2.5rem", maxWidth: "22rem" }}>
+                    The journey begins with a conversation. Let's talk about where your business is headed.
+                  </p>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "0.875rem", alignSelf: "flex-start" }}>
+                    <a href="mailto:hello@karncy.com" style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.875rem", fontWeight: 700, padding: "0.9rem 2.25rem", background: "var(--cta)", color: "var(--cta-foreground)", borderRadius: "var(--radius)", textDecoration: "none" }}>
+                      Apply for Funding <ArrowRight size={14} />
+                    </a>
+                    <a href="mailto:investors@karncy.com" style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.875rem", fontWeight: 600, padding: "0.9rem 2.25rem", background: "transparent", color: "var(--primary)", borderRadius: "var(--radius)", textDecoration: "none", border: "1.5px solid var(--primary)" }}>
+                      Become an Investor <ArrowRight size={14} />
+                    </a>
+                    <a href="mailto:hello@karncy.com" style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.875rem", fontWeight: 600, padding: "0.9rem 2.25rem", background: "var(--foreground)", color: "var(--background)", borderRadius: "var(--radius)", textDecoration: "none" }}>
+                      <Mail size={14} /> Talk to Karncy directly
+                    </a>
+                  </div>
 
-                {/* Menu — horizontal equal alignment */}
-                <div style={{ marginTop: "1.75rem", paddingTop: "1.5rem", borderTop: "1px solid var(--border)" }}>
-                  <p style={{ fontFamily: "var(--font-display)", fontSize: "0.9rem", letterSpacing: "0.08em", textTransform: "uppercase", color: "#0f172a", fontWeight: 700, marginBottom: "1rem" }}>Menu</p>
-                  <nav style={{ display: "flex", alignItems: "center", gap: "1.25rem", flexWrap: "wrap" }}>
-                    {["About", "Investors", "Privacy", "Terms"].map((link, idx, arr) => (
-                      <div key={link} style={{ display: "inline-flex", alignItems: "center", gap: "1.25rem" }}>
-                        <button
-                          type="button"
-                          onClick={(e) => e.preventDefault()}
-                          style={{
-                            fontFamily: "var(--font-sans)",
-                            fontSize: "0.95rem",
-                            fontWeight: 600,
-                            color: "#0f172a",
-                            background: "none",
-                            border: "none",
-                            padding: 0,
-                            cursor: "pointer",
-                            lineHeight: 1,
-                            transition: "color 0.15s",
-                          }}
-                          onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.color = "var(--primary)")}
-                          onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.color = "#0f172a")}
-                        >
-                          {link}
-                        </button>
-                        {idx < arr.length - 1 && (
+                  {/* Menu — horizontal equal alignment */}
+                  <div style={{ marginTop: "1.75rem", paddingTop: "1.5rem", borderTop: "1px solid var(--border)" }}>
+                    <p style={{ fontFamily: "var(--font-display)", fontSize: "0.9rem", letterSpacing: "0.08em", textTransform: "uppercase", color: "#0f172a", fontWeight: 700, marginBottom: "1rem" }}>Menu</p>
+                    <nav style={{ display: "flex", alignItems: "center", gap: "1.25rem", flexWrap: "wrap" }}>
+                      {["About", "Investors", "Privacy", "Terms"].map((link) => (
+                        <div key={link} style={{ display: "inline-flex", alignItems: "center", gap: "1.25rem" }}>
+                          <button
+                            type="button"
+                            onClick={(e) => e.preventDefault()}
+                            style={{
+                              fontFamily: "var(--font-sans)",
+                              fontSize: "0.95rem",
+                              fontWeight: 600,
+                              color: "#0f172a",
+                              background: "none",
+                              border: "none",
+                              padding: 0,
+                              cursor: "pointer",
+                              lineHeight: 1,
+                              transition: "color 0.15s",
+                            }}
+                            onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.color = "var(--primary)")}
+                            onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.color = "#0f172a")}
+                          >
+                            {link}
+                          </button>
                           <span style={{ width: "1px", height: "14px", background: "rgba(20,20,43,0.18)", display: "inline-block" }} />
-                        )}
+                        </div>
+                      ))}
+                      <QuickLinksMenu onSelectProduct={(pid) => setActiveProduct(pid)} />
+                    </nav>
+                  </div>
+                </div>
+              </FadeUp>
+
+              {/* Right — cream */}
+              <FadeUp delay={0.1} style={{ height: "100%" }}>
+                <div style={{ padding: "clamp(3rem, 6vw, 7rem) clamp(1.5rem, 5vw, 4rem)", display: "flex", flexDirection: "column", justifyContent: "center", height: "100%", boxSizing: "border-box" }}>
+                  <p style={{ fontFamily: "var(--font-display)", fontSize: "1.35rem", letterSpacing: "-0.01em", textTransform: "uppercase", color: "#0f172a", fontWeight: 700, marginBottom: "2rem" }}>
+                    Reach us
+                  </p>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "1.75rem", maxWidth: "24rem" }}>
+                    {[
+                      { label: "Email", icon: <Mail size={14} style={{ color: "var(--primary)" }} />, value: "hello@karncy.com", href: "mailto:hello@karncy.com" },
+                      { label: "Phone", icon: <Phone size={14} style={{ color: "var(--primary)" }} />, value: "040-42011067", href: "tel:04042011067" },
+                    ].map((c) => (
+                      <div key={c.label}>
+                        <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.85rem", letterSpacing: "0.08em", textTransform: "uppercase", color: "#0f172a", fontWeight: 700, marginBottom: "0.35rem" }}>{c.label}</p>
+                        <a href={c.href} style={{ display: "inline-flex", alignItems: "center", gap: "0.45rem", fontFamily: "var(--font-sans)", fontSize: "1.05rem", fontWeight: 700, color: "#0f172a", textDecoration: "none" }}>
+                          {c.icon} {c.value}
+                        </a>
                       </div>
                     ))}
-                  </nav>
-                </div>
-              </div>
-            </FadeUp>
+                    <div>
+                      <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.85rem", letterSpacing: "0.08em", textTransform: "uppercase", color: "#0f172a", fontWeight: 700, marginBottom: "0.35rem" }}>Address</p>
+                      <p style={{ display: "flex", alignItems: "flex-start", gap: "0.45rem", fontFamily: "var(--font-sans)", fontSize: "1.02rem", fontWeight: 600, color: "#0f172a", lineHeight: 1.6, margin: 0 }}>
+                        <MapPin size={14} style={{ color: "var(--primary)", marginTop: "0.25rem", flexShrink: 0 }} />
+                        5th Floor, The Park View, Gachibowli, Hyderabad, 500032
+                      </p>
+                    </div>
 
-            {/* Right — cream */}
-            <FadeUp delay={0.1} style={{ height: "100%" }}>
-              <div style={{ padding: "clamp(3rem, 6vw, 7rem) clamp(1.5rem, 5vw, 4rem)", display: "flex", flexDirection: "column", justifyContent: "center", height: "100%", boxSizing: "border-box" }}>
-                <p style={{ fontFamily: "var(--font-display)", fontSize: "1.35rem", letterSpacing: "-0.01em", textTransform: "uppercase", color: "#0f172a", fontWeight: 700, marginBottom: "2rem" }}>
-                  Reach us
+                    {/* Company details + certifications */}
+                    <div style={{ paddingTop: "1.5rem", borderTop: "1px solid var(--border)" }}>
+                      <p style={{ fontFamily: "var(--font-display)", fontSize: "1.1rem", letterSpacing: "0.05em", textTransform: "uppercase", color: "#0f172a", fontWeight: 700, marginBottom: "0.85rem" }}>Company Details</p>
+                      <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem", marginBottom: "1.25rem" }}>
+                        <p style={{ fontFamily: "var(--font-sans)", fontSize: "1.05rem", fontWeight: 700, color: "#0f172a", margin: 0 }}>Karncy Ventures Private Limited</p>
+                        <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.98rem", fontWeight: 600, color: "#334155", margin: 0 }}>CIN: U65100TG2022PTC164XXXX</p>
+                      </div>
+                      <div style={{ display: "flex", gap: "1rem", alignItems: "center", flexWrap: "wrap" }}>
+                        <img src={certIso27001} alt="ISO 27001 Information Security Certified" style={{ height: "54px", width: "auto", objectFit: "contain", opacity: 0.95 }} />
+                        <img src={certSoc2} alt="AICPA SOC 2 Type II Security Certified" style={{ height: "58px", width: "auto", objectFit: "contain", opacity: 1 }} />
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </FadeUp>
+            </div>
+
+            {/* Security warning */}
+            <div style={{ background: "rgba(255,105,0,0.06)", borderTop: "1px solid rgba(255,105,0,0.18)", padding: "1.25rem 0" }}>
+              <div style={{ width: SECTION_W, margin: AUTO, display: "flex", alignItems: "flex-start", gap: "0.75rem" }}>
+                <AlertTriangle size={15} style={{ color: "var(--cta)", flexShrink: 0, marginTop: "0.1rem" }} />
+                <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.82rem", fontWeight: 500, color: "var(--foreground)", lineHeight: 1.55, margin: 0 }}>
+                  <strong>Beware of impersonated websites.</strong> Karncy only communicates through official channels: hello@karncy.com and 040-42011067. Do not share financial information with unverified sources claiming to represent Karncy.
                 </p>
-                <div style={{ display: "flex", flexDirection: "column", gap: "1.75rem", maxWidth: "24rem" }}>
-                  {[
-                    { label: "Email", icon: <Mail size={14} style={{ color: "var(--primary)" }} />, value: "hello@karncy.com", href: "mailto:hello@karncy.com" },
-                    { label: "Phone", icon: <Phone size={14} style={{ color: "var(--primary)" }} />, value: "040-42011067", href: "tel:04042011067" },
-                  ].map((c) => (
-                    <div key={c.label}>
-                      <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.85rem", letterSpacing: "0.08em", textTransform: "uppercase", color: "#0f172a", fontWeight: 700, marginBottom: "0.35rem" }}>{c.label}</p>
-                      <a href={c.href} style={{ display: "inline-flex", alignItems: "center", gap: "0.45rem", fontFamily: "var(--font-sans)", fontSize: "1.05rem", fontWeight: 700, color: "#0f172a", textDecoration: "none" }}>
-                        {c.icon} {c.value}
-                      </a>
-                    </div>
-                  ))}
-                  <div>
-                    <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.85rem", letterSpacing: "0.08em", textTransform: "uppercase", color: "#0f172a", fontWeight: 700, marginBottom: "0.35rem" }}>Address</p>
-                    <p style={{ display: "flex", alignItems: "flex-start", gap: "0.45rem", fontFamily: "var(--font-sans)", fontSize: "1.02rem", fontWeight: 600, color: "#0f172a", lineHeight: 1.6, margin: 0 }}>
-                      <MapPin size={14} style={{ color: "var(--primary)", marginTop: "0.25rem", flexShrink: 0 }} />
-                      5th Floor, The Park View, Gachibowli, Hyderabad, 500032
-                    </p>
-                  </div>
-
-                  {/* Company details + certifications */}
-                  <div style={{ paddingTop: "1.5rem", borderTop: "1px solid var(--border)" }}>
-                    <p style={{ fontFamily: "var(--font-display)", fontSize: "1.1rem", letterSpacing: "0.05em", textTransform: "uppercase", color: "#0f172a", fontWeight: 700, marginBottom: "0.85rem" }}>Company Details</p>
-                    <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem", marginBottom: "1.25rem" }}>
-                      <p style={{ fontFamily: "var(--font-sans)", fontSize: "1.05rem", fontWeight: 700, color: "#0f172a", margin: 0 }}>Karncy Ventures Private Limited</p>
-                      <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.98rem", fontWeight: 600, color: "#334155", margin: 0 }}>CIN: U65100TG2022PTC164XXXX</p>
-                    </div>
-                    <div style={{ display: "flex", gap: "1rem", alignItems: "center", flexWrap: "wrap" }}>
-                      <img src={certIso27001} alt="ISO 27001 Information Security Certified" style={{ height: "54px", width: "auto", objectFit: "contain", opacity: 0.95 }} />
-                      <img src={certSoc2} alt="AICPA SOC 2 Type II Security Certified" style={{ height: "58px", width: "auto", objectFit: "contain", opacity: 1 }} />
-                    </div>
-                  </div>
-
-                </div>
               </div>
-            </FadeUp>
-          </div>
-
-          {/* Security warning */}
-          <div style={{ background: "rgba(255,105,0,0.06)", borderTop: "1px solid rgba(255,105,0,0.18)", padding: "1.25rem 0" }}>
-            <div style={{ width: SECTION_W, margin: AUTO, display: "flex", alignItems: "flex-start", gap: "0.75rem" }}>
-              <AlertTriangle size={15} style={{ color: "var(--cta)", flexShrink: 0, marginTop: "0.1rem" }} />
-              <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.82rem", fontWeight: 500, color: "var(--foreground)", lineHeight: 1.55, margin: 0 }}>
-                <strong>Beware of impersonated websites.</strong> Karncy only communicates through official channels: hello@karncy.com and 040-42011067. Do not share financial information with unverified sources claiming to represent Karncy.
-              </p>
             </div>
-          </div>
 
-          {/* Footer bar — 70% centered width */}
-          <div style={{ borderTop: "1px solid var(--border)", padding: "1.5rem 0" }}>
-            <div style={{ width: SECTION_W, margin: AUTO, display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "1rem" }}>
-              <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.82rem", fontWeight: 500, color: "var(--muted-foreground)" }}>
-                © 2026 Karncy Ventures Private Limited. All rights reserved.
-              </span>
-              <div style={{ display: "flex", alignItems: "center", gap: "1.5rem" }}>
-                {/* Social icons */}
-                <div style={{ display: "flex", gap: "0.5rem" }}>
-                  <a href="https://www.linkedin.com/karncy" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"
-                    style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: "2rem", height: "2rem", borderRadius: "50%", background: "#0077B5", color: "#fff", textDecoration: "none", transition: "opacity 0.15s, transform 0.15s" }}
-                    onMouseEnter={(e) => { const el = e.currentTarget as HTMLAnchorElement; el.style.opacity = "0.85"; el.style.transform = "translateY(-1px)"; }}
-                    onMouseLeave={(e) => { const el = e.currentTarget as HTMLAnchorElement; el.style.opacity = "1"; el.style.transform = "translateY(0)"; }}
+            {/* Footer bar — 70% centered width */}
+            <div style={{ borderTop: "1px solid var(--border)", padding: "1.5rem 0" }}>
+              <div style={{ width: SECTION_W, margin: AUTO, display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "1rem" }}>
+                <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.82rem", fontWeight: 500, color: "var(--muted-foreground)" }}>
+                  © 2026 Karncy Ventures Private Limited. All rights reserved.
+                </span>
+                <div style={{ display: "flex", alignItems: "center", gap: "1.5rem" }}>
+                  {/* Social icons */}
+                  <div style={{ display: "flex", gap: "0.5rem" }}>
+                    <a href="https://www.linkedin.com/karncy" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"
+                      style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: "2rem", height: "2rem", borderRadius: "50%", background: "#0077B5", color: "#fff", textDecoration: "none", transition: "opacity 0.15s, transform 0.15s" }}
+                      onMouseEnter={(e) => { const el = e.currentTarget as HTMLAnchorElement; el.style.opacity = "0.85"; el.style.transform = "translateY(-1px)"; }}
+                      onMouseLeave={(e) => { const el = e.currentTarget as HTMLAnchorElement; el.style.opacity = "1"; el.style.transform = "translateY(0)"; }}
+                    >
+                      <Linkedin size={13} />
+                    </a>
+                    <a href="https://www.facebook.com/karncy" target="_blank" rel="noopener noreferrer" aria-label="Facebook"
+                      style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: "2rem", height: "2rem", borderRadius: "50%", background: "#1877F2", color: "#fff", textDecoration: "none", transition: "opacity 0.15s, transform 0.15s" }}
+                      onMouseEnter={(e) => { const el = e.currentTarget as HTMLAnchorElement; el.style.opacity = "0.85"; el.style.transform = "translateY(-1px)"; }}
+                      onMouseLeave={(e) => { const el = e.currentTarget as HTMLAnchorElement; el.style.opacity = "1"; el.style.transform = "translateY(0)"; }}
+                    >
+                      <Facebook size={13} />
+                    </a>
+                    <a href="https://x.com/karncy" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)"
+                      style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: "2rem", height: "2rem", borderRadius: "50%", background: "var(--foreground)", color: "var(--background)", textDecoration: "none", transition: "opacity 0.15s, transform 0.15s" }}
+                      onMouseEnter={(e) => { const el = e.currentTarget as HTMLAnchorElement; el.style.opacity = "0.85"; el.style.transform = "translateY(-1px)"; }}
+                      onMouseLeave={(e) => { const el = e.currentTarget as HTMLAnchorElement; el.style.opacity = "1"; el.style.transform = "translateY(0)"; }}
+                    >
+                      <Twitter size={13} />
+                    </a>
+                  </div>
+                  <button onClick={() => scrollTo("prologue")} style={{ fontFamily: "var(--font-sans)", fontSize: "0.92rem", fontWeight: 600, color: "var(--muted-foreground)", background: "none", border: "none", cursor: "pointer", transition: "color 0.15s" }}
+                    onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.color = "var(--foreground)"; }}
+                    onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.color = "var(--muted-foreground)"; }}
                   >
-                    <Linkedin size={13} />
-                  </a>
-                  <a href="https://www.facebook.com/karncy" target="_blank" rel="noopener noreferrer" aria-label="Facebook"
-                    style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: "2rem", height: "2rem", borderRadius: "50%", background: "#1877F2", color: "#fff", textDecoration: "none", transition: "opacity 0.15s, transform 0.15s" }}
-                    onMouseEnter={(e) => { const el = e.currentTarget as HTMLAnchorElement; el.style.opacity = "0.85"; el.style.transform = "translateY(-1px)"; }}
-                    onMouseLeave={(e) => { const el = e.currentTarget as HTMLAnchorElement; el.style.opacity = "1"; el.style.transform = "translateY(0)"; }}
-                  >
-                    <Facebook size={13} />
-                  </a>
-                  <a href="https://x.com/karncy" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)"
-                    style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: "2rem", height: "2rem", borderRadius: "50%", background: "var(--foreground)", color: "var(--background)", textDecoration: "none", transition: "opacity 0.15s, transform 0.15s" }}
-                    onMouseEnter={(e) => { const el = e.currentTarget as HTMLAnchorElement; el.style.opacity = "0.85"; el.style.transform = "translateY(-1px)"; }}
-                    onMouseLeave={(e) => { const el = e.currentTarget as HTMLAnchorElement; el.style.opacity = "1"; el.style.transform = "translateY(0)"; }}
-                  >
-                    <Twitter size={13} />
-                  </a>
+                    Back to top ↑
+                  </button>
                 </div>
-                <button onClick={() => scrollTo("prologue")} style={{ fontFamily: "var(--font-sans)", fontSize: "0.92rem", fontWeight: 600, color: "var(--muted-foreground)", background: "none", border: "none", cursor: "pointer", transition: "color 0.15s" }}
-                  onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.color = "var(--foreground)"; }}
-                  onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.color = "var(--muted-foreground)"; }}
-                >
-                  Back to top ↑
-                </button>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
       </main>
 
       <AnimatePresence>
