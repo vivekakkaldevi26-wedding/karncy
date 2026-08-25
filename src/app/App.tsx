@@ -1438,7 +1438,6 @@ export default function App() {
   const scrollTo = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 
   const scrollToChapterCard = (pid: ProductId) => {
-    setActiveProduct(pid);
     const el = document.getElementById("chapters");
     if (!el) return;
     const cardIdx = (["invoice", "ventures", "startup"] as ProductId[]).indexOf(pid);
@@ -1504,10 +1503,10 @@ export default function App() {
             <FadeUp delay={0.3}>
               <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem", maxWidth: "36rem" }}>
                 <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", alignItems: "center" }}>
-                  <button onClick={() => setActiveModal("funding")} style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.875rem", fontWeight: 700, padding: "0.9rem 2rem", background: "var(--cta)", color: "var(--cta-foreground)", borderRadius: "var(--radius)", border: "none", cursor: "pointer", letterSpacing: "0.01em" }}>
+                  <button onClick={() => scrollToChapterCard("invoice")} style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.875rem", fontWeight: 700, padding: "0.9rem 2rem", background: "var(--cta)", color: "var(--cta-foreground)", borderRadius: "var(--radius)", border: "none", cursor: "pointer", letterSpacing: "0.01em" }}>
                     Apply for Funding <ArrowRight size={15} />
                   </button>
-                  <button onClick={() => setActiveModal("business")} style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.875rem", fontWeight: 700, padding: "0.9rem 2rem", background: "var(--primary)", color: "var(--primary-foreground)", borderRadius: "var(--radius)", border: "none", cursor: "pointer", letterSpacing: "0.01em" }}>
+                  <button onClick={() => scrollToChapterCard("ventures")} style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.875rem", fontWeight: 700, padding: "0.9rem 2rem", background: "var(--primary)", color: "var(--primary-foreground)", borderRadius: "var(--radius)", border: "none", cursor: "pointer", letterSpacing: "0.01em" }}>
                     Apply for Business <ArrowRight size={15} />
                   </button>
                 </div>
@@ -1841,10 +1840,10 @@ export default function App() {
                     The journey begins with a conversation. Let's talk about where your business is headed.
                   </p>
                   <div style={{ display: "flex", flexDirection: "column", gap: "0.875rem", alignSelf: "flex-start" }}>
-                    <button onClick={() => setActiveModal("funding")} style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.875rem", fontWeight: 700, padding: "0.9rem 2.25rem", background: "var(--cta)", color: "var(--cta-foreground)", borderRadius: "var(--radius)", border: "none", cursor: "pointer" }}>
+                    <button onClick={() => scrollToChapterCard("invoice")} style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.875rem", fontWeight: 700, padding: "0.9rem 2.25rem", background: "var(--cta)", color: "var(--cta-foreground)", borderRadius: "var(--radius)", border: "none", cursor: "pointer" }}>
                       Apply for Funding <ArrowRight size={14} />
                     </button>
-                    <button onClick={() => setActiveModal("business")} style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.875rem", fontWeight: 600, padding: "0.9rem 2.25rem", background: "transparent", color: "var(--primary)", borderRadius: "var(--radius)", border: "1.5px solid var(--primary)", cursor: "pointer" }}>
+                    <button onClick={() => scrollToChapterCard("ventures")} style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.875rem", fontWeight: 600, padding: "0.9rem 2.25rem", background: "transparent", color: "var(--primary)", borderRadius: "var(--radius)", border: "1.5px solid var(--primary)", cursor: "pointer" }}>
                       Apply for Business <ArrowRight size={14} />
                     </button>
                     <a href="tel:04042011067" style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.875rem", fontWeight: 600, padding: "0.9rem 2.25rem", background: "var(--foreground)", color: "var(--background)", borderRadius: "var(--radius)", border: "none", cursor: "pointer", textDecoration: "none" }}>
@@ -1856,57 +1855,15 @@ export default function App() {
                   <div style={{ marginTop: "1.75rem", paddingTop: "1.5rem", borderTop: "1px solid var(--border)" }}>
                     <p style={{ fontFamily: "var(--font-display)", fontSize: "0.9rem", letterSpacing: "0.08em", textTransform: "uppercase", color: "#0f172a", fontWeight: 700, marginBottom: "1rem" }}>Menu</p>
                     <nav style={{ display: "flex", alignItems: "center", gap: "1.25rem", flexWrap: "wrap" }}>
-                      {[
-                        { label: "About", href: "#prologue" },
-                        { label: "Privacy", href: "https://karncy.com/privacy-policy/" },
-                        { label: "Terms", href: "https://karncy.com/terms-and-conditions/" },
-                      ].map((item) => (
-                        <div key={item.label} style={{ display: "inline-flex", alignItems: "center", gap: "1.25rem" }}>
-                          {item.href.startsWith("#") ? (
-                            <a
-                              href={item.href}
-                              onClick={(e) => {
-                                e.preventDefault();
-                                document.getElementById("prologue")?.scrollIntoView({ behavior: "smooth" });
-                              }}
-                              style={{
-                                fontFamily: "var(--font-sans)",
-                                fontSize: "0.95rem",
-                                fontWeight: 600,
-                                color: "#0f172a",
-                                textDecoration: "none",
-                                lineHeight: 1,
-                                transition: "color 0.15s",
-                              }}
-                              onMouseEnter={(e) => ((e.currentTarget as HTMLAnchorElement).style.color = "var(--primary)")}
-                              onMouseLeave={(e) => ((e.currentTarget as HTMLAnchorElement).style.color = "#0f172a")}
-                            >
-                              {item.label}
-                            </a>
-                          ) : (
-                            <a
-                              href={item.href}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              style={{
-                                fontFamily: "var(--font-sans)",
-                                fontSize: "0.95rem",
-                                fontWeight: 600,
-                                color: "#0f172a",
-                                textDecoration: "none",
-                                lineHeight: 1,
-                                transition: "color 0.15s",
-                              }}
-                              onMouseEnter={(e) => ((e.currentTarget as HTMLAnchorElement).style.color = "var(--primary)")}
-                              onMouseLeave={(e) => ((e.currentTarget as HTMLAnchorElement).style.color = "#0f172a")}
-                            >
-                              {item.label}
-                            </a>
-                          )}
+                      {["About", "Privacy", "Terms"].map((label) => (
+                        <div key={label} style={{ display: "inline-flex", alignItems: "center", gap: "1.25rem" }}>
+                          <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.95rem", fontWeight: 600, color: "#0f172a" }}>
+                            {label}
+                          </span>
                           <span style={{ width: "1px", height: "14px", background: "rgba(20,20,43,0.18)", display: "inline-block" }} />
                         </div>
                       ))}
-                      <QuickLinksMenu onSelectProduct={(pid) => setActiveProduct(pid)} />
+                      <QuickLinksMenu onSelectProduct={(pid) => scrollToChapterCard(pid)} />
                     </nav>
                   </div>
                 </div>
