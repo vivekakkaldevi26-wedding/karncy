@@ -955,8 +955,8 @@ function QuickLinksMenu({ onSelectProduct }: { onSelectProduct?: (pid: ProductId
   }, [open]);
 
   const items: { label: string; pid?: ProductId; href?: string }[] = [
-    { label: "Invoice Financing", pid: "invoice" },
-    { label: "Joint Ventures", pid: "ventures" },
+    { label: "Karncy Financing", pid: "invoice" },
+    { label: "Karncy Ventures", pid: "ventures" },
     { label: "Startup Partnerships", pid: "startup" },
     { label: "Terms & conditions", href: "https://karncy.com/terms-and-conditions/" },
     { label: "Privacy policy", href: "https://karncy.com/privacy-policy/" },
