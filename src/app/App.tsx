@@ -1847,9 +1847,9 @@ export default function App() {
                     <button onClick={() => setActiveModal("business")} style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.875rem", fontWeight: 600, padding: "0.9rem 2.25rem", background: "transparent", color: "var(--primary)", borderRadius: "var(--radius)", border: "1.5px solid var(--primary)", cursor: "pointer" }}>
                       Apply for Business <ArrowRight size={14} />
                     </button>
-                    <button onClick={() => setActiveModal("business")} style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.875rem", fontWeight: 600, padding: "0.9rem 2.25rem", background: "var(--foreground)", color: "var(--background)", borderRadius: "var(--radius)", border: "none", cursor: "pointer" }}>
-                      <Mail size={14} /> Talk to Karncy directly
-                    </button>
+                    <a href="tel:04042011067" style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.875rem", fontWeight: 600, padding: "0.9rem 2.25rem", background: "var(--foreground)", color: "var(--background)", borderRadius: "var(--radius)", border: "none", cursor: "pointer", textDecoration: "none" }}>
+                      <Phone size={14} /> Talk to Karncy directly
+                    </a>
                   </div>
 
                   {/* Menu — horizontal equal alignment */}
