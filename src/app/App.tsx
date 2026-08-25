@@ -840,12 +840,16 @@ function ChaptersScroll({ onOpen }: { onOpen: (id: ProductId) => void }) {
               <ChapterCard
                 key={pid}
                 productId={pid}
-                onExplore={() => onOpen(pid)}
+                onExplore={() => {
+                  if (i < ids.length - 1) {
+                    goToCard(i + 1);
+                  } else {
+                    document.getElementById("why-karncy")?.scrollIntoView({ behavior: "smooth" });
+                  }
+                }}
                 isActive={activeCard === i}
                 cardWidth={cardWidth}
               />
-
-
             ))}
           </div>
         </div>
@@ -1438,7 +1442,6 @@ export default function App() {
   const scrollTo = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 
   const scrollToChapterCard = (pid: ProductId) => {
-    setActiveProduct(pid);
     const el = document.getElementById("chapters");
     if (!el) return;
     const cardIdx = (["invoice", "ventures", "startup"] as ProductId[]).indexOf(pid);
