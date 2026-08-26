@@ -1903,22 +1903,6 @@ export default function App() {
                       <Phone size={14} /> Talk to Karncy directly
                     </a>
                   </div>
-
-                  {/* Menu — horizontal equal alignment */}
-                  <div style={{ marginTop: "1.75rem", paddingTop: "1.5rem", borderTop: "1px solid var(--border)" }}>
-                    <p style={{ fontFamily: "var(--font-display)", fontSize: "0.9rem", letterSpacing: "0.08em", textTransform: "uppercase", color: "#0f172a", fontWeight: 700, marginBottom: "1rem" }}>Menu</p>
-                    <nav style={{ display: "flex", alignItems: "center", gap: "1.25rem", flexWrap: "wrap" }}>
-                      {["About", "Privacy", "Terms"].map((label) => (
-                        <div key={label} style={{ display: "inline-flex", alignItems: "center", gap: "1.25rem" }}>
-                          <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.95rem", fontWeight: 600, color: "#0f172a" }}>
-                            {label}
-                          </span>
-                          <span style={{ width: "1px", height: "14px", background: "rgba(20,20,43,0.18)", display: "inline-block" }} />
-                        </div>
-                      ))}
-                      <QuickLinksMenu onSelectProduct={(pid) => scrollToChapterCard(pid)} />
-                    </nav>
-                  </div>
                 </div>
               </FadeUp>
 
@@ -1996,38 +1980,50 @@ export default function App() {
               </div>
             </div>
 
-            {/* Footer bar — 70% centered width */}
-            <div style={{ borderTop: "1px solid var(--border)", padding: "1rem 0" }}>
-              {/* Mobile Footer Menu Navigation */}
-              <div className="mobile-footer-menu" style={{ display: "none", width: "100%", paddingBottom: "1.25rem", borderBottom: "1px solid var(--border)", marginBottom: "1rem" }}>
-                <div style={{ display: "flex", flexWrap: "wrap", gap: "0.85rem 1.5rem", alignItems: "center", justifyContent: "center" }}>
+            {/* Footer Navigation Menu + Copyright Bar — unified clean design */}
+            <div style={{ borderTop: "1px solid var(--border)", padding: "1.25rem 0" }}>
+              {/* Unified Menu Bar */}
+              <div style={{ width: SECTION_W, margin: AUTO }}>
+                <nav style={{ display: "flex", flexWrap: "wrap", gap: "1rem 2rem", alignItems: "center", justifyContent: "center", paddingBottom: "1.25rem", borderBottom: "1px solid var(--border)" }}>
                   {["About", "Privacy", "Terms"].map((item) => (
-                    <span key={item} style={{ fontFamily: "var(--font-sans)", fontSize: "0.92rem", fontWeight: 600, color: "var(--foreground)", cursor: "pointer" }}>
+                    <button
+                      key={item}
+                      onClick={() => {
+                        if (item === "About") scrollTo("why-karncy");
+                      }}
+                      style={{ background: "none", border: "none", padding: 0, fontFamily: "var(--font-sans)", fontSize: "1rem", fontWeight: 600, color: "#0f172a", cursor: "pointer", transition: "color 0.15s ease" }}
+                      onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.color = "var(--primary)")}
+                      onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.color = "#0f172a")}
+                    >
                       {item}
-                    </span>
+                    </button>
                   ))}
-                  <button
-                    onClick={() => scrollToChapterCard("invoice")}
-                    style={{ background: "none", border: "none", padding: 0, fontFamily: "var(--font-sans)", fontSize: "0.92rem", fontWeight: 700, color: "var(--cta)", cursor: "pointer" }}
-                  >
-                    Financing
-                  </button>
-                  <button
-                    onClick={() => scrollToChapterCard("ventures")}
-                    style={{ background: "none", border: "none", padding: 0, fontFamily: "var(--font-sans)", fontSize: "0.92rem", fontWeight: 700, color: "var(--cta)", cursor: "pointer" }}
-                  >
-                    Ventures
-                  </button>
-                  <button
-                    onClick={() => scrollToChapterCard("startup")}
-                    style={{ background: "none", border: "none", padding: 0, fontFamily: "var(--font-sans)", fontSize: "0.92rem", fontWeight: 700, color: "var(--cta)", cursor: "pointer" }}
-                  >
-                    Equity
-                  </button>
-                </div>
+                  {[
+                    { label: "Financing", pid: "invoice" as const },
+                    { label: "Ventures", pid: "ventures" as const },
+                    { label: "Equity", pid: "startup" as const },
+                  ].map((prod) => (
+                    <button
+                      key={prod.label}
+                      onClick={() => scrollToChapterCard(prod.pid)}
+                      style={{ background: "none", border: "none", padding: 0, fontFamily: "var(--font-sans)", fontSize: "1rem", fontWeight: 700, color: "var(--cta)", cursor: "pointer", transition: "transform 0.15s ease, opacity 0.15s ease" }}
+                      onMouseEnter={(e) => {
+                        (e.currentTarget as HTMLButtonElement).style.transform = "translateY(-1px)";
+                        (e.currentTarget as HTMLButtonElement).style.opacity = "0.85";
+                      }}
+                      onMouseLeave={(e) => {
+                        (e.currentTarget as HTMLButtonElement).style.transform = "translateY(0)";
+                        (e.currentTarget as HTMLButtonElement).style.opacity = "1";
+                      }}
+                    >
+                      {prod.label}
+                    </button>
+                  ))}
+                </nav>
               </div>
 
-              <div style={{ width: SECTION_W, margin: AUTO, display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "1rem" }}>
+              {/* Copyright & Socials row */}
+              <div style={{ width: SECTION_W, margin: AUTO, paddingTop: "1.25rem", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "1rem" }}>
                 <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.82rem", fontWeight: 500, color: "var(--muted-foreground)" }}>
                   © 2026 Karncy Ventures Private Limited. All rights reserved.
                 </span>
