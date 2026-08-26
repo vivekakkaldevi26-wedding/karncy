@@ -1875,7 +1875,7 @@ export default function App() {
         </section>
 
         {/* ─── Horizon ─────────────────────────────────────────────────── */}
-        <section id="horizon" style={{ height: "100vh", display: "flex", flexDirection: "column", boxSizing: "border-box", overflow: "hidden" }}>
+        <section id="horizon" className="section-horizon" style={{ minHeight: "100vh", display: "flex", flexDirection: "column", boxSizing: "border-box" }}>
           <div style={{ width: SECTION_W, margin: AUTO, flex: 1, display: "flex", flexDirection: "column", minHeight: 0 }}>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 340px), 1fr))", border: "1px solid var(--border)", borderRadius: "calc(var(--radius) * 2)", overflow: "hidden", flex: 1, minHeight: 0 }}>
               {/* Left — navy */}
@@ -1997,7 +1997,36 @@ export default function App() {
             </div>
 
             {/* Footer bar — 70% centered width */}
-            <div style={{ borderTop: "1px solid var(--border)", padding: "0.75rem 0" }}>
+            <div style={{ borderTop: "1px solid var(--border)", padding: "1rem 0" }}>
+              {/* Mobile Footer Menu Navigation */}
+              <div className="mobile-footer-menu" style={{ display: "none", width: "100%", paddingBottom: "1.25rem", borderBottom: "1px solid var(--border)", marginBottom: "1rem" }}>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: "0.85rem 1.5rem", alignItems: "center", justifyContent: "center" }}>
+                  {["About", "Privacy", "Terms"].map((item) => (
+                    <span key={item} style={{ fontFamily: "var(--font-sans)", fontSize: "0.92rem", fontWeight: 600, color: "var(--foreground)", cursor: "pointer" }}>
+                      {item}
+                    </span>
+                  ))}
+                  <button
+                    onClick={() => scrollToChapterCard("invoice")}
+                    style={{ background: "none", border: "none", padding: 0, fontFamily: "var(--font-sans)", fontSize: "0.92rem", fontWeight: 700, color: "var(--cta)", cursor: "pointer" }}
+                  >
+                    Financing
+                  </button>
+                  <button
+                    onClick={() => scrollToChapterCard("ventures")}
+                    style={{ background: "none", border: "none", padding: 0, fontFamily: "var(--font-sans)", fontSize: "0.92rem", fontWeight: 700, color: "var(--cta)", cursor: "pointer" }}
+                  >
+                    Ventures
+                  </button>
+                  <button
+                    onClick={() => scrollToChapterCard("startup")}
+                    style={{ background: "none", border: "none", padding: 0, fontFamily: "var(--font-sans)", fontSize: "0.92rem", fontWeight: 700, color: "var(--cta)", cursor: "pointer" }}
+                  >
+                    Equity
+                  </button>
+                </div>
+              </div>
+
               <div style={{ width: SECTION_W, margin: AUTO, display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "1rem" }}>
                 <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.82rem", fontWeight: 500, color: "var(--muted-foreground)" }}>
                   © 2026 Karncy Ventures Private Limited. All rights reserved.

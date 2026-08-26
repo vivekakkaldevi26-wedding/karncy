@@ -66,7 +66,23 @@ body,
   display: none !important;
 }
 
+.mobile-footer-menu {
+  display: none !important;
+}
+
 @media (max-width: 768px) {
+  .mobile-footer-menu {
+    display: block !important;
+  }
+
+  #horizon,
+  .section-horizon {
+    height: auto !important;
+    min-height: auto !important;
+    overflow: visible !important;
+    padding: 3.5rem 0 1.5rem 0 !important;
+  }
+
   .testimonial-quote-mobile {
     display: block;
   }
