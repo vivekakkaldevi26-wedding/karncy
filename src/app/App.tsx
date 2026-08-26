@@ -922,92 +922,33 @@ function ChaptersScroll({ onOpen, onAction }: { onOpen?: (id: ProductId) => void
         </div>
       </div>
 
-      {/* ─── Mobile View: Line-by-line Vertical Stack ─── */}
-      <section id="chapters-mobile" className="chapters-mobile-stack" style={{ display: "none", flexDirection: "column", padding: "3rem 0 3.5rem" }}>
-        <div style={{ width: "95%", margin: "0 auto 2.25rem" }}>
+      {/* ─── Mobile View: Line-by-line Vertical Stack using original ChapterCard ─── */}
+      <section id="chapters-mobile" className="chapters-mobile-stack" style={{ display: "none", flexDirection: "column", padding: "2.5rem 0 3.5rem" }}>
+        <div style={{ width: "95%", margin: "0 auto 1.5rem" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "0.4rem" }}>
             <div style={{ width: "1.5rem", height: "1px", background: "var(--primary)" }} />
             <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.67rem", letterSpacing: "0.13em", textTransform: "uppercase", color: "var(--muted-foreground)" }}>03</span>
           </div>
-          <h2 style={{ fontFamily: "var(--font-display)", fontSize: "2.1rem", fontWeight: 700, color: "var(--foreground)", letterSpacing: "-0.025em", marginBottom: "0.35rem" }}>
+          <h2 style={{ fontFamily: "var(--font-display)", fontSize: "2rem", fontWeight: 700, color: "var(--foreground)", letterSpacing: "-0.025em", marginBottom: "0.25rem" }}>
             Our Products
           </h2>
-          <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.95rem", color: "var(--muted-foreground)", lineHeight: 1.6, margin: 0 }}>
-            Structured financing and venture partnerships built for growing Indian enterprises.
-          </p>
         </div>
 
-        <div style={{ width: "95%", margin: "0 auto", display: "flex", flexDirection: "column", gap: "2rem" }}>
-          {ids.map((pid, i) => {
-            const product = products[pid];
-            return (
-              <div
-                key={pid}
-                id={`chapter-card-${pid}`}
-                style={{
-                  width: "100%",
-                  borderRadius: "calc(var(--radius) * 2.2)",
-                  border: "1px solid var(--border)",
-                  overflow: "hidden",
-                  background: "#ffffff",
-                  boxShadow: "0 12px 36px rgba(13,31,130,0.06)",
-                  scrollMarginTop: "2rem",
-                  boxSizing: "border-box",
+        <div style={{ width: "95%", margin: "0 auto", display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+          {ids.map((pid) => (
+            <div key={pid} id={`chapter-card-${pid}`} style={{ scrollMarginTop: "2.5rem", width: "100%" }}>
+              <ChapterCard
+                productId={pid}
+                onExplore={() => {
+                  if (onAction) {
+                    onAction(pid === "invoice" ? "funding" : "business");
+                  }
                 }}
-              >
-                {/* Header Navy Block */}
-                <div style={{ background: "var(--primary)", padding: "2.25rem 1.75rem", position: "relative", overflow: "hidden" }}>
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1.5rem" }}>
-                    <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.72rem", letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(255,255,255,0.65)" }}>
-                      0{i + 1} / 03
-                    </span>
-                    <div style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: "2.25rem", height: "2.25rem", borderRadius: "50%", background: "rgba(255,255,255,0.15)", color: "rgba(255,255,255,0.95)" }}>
-                      {productIcons[pid]}
-                    </div>
-                  </div>
-                  <h3 style={{ fontFamily: "var(--font-display)", fontSize: "1.65rem", fontWeight: 700, color: "var(--primary-foreground)", letterSpacing: "-0.02em", marginBottom: "0.5rem" }}>
-                    {product.title}
-                  </h3>
-                  <p style={{ fontFamily: "var(--font-display)", fontSize: "0.92rem", color: "rgba(255,255,255,0.8)", fontStyle: "italic", lineHeight: 1.5, marginBottom: "1.75rem" }}>
-                    {product.tagline}
-                  </p>
-                  <button
-                    onClick={() => {
-                      if (onAction) {
-                        onAction(pid === "invoice" ? "funding" : "business");
-                      }
-                    }}
-                    style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.88rem", fontWeight: 700, padding: "0.75rem 1.75rem", borderRadius: "var(--radius)", border: "none", color: "var(--cta-foreground)", background: "var(--cta)", cursor: "pointer" }}
-                  >
-                    {product.cta} <ArrowRight size={14} />
-                  </button>
-                </div>
-
-                {/* White Content Block */}
-                <div style={{ padding: "2rem 1.75rem", background: "#ffffff" }}>
-                  <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.9rem", color: "var(--muted-foreground)", lineHeight: 1.7, marginBottom: "1.75rem" }}>
-                    {product.description}
-                  </p>
-                  <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
-                    {product.steps.map((step, sIdx) => (
-                      <div key={sIdx} style={{ display: "grid", gridTemplateColumns: "1.5rem 1fr", gap: "0.75rem", alignItems: "flex-start" }}>
-                        <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.72rem", color: "var(--primary)", paddingTop: "0.15rem", fontWeight: 700 }}>
-                          0{sIdx + 1}
-                        </span>
-                        <div>
-                          <div style={{ display: "flex", alignItems: "center", gap: "0.35rem", marginBottom: "0.25rem" }}>
-                            <span style={{ fontFamily: "var(--font-display)", fontSize: "1.02rem", fontWeight: 600, color: "var(--foreground)" }}>{step.title}</span>
-                            <Tip content={step.tooltip} />
-                          </div>
-                          <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.82rem", color: "var(--muted-foreground)", lineHeight: 1.6, margin: 0 }}>{step.desc}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            );
-          })}
+                isActive={true}
+                cardWidth="100%"
+              />
+            </div>
+          ))}
         </div>
       </section>
     </>
