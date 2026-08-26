@@ -416,6 +416,47 @@ function Ticker() {
 
 // ─── Testimonial Carousel ──────────────────────────────────────────────────────
 
+function TestimonialQuote({ quote }: { quote: string }) {
+  const [expanded, setExpanded] = useState(false);
+  const isLong = quote.length > 135;
+
+  return (
+    <div style={{ marginBottom: "1.5rem" }}>
+      {/* Desktop view: full quote */}
+      <p className="testimonial-quote-desktop" style={{ fontFamily: "var(--font-display)", fontSize: "1.05rem", fontStyle: "italic", color: "var(--foreground)", lineHeight: 1.72, margin: 0 }}>
+        "{quote}"
+      </p>
+      {/* Mobile view: truncated with Read more toggle */}
+      <div className="testimonial-quote-mobile">
+        <p style={{ fontFamily: "var(--font-display)", fontSize: "0.98rem", fontStyle: "italic", color: "var(--foreground)", lineHeight: 1.65, margin: 0 }}>
+          "{(!expanded && isLong) ? `${quote.slice(0, 130).trim()}...` : quote}"
+        </p>
+        {isLong && (
+          <button
+            type="button"
+            onClick={() => setExpanded(!expanded)}
+            style={{
+              background: "none",
+              border: "none",
+              padding: "0.35rem 0 0 0",
+              color: "var(--cta)",
+              fontFamily: "var(--font-sans)",
+              fontSize: "0.85rem",
+              fontWeight: 700,
+              cursor: "pointer",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "0.2rem"
+            }}
+          >
+            {expanded ? "Read less ↑" : "Read more ↓"}
+          </button>
+        )}
+      </div>
+    </div>
+  );
+}
+
 function TestimonialCarousel() {
   const [idx, setIdx] = useState(0);
   const total = testimonials.length;
@@ -446,9 +487,7 @@ function TestimonialCarousel() {
 
           {/* Content */}
           <div style={{ flex: 1 }}>
-            <p style={{ fontFamily: "var(--font-display)", fontSize: "1.05rem", fontStyle: "italic", color: "var(--foreground)", lineHeight: 1.72, marginBottom: "1.5rem" }}>
-              "{t.quote}"
-            </p>
+            <TestimonialQuote key={idx} quote={t.quote} />
             <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
               <div>
                 <p style={{ fontFamily: "var(--font-display)", fontSize: "0.875rem", fontWeight: 700, color: "var(--foreground)" }}>{t.author}</p>
@@ -1534,7 +1573,7 @@ export default function App() {
         </section>
 
         {/* ─── Dual Audience ────────────────────────────────────────────── */}
-        <section style={{ padding: "5rem 0" }}>
+        <section className="section-dual-audience" style={{ padding: "5rem 0" }}>
           <div className="dual-audience-container" style={{ width: SECTION_W, margin: AUTO }}>
             <FadeUp>
               <p style={{ fontFamily: "var(--font-sans)", fontSize: "clamp(0.9rem, 1.5vw, 1.25rem)", fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--muted-foreground)", marginBottom: "2rem" }}>
@@ -1629,9 +1668,9 @@ export default function App() {
         </section>
 
         {/* ─── Compass ─────────────────────────────────────────────────── */}
-        <section id="compass" style={sectionBase}>
+        <section id="compass" className="section-compass" style={sectionBase}>
           <div style={{ width: SECTION_W, margin: AUTO }}>
-            <div style={{ marginBottom: "3.5rem" }}>
+            <div className="section-header-desc" style={{ marginBottom: "3.5rem" }}>
               <FadeUp>
                 <div style={{ marginBottom: "1.25rem" }}>
                   <SectionLabel n="02" />
@@ -1764,14 +1803,14 @@ export default function App() {
         </section>
 
         {/* ─── Why Choose Karncy — 2 rows × 3 columns ──────────────────── */}
-        <section id="why-karncy" style={sectionBase}>
+        <section id="why-karncy" className="section-why-karncy" style={sectionBase}>
           <div style={{ width: SECTION_W, margin: AUTO }}>
             <FadeUp>
               <SectionLabel n="05" />
               <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2.2rem, 4vw, 3.2rem)", fontWeight: 700, letterSpacing: "-0.025em", color: "var(--foreground)", lineHeight: 1.04, marginBottom: "0.75rem" }}>
                 Why choose Karncy?
               </h2>
-              <p style={{ fontFamily: "var(--font-sans)", fontSize: "1.08rem", color: "var(--muted-foreground)", lineHeight: 1.72, maxWidth: "52rem", marginBottom: "3.5rem" }}>
+              <p className="section-header-desc" style={{ fontFamily: "var(--font-sans)", fontSize: "1.08rem", color: "var(--muted-foreground)", lineHeight: 1.72, maxWidth: "52rem", marginBottom: "3.5rem" }}>
                 <span style={{ display: "block" }}>We are not another capital provider. We are the partner that stays —</span>
                 <span style={{ display: "block" }}>operationally embedded, transparently accountable, and relentlessly focused on your outcome.</span>
               </p>
@@ -1803,14 +1842,14 @@ export default function App() {
         </section>
 
         {/* ─── Social Proof — testimonials + partner logos ───────────────── */}
-        <section id="social-proof" style={sectionBase}>
+        <section id="social-proof" className="section-social-proof" style={sectionBase}>
           <div style={{ width: SECTION_W, margin: AUTO }}>
             <FadeUp>
               <SectionLabel n="06" />
               <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2.2rem, 4vw, 3.2rem)", fontWeight: 700, letterSpacing: "-0.025em", color: "var(--foreground)", lineHeight: 1.04, marginBottom: "0.75rem" }}>
                 Trusted by growing businesses.
               </h2>
-              <p style={{ fontFamily: "var(--font-sans)", fontSize: "1.08rem", color: "var(--muted-foreground)", lineHeight: 1.72, maxWidth: "36rem", marginBottom: "3.5rem" }}>
+              <p className="section-header-desc" style={{ fontFamily: "var(--font-sans)", fontSize: "1.08rem", color: "var(--muted-foreground)", lineHeight: 1.72, maxWidth: "36rem", marginBottom: "3.5rem" }}>
                 From manufacturers and logistics operators to early-stage founders, Karncy has been the partner behind India's quiet growth stories.
               </p>
             </FadeUp>

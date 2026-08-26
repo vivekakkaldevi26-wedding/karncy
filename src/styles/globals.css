@@ -50,7 +50,58 @@ body,
   margin-bottom: 0;
 }
 
+.testimonial-quote-mobile {
+  display: none;
+}
+
+.testimonial-quote-desktop {
+  display: block;
+}
+
 @media (max-width: 768px) {
+  .testimonial-quote-mobile {
+    display: block;
+  }
+
+  .testimonial-quote-desktop {
+    display: none;
+  }
+
+  /* ---------------------------------
+     Reduced Gaps for Sections 02, 03, 05, 06
+     --------------------------------- */
+  .section-dual-audience {
+    padding: 3.5rem 0 1.75rem 0 !important;
+  }
+
+  #compass,
+  .section-compass {
+    padding-top: 1.75rem !important;
+    padding-bottom: 2.25rem !important;
+  }
+
+  #operations,
+  .section-operations {
+    padding-top: 2.25rem !important;
+    padding-bottom: 2.5rem !important;
+  }
+
+  #why-karncy,
+  .section-why-karncy {
+    padding-top: 2rem !important;
+    padding-bottom: 2.5rem !important;
+  }
+
+  #social-proof,
+  .section-social-proof {
+    padding-top: 2rem !important;
+    padding-bottom: 3.5rem !important;
+  }
+
+  .section-header-desc {
+    margin-bottom: 1.75rem !important;
+  }
+
   .hero-tagline-badge {
     display: none !important;
   }
@@ -97,12 +148,6 @@ body,
 
   .mobile-hide-desc {
     display: none !important;
-  }
-
-  #operations,
-  #why-karncy,
-  #social-proof {
-    padding-bottom: 5rem !important;
   }
 
   .msme-container {
