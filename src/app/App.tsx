@@ -1967,12 +1967,32 @@ export default function App() {
             </div>
 
             {/* Security warning */}
-            <div style={{ background: "transparent", borderTop: "1px solid var(--border)", margin: "1.75rem 0", padding: "1rem 0" }}>
-              <div style={{ width: SECTION_W, margin: AUTO, display: "flex", alignItems: "flex-start", gap: "0.75rem" }}>
+            <div style={{ background: "transparent", borderTop: "1px solid var(--border)", margin: "1.75rem 0", padding: "0.85rem 0", overflow: "hidden" }}>
+              {/* Desktop version */}
+              <div className="security-warning-desktop" style={{ width: SECTION_W, margin: AUTO, display: "flex", alignItems: "flex-start", gap: "0.75rem" }}>
                 <AlertTriangle size={15} style={{ color: "var(--cta)", flexShrink: 0, marginTop: "0.1rem" }} />
                 <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.82rem", fontWeight: 500, color: "var(--foreground)", lineHeight: 1.55, margin: 0 }}>
                   <strong>Beware of impersonated websites.</strong> Karncy only communicates through official channels: hello@karncy.com and 040-42011067. Do not share financial information with unverified sources claiming to represent Karncy.
                 </p>
+              </div>
+
+              {/* Mobile marquee scroll */}
+              <div className="security-warning-mobile" style={{ overflow: "hidden", display: "none", alignItems: "center", width: "100%" }}>
+                <motion.div
+                  style={{ display: "flex", alignItems: "center", flexShrink: 0 }}
+                  animate={{ x: ["0%", "-50%"] }}
+                  transition={{ duration: 24, ease: "linear", repeat: Infinity }}
+                >
+                  {[0, 1].map((key) => (
+                    <div key={key} style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", padding: "0 1.5rem", whiteSpace: "nowrap" }}>
+                      <AlertTriangle size={14} style={{ color: "var(--cta)", flexShrink: 0 }} />
+                      <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.8rem", fontWeight: 500, color: "var(--foreground)", whiteSpace: "nowrap" }}>
+                        <strong style={{ fontWeight: 700 }}>Beware of impersonated websites.</strong> Karncy only communicates through official channels: <span style={{ color: "var(--primary)", fontWeight: 600 }}>hello@karncy.com</span> and <span style={{ color: "var(--primary)", fontWeight: 600 }}>040-42011067</span>. Do not share financial information with unverified sources claiming to represent Karncy.
+                      </span>
+                      <span style={{ marginLeft: "1.5rem", width: "4px", height: "4px", borderRadius: "50%", background: "var(--cta)", display: "inline-block", flexShrink: 0 }} />
+                    </div>
+                  ))}
+                </motion.div>
               </div>
             </div>
 
