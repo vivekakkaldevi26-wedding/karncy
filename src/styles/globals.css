@@ -66,13 +66,21 @@ body,
   display: none !important;
 }
 
-.mobile-footer-menu {
+.chapters-desktop-wrapper {
+  display: block;
+}
+
+.chapters-mobile-stack {
   display: none !important;
 }
 
 @media (max-width: 768px) {
-  .mobile-footer-menu {
-    display: block !important;
+  .chapters-desktop-wrapper {
+    display: none !important;
+  }
+
+  .chapters-mobile-stack {
+    display: flex !important;
   }
 
   #horizon,

@@ -707,7 +707,7 @@ function ChapterCard({
 
 // ─── Sticky horizontal chapters — per-card wheel snap ────────────────────────
 
-function ChaptersScroll({ onOpen }: { onOpen: (id: ProductId) => void }) {
+function ChaptersScroll({ onOpen, onAction }: { onOpen?: (id: ProductId) => void; onAction?: (type: ModalType) => void }) {
   const outerRef = useRef<HTMLDivElement>(null);
   const [activeCard, setActiveCard] = useState(0);
   // Always-current refs — never stale inside event handlers
@@ -736,10 +736,6 @@ function ChaptersScroll({ onOpen }: { onOpen: (id: ProductId) => void }) {
 
   const cardWidth = CARD_WIDTH;
 
-
-
-  //const LEAD = "0px";
-
   // True while the sticky panel is pinned (generous tolerance for subpixels)
   const isSectionPinned = useCallback((): boolean => {
     const el = outerRef.current;
@@ -766,7 +762,7 @@ function ChaptersScroll({ onOpen }: { onOpen: (id: ProductId) => void }) {
   // ── Listen for custom event from Section 2 Let's buttons ────────────────
   useEffect(() => {
     const handleGoTo = (e: Event) => {
-      const customEvent = e as CustomEvent<{ cardIdx: number }>;
+      const customEvent = e as CustomEvent<{ cardIdx: number; pid?: ProductId }>;
       if (customEvent.detail && typeof customEvent.detail.cardIdx === "number") {
         goToCard(customEvent.detail.cardIdx);
       }
@@ -778,6 +774,7 @@ function ChaptersScroll({ onOpen }: { onOpen: (id: ProductId) => void }) {
   // ── Wheel interception ────────────────────────────────────────────────────
   useEffect(() => {
     const onWheel = (e: WheelEvent) => {
+      if (window.innerWidth <= 768) return;
       if (!isSectionPinned()) return;
 
       const dir = e.deltaY > 0 ? 1 : -1;
@@ -808,6 +805,7 @@ function ChaptersScroll({ onOpen }: { onOpen: (id: ProductId) => void }) {
   // ── Keep card state in sync for touch / keyboard / dot-clicks ────────────
   useEffect(() => {
     const onScroll = () => {
+      if (window.innerWidth <= 768) return;
       const el = outerRef.current;
       if (!el) return;
       const sectionTop = el.getBoundingClientRect().top + window.scrollY;
@@ -825,110 +823,194 @@ function ChaptersScroll({ onOpen }: { onOpen: (id: ProductId) => void }) {
   }, [NUM]);
 
   return (
-    <div ref={outerRef} id="chapters" style={{ height: `${NUM * 100}vh`, position: "relative" }}>
-      <div
-        style={{
-          position: "sticky", top: 0, height: "100vh",
-          overflow: "hidden", background: "transparent",
-        }}
-      >
-        {/* Section header */}
-        <div style={{ position: "absolute", top: 0, left: 0, right: 0, padding: "2.5rem 0 1.25rem", zIndex: 2 }}>
-          <div style={{ width: SECTION_W, margin: AUTO }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "0.4rem" }}>
-              <div style={{ width: "1.5rem", height: "1px", background: "var(--primary)" }} />
-              <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.67rem", letterSpacing: "0.13em", textTransform: "uppercase", color: "var(--muted-foreground)" }}>03</span>
-            </div>
-            <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.4rem, 2.2vw, 1.9rem)", fontWeight: 700, color: "var(--foreground)", letterSpacing: "-0.02em", marginBottom: "0.25rem" }}>
-              Our Products
-            </h2>
-            <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.95rem", color: "var(--muted-foreground)", display: "flex", alignItems: "center", gap: "0.35rem", fontWeight: 600, margin: 0 }}>
-              Scroll to View <ArrowDown size={14} style={{ color: "var(--cta)" }} />
-            </p>
-          </div>
-        </div>
-
-        {/* Container: left:15vw clips the left bleed; overflow:hidden+flex centers strip vertically */}
+    <>
+      {/* ─── Desktop View: Sticky Horizontal Card Carousel ─── */}
+      <div ref={outerRef} id="chapters" className="chapters-desktop-wrapper" style={{ height: `${NUM * 100}vh`, position: "relative" }}>
         <div
           style={{
-            position: "absolute",
-            top: "7rem",
-            bottom: "4rem",
-            left: 0,
-            right: 0,
-            width: "100%",
-            margin: 0,
-            overflow: "hidden",
-            display: "flex",
-            alignItems: "center",
+            position: "sticky", top: 0, height: "100vh",
+            overflow: "hidden", background: "transparent",
           }}
         >
-
+          {/* Section header */}
+          <div style={{ position: "absolute", top: 0, left: 0, right: 0, padding: "2.5rem 0 1.25rem", zIndex: 2 }}>
+            <div style={{ width: SECTION_W, margin: AUTO }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "0.4rem" }}>
+                <div style={{ width: "1.5rem", height: "1px", background: "var(--primary)" }} />
+                <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.67rem", letterSpacing: "0.13em", textTransform: "uppercase", color: "var(--muted-foreground)" }}>03</span>
+              </div>
+              <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.4rem, 2.2vw, 1.9rem)", fontWeight: 700, color: "var(--foreground)", letterSpacing: "-0.02em", marginBottom: "0.25rem" }}>
+                Our Products
+              </h2>
+              <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.95rem", color: "var(--muted-foreground)", display: "flex", alignItems: "center", gap: "0.35rem", fontWeight: 600, margin: 0 }}>
+                Scroll to View <ArrowDown size={14} style={{ color: "var(--cta)" }} />
+              </p>
+            </div>
+          </div>
 
           <div
             style={{
+              position: "absolute",
+              top: "7rem",
+              bottom: "4rem",
+              left: 0,
+              right: 0,
+              width: "100%",
+              margin: 0,
+              overflow: "hidden",
               display: "flex",
-              gap: `${CARD_GAP}px`,
-              width: "max-content",
-              flexShrink: 0,
-              transform: `translateX(
-      calc(
-        50vw -
-        (${cardWidth} / 2) -
-        ${activeCard} * (${cardWidth} + ${CARD_GAP}px)
-      )
-    )`,
-              transition: "transform 0.6s cubic-bezier(0.22, 1, 0.36, 1)",
-              willChange: "transform",
+              alignItems: "center",
             }}
           >
-
-
-
-
-
-            {ids.map((pid, i) => (
-              <ChapterCard
-                key={pid}
-                productId={pid}
-                onExplore={() => {
-                  if (i < ids.length - 1) {
-                    goToCard(i + 1);
-                  } else {
-                    document.getElementById("why-karncy")?.scrollIntoView({ behavior: "smooth" });
-                  }
-                }}
-                isActive={activeCard === i}
-                cardWidth={cardWidth}
-              />
-            ))}
+            <div
+              style={{
+                display: "flex",
+                gap: `${CARD_GAP}px`,
+                width: "max-content",
+                flexShrink: 0,
+                transform: `translateX(
+        calc(
+          50vw -
+          (${cardWidth} / 2) -
+          ${activeCard} * (${cardWidth} + ${CARD_GAP}px)
+        )
+      )`,
+                transition: "transform 0.6s cubic-bezier(0.22, 1, 0.36, 1)",
+                willChange: "transform",
+              }}
+            >
+              {ids.map((pid, i) => (
+                <ChapterCard
+                  key={pid}
+                  productId={pid}
+                  onExplore={() => {
+                    if (i < ids.length - 1) {
+                      goToCard(i + 1);
+                    } else {
+                      document.getElementById("why-karncy")?.scrollIntoView({ behavior: "smooth" });
+                    }
+                  }}
+                  isActive={activeCard === i}
+                  cardWidth={cardWidth}
+                />
+              ))}
+            </div>
           </div>
-        </div>
 
-        {/* Dot indicators — also clickable for direct navigation */}
-        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "1.25rem 0 2rem", zIndex: 2 }}>
-          <div style={{ width: SECTION_W, margin: AUTO, display: "flex", gap: "0.5rem", alignItems: "center" }}>
-            {ids.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => goToCard(i)}
-                aria-label={`Go to card ${i + 1}`}
-                style={{
-                  height: "4px", borderRadius: "9999px",
-                  width: i === activeCard ? "28px" : "4px",
-                  background: i === activeCard ? "var(--cta)" : "rgba(30,58,95,0.18)",
-                  border: "none", cursor: "pointer", padding: 0,
-                  transition: "width 0.32s ease, background 0.32s ease",
-                }}
-              />
-            ))}
-            <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.67rem", color: "var(--muted-foreground)", marginLeft: "0.75rem" }}>
-              {activeCard + 1} / {NUM}
-            </span>
+          {/* Dot indicators */}
+          <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "1.25rem 0 2rem", zIndex: 2 }}>
+            <div style={{ width: SECTION_W, margin: AUTO, display: "flex", gap: "0.5rem", alignItems: "center" }}>
+              {ids.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => goToCard(i)}
+                  aria-label={`Go to card ${i + 1}`}
+                  style={{
+                    height: "4px", borderRadius: "9999px",
+                    width: i === activeCard ? "28px" : "4px",
+                    background: i === activeCard ? "var(--cta)" : "rgba(30,58,95,0.18)",
+                    border: "none", cursor: "pointer", padding: 0,
+                    transition: "width 0.32s ease, background 0.32s ease",
+                  }}
+                />
+              ))}
+              <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.67rem", color: "var(--muted-foreground)", marginLeft: "0.75rem" }}>
+                {activeCard + 1} / {NUM}
+              </span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+
+      {/* ─── Mobile View: Line-by-line Vertical Stack ─── */}
+      <section id="chapters-mobile" className="chapters-mobile-stack" style={{ display: "none", flexDirection: "column", padding: "3rem 0 3.5rem" }}>
+        <div style={{ width: "95%", margin: "0 auto 2.25rem" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "0.4rem" }}>
+            <div style={{ width: "1.5rem", height: "1px", background: "var(--primary)" }} />
+            <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.67rem", letterSpacing: "0.13em", textTransform: "uppercase", color: "var(--muted-foreground)" }}>03</span>
+          </div>
+          <h2 style={{ fontFamily: "var(--font-display)", fontSize: "2.1rem", fontWeight: 700, color: "var(--foreground)", letterSpacing: "-0.025em", marginBottom: "0.35rem" }}>
+            Our Products
+          </h2>
+          <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.95rem", color: "var(--muted-foreground)", lineHeight: 1.6, margin: 0 }}>
+            Structured financing and venture partnerships built for growing Indian enterprises.
+          </p>
+        </div>
+
+        <div style={{ width: "95%", margin: "0 auto", display: "flex", flexDirection: "column", gap: "2rem" }}>
+          {ids.map((pid, i) => {
+            const product = products[pid];
+            return (
+              <div
+                key={pid}
+                id={`chapter-card-${pid}`}
+                style={{
+                  width: "100%",
+                  borderRadius: "calc(var(--radius) * 2.2)",
+                  border: "1px solid var(--border)",
+                  overflow: "hidden",
+                  background: "#ffffff",
+                  boxShadow: "0 12px 36px rgba(13,31,130,0.06)",
+                  scrollMarginTop: "2rem",
+                  boxSizing: "border-box",
+                }}
+              >
+                {/* Header Navy Block */}
+                <div style={{ background: "var(--primary)", padding: "2.25rem 1.75rem", position: "relative", overflow: "hidden" }}>
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1.5rem" }}>
+                    <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.72rem", letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(255,255,255,0.65)" }}>
+                      0{i + 1} / 03
+                    </span>
+                    <div style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: "2.25rem", height: "2.25rem", borderRadius: "50%", background: "rgba(255,255,255,0.15)", color: "rgba(255,255,255,0.95)" }}>
+                      {productIcons[pid]}
+                    </div>
+                  </div>
+                  <h3 style={{ fontFamily: "var(--font-display)", fontSize: "1.65rem", fontWeight: 700, color: "var(--primary-foreground)", letterSpacing: "-0.02em", marginBottom: "0.5rem" }}>
+                    {product.title}
+                  </h3>
+                  <p style={{ fontFamily: "var(--font-display)", fontSize: "0.92rem", color: "rgba(255,255,255,0.8)", fontStyle: "italic", lineHeight: 1.5, marginBottom: "1.75rem" }}>
+                    {product.tagline}
+                  </p>
+                  <button
+                    onClick={() => {
+                      if (onAction) {
+                        onAction(pid === "invoice" ? "funding" : "business");
+                      }
+                    }}
+                    style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.88rem", fontWeight: 700, padding: "0.75rem 1.75rem", borderRadius: "var(--radius)", border: "none", color: "var(--cta-foreground)", background: "var(--cta)", cursor: "pointer" }}
+                  >
+                    {product.cta} <ArrowRight size={14} />
+                  </button>
+                </div>
+
+                {/* White Content Block */}
+                <div style={{ padding: "2rem 1.75rem", background: "#ffffff" }}>
+                  <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.9rem", color: "var(--muted-foreground)", lineHeight: 1.7, marginBottom: "1.75rem" }}>
+                    {product.description}
+                  </p>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
+                    {product.steps.map((step, sIdx) => (
+                      <div key={sIdx} style={{ display: "grid", gridTemplateColumns: "1.5rem 1fr", gap: "0.75rem", alignItems: "flex-start" }}>
+                        <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.72rem", color: "var(--primary)", paddingTop: "0.15rem", fontWeight: 700 }}>
+                          0{sIdx + 1}
+                        </span>
+                        <div>
+                          <div style={{ display: "flex", alignItems: "center", gap: "0.35rem", marginBottom: "0.25rem" }}>
+                            <span style={{ fontFamily: "var(--font-display)", fontSize: "1.02rem", fontWeight: 600, color: "var(--foreground)" }}>{step.title}</span>
+                            <Tip content={step.tooltip} />
+                          </div>
+                          <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.82rem", color: "var(--muted-foreground)", lineHeight: 1.6, margin: 0 }}>{step.desc}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+    </>
   );
 }
 
@@ -1493,6 +1575,14 @@ export default function App() {
   const scrollTo = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 
   const scrollToChapterCard = (pid: ProductId) => {
+    const isMobile = typeof window !== "undefined" && window.innerWidth <= 768;
+    if (isMobile) {
+      const el = document.getElementById(`chapter-card-${pid}`);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+        return;
+      }
+    }
     const cardIdx = (["invoice", "ventures", "startup"] as ProductId[]).indexOf(pid);
     if (cardIdx >= 0) {
       window.dispatchEvent(new CustomEvent("goToChapterCard", { detail: { cardIdx, pid } }));
@@ -1726,8 +1816,8 @@ export default function App() {
           </div>
         </section>
 
-        {/* ─── Our Products (sticky scroll) ────────────────────────────── */}
-        <ChaptersScroll />
+        {/* ─── Our Products (sticky scroll on desktop, line-by-line on mobile) ─── */}
+        <ChaptersScroll onAction={(type) => setActiveModal(type)} />
 
         {/* ─── Operations ──────────────────────────────────────────────── */}
         <section id="operations" style={sectionBase}>
