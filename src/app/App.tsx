@@ -1985,13 +1985,13 @@ export default function App() {
               {/* Unified Menu Bar */}
               <div style={{ width: SECTION_W, margin: AUTO }}>
                 <nav style={{ display: "flex", flexWrap: "wrap", gap: "1rem 2rem", alignItems: "center", justifyContent: "center", paddingBottom: "1.25rem", borderBottom: "1px solid var(--border)" }}>
-                  {["About", "Privacy", "Terms"].map((item) => (
+                  {["About", "Blog", "Careers", "Privacy", "Terms", "Risk Disclosure Policy"].map((item) => (
                     <button
                       key={item}
                       onClick={() => {
                         if (item === "About") scrollTo("why-karncy");
                       }}
-                      style={{ background: "none", border: "none", padding: 0, fontFamily: "var(--font-sans)", fontSize: "1rem", fontWeight: 600, color: "#0f172a", cursor: "pointer", transition: "color 0.15s ease" }}
+                      style={{ background: "none", border: "none", padding: "0.25rem 0", fontFamily: "var(--font-sans)", fontSize: "0.95rem", fontWeight: 600, color: "#0f172a", cursor: "pointer", transition: "color 0.15s ease" }}
                       onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.color = "var(--primary)")}
                       onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.color = "#0f172a")}
                     >
