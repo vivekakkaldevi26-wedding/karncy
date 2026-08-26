@@ -1491,7 +1491,7 @@ export default function App() {
         <section id="prologue" style={{ minHeight: "100vh", position: "relative", display: "flex", flexDirection: "column" }}>
           <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", width: SECTION_W, margin: AUTO, paddingTop: "7rem", paddingBottom: "6rem", position: "relative", zIndex: 1 }}>
             <FadeUp>
-              <div style={{ display: "flex", alignItems: "center", gap: "0.875rem", marginBottom: "3rem" }}>
+              <div className="hero-tagline-badge" style={{ display: "flex", alignItems: "center", gap: "0.875rem", marginBottom: "3rem" }}>
                 <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.85rem", fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", color: "var(--primary)" }}>
                   Karncy — Your Growth Partner
                 </span>
