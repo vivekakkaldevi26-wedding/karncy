@@ -55,6 +55,36 @@ body,
     font-weight: 600 !important;
   }
 
+  .hero-subtext {
+    font-size: calc(1.08rem - 2px) !important;
+    line-height: 1.68 !important;
+  }
+
+  .dual-audience-container {
+    width: 95% !important;
+    max-width: 95% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  .dual-audience-card {
+    padding: 2.25rem 1.5rem !important;
+  }
+
+  .compass-doors-grid {
+    border: 1px solid var(--border) !important;
+  }
+
+  .compass-door-card {
+    border-right: none !important;
+    border-bottom: 1px solid var(--border) !important;
+    padding: 3rem 1.5rem !important;
+  }
+
+  .compass-door-card:last-child {
+    border-bottom: none !important;
+  }
+
   .site-logo {
     position: absolute;
     top: 20px;

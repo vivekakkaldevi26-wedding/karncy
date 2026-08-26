@@ -1506,7 +1506,7 @@ export default function App() {
             <FadeUp delay={0.2}>
               <div style={{ display: "flex", gap: "1.5rem", alignItems: "flex-start", marginBottom: "3rem", maxWidth: "32rem" }}>
                 <div style={{ width: "2px", background: "var(--border)", alignSelf: "stretch", flexShrink: 0, borderRadius: "9999px" }} />
-                <p style={{ fontFamily: "var(--font-sans)", fontSize: "1.08rem", color: "var(--muted-foreground)", lineHeight: 1.76 }}>
+                <p className="hero-subtext" style={{ fontFamily: "var(--font-sans)", fontSize: "1.08rem", color: "var(--muted-foreground)", lineHeight: 1.76 }}>
                   Embedded financial partner for Indian SMEs — invoice financing, joint ventures, and startup growth.
                 </p>
               </div>
@@ -1535,7 +1535,7 @@ export default function App() {
 
         {/* ─── Dual Audience ────────────────────────────────────────────── */}
         <section style={{ padding: "5rem 0" }}>
-          <div style={{ width: SECTION_W, margin: AUTO }}>
+          <div className="dual-audience-container" style={{ width: SECTION_W, margin: AUTO }}>
             <FadeUp>
               <p style={{ fontFamily: "var(--font-sans)", fontSize: "clamp(0.9rem, 1.5vw, 1.25rem)", fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--muted-foreground)", marginBottom: "2rem" }}>
                 Who are you here for?
@@ -1546,6 +1546,7 @@ export default function App() {
               {/* Business card — white background */}
               <FadeUp delay={0.05}>
                 <motion.div
+                  className="dual-audience-card"
                   whileHover={{ y: -4, boxShadow: "0 16px 48px rgba(13,31,130,0.1)" }}
                   transition={{ duration: 0.24 }}
                   style={{ background: "#ffffff", border: "1px solid var(--border)", borderRadius: "calc(var(--radius) * 2)", padding: "3rem 2.5rem", display: "flex", flexDirection: "column", gap: "1rem", height: "100%", boxSizing: "border-box" }}
@@ -1586,6 +1587,7 @@ export default function App() {
               {/* Investor card — white */}
               <FadeUp delay={0.1}>
                 <motion.div
+                  className="dual-audience-card"
                   whileHover={{ y: -4, boxShadow: "0 16px 48px rgba(13,31,130,0.1)" }}
                   transition={{ duration: 0.24 }}
                   style={{ background: "#ffffff", border: "1px solid var(--border)", borderRadius: "calc(var(--radius) * 2)", padding: "3rem 2.5rem", display: "flex", flexDirection: "column", gap: "1rem", height: "100%", boxSizing: "border-box" }}
@@ -1645,12 +1647,13 @@ export default function App() {
               </FadeUp>
             </div>
 
-            <div style={{ border: "1px solid var(--border)", borderRadius: "calc(var(--radius) * 2)", overflow: "hidden", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 280px), 1fr))" }}>
+            <div className="compass-doors-grid" style={{ border: "1px solid var(--border)", borderRadius: "calc(var(--radius) * 2)", overflow: "hidden", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 280px), 1fr))" }}>
               {(["invoice", "ventures", "startup"] as const).map((pid, i) => {
                 const p = products[pid];
                 return (
                     <motion.div
                       key={pid}
+                      className="compass-door-card"
                       onClick={() => scrollToChapterCard(pid)}
                       whileHover={{ backgroundColor: "rgba(255,105,0,0.03)" }}
                       transition={{ duration: 0.2 }}
@@ -1925,7 +1928,7 @@ export default function App() {
             </div>
 
             {/* Security warning */}
-            <div style={{ background: "rgba(255,105,0,0.06)", borderTop: "1px solid rgba(255,105,0,0.18)", padding: "0.6rem 0" }}>
+            <div style={{ background: "transparent", borderTop: "1px solid var(--border)", margin: "1.75rem 0", padding: "1rem 0" }}>
               <div style={{ width: SECTION_W, margin: AUTO, display: "flex", alignItems: "flex-start", gap: "0.75rem" }}>
                 <AlertTriangle size={15} style={{ color: "var(--cta)", flexShrink: 0, marginTop: "0.1rem" }} />
                 <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.82rem", fontWeight: 500, color: "var(--foreground)", lineHeight: 1.55, margin: 0 }}>
