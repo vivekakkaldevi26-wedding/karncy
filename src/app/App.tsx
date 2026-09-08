@@ -400,7 +400,7 @@ export const policiesData: Record<PolicyKey, {
   badge: string;
   lastUpdated: string;
   summary: string;
-  sections: { heading: string; icon?: React.ReactNode; text: string; bullets?: string[] }[];
+  sections: { heading: string; icon?: React.ReactNode; text?: string; bullets?: string[] }[];
 }> = {
   privacy: {
     title: "Privacy Policy",
