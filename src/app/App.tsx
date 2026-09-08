@@ -924,7 +924,7 @@ function ChaptersScroll({ onOpen, onAction }: { onOpen?: (id: ProductId) => void
 
       {/* ─── Mobile View: Line-by-line Vertical Stack using original ChapterCard ─── */}
       <section id="chapters-mobile" className="chapters-mobile-stack" style={{ display: "none", flexDirection: "column", padding: "2.5rem 0 3.5rem" }}>
-        <div style={{ width: "95%", margin: "0 auto 1.5rem" }}>
+        <div style={{ width: SECTION_W, margin: "0 auto 1.5rem" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "0.4rem" }}>
             <div style={{ width: "1.5rem", height: "1px", background: "var(--primary)" }} />
             <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.67rem", letterSpacing: "0.13em", textTransform: "uppercase", color: "var(--muted-foreground)" }}>03</span>
@@ -934,7 +934,7 @@ function ChaptersScroll({ onOpen, onAction }: { onOpen?: (id: ProductId) => void
           </h2>
         </div>
 
-        <div style={{ width: "95%", margin: "0 auto", display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+        <div style={{ width: SECTION_W, margin: "0 auto", display: "flex", flexDirection: "column", gap: "1.5rem" }}>
           {ids.map((pid) => (
             <div key={pid} id={`chapter-card-${pid}`} style={{ scrollMarginTop: "2.5rem", width: "100%" }}>
               <ChapterCard

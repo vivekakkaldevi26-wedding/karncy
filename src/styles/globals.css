@@ -156,8 +156,6 @@ body,
   }
 
   .dual-audience-container {
-    width: 95% !important;
-    max-width: 95% !important;
     margin-left: auto !important;
     margin-right: auto !important;
   }
@@ -165,6 +163,7 @@ body,
   .dual-audience-card {
     padding: 2.25rem 1.5rem !important;
   }
+
 
   .compass-doors-grid {
     border: 1px solid var(--border) !important;
