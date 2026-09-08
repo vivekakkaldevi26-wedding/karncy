@@ -590,16 +590,9 @@ export const policiesData: Record<PolicyKey, {
 
 function ScrollNav({ active }: { active: string }) {
   const [barHeights, setBarHeights] = useState<Record<string, number>>({});
-  const [scrollPct, setScrollPct] = useState(0);
   const scrollTo = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 
   useEffect(() => {
-    const handleScroll = () => {
-      const total = document.documentElement.scrollHeight - window.innerHeight;
-      const current = total > 0 ? Math.min(100, Math.max(0, Math.round((window.scrollY / total) * 100))) : 0;
-      setScrollPct(current);
-    };
-
     const measure = () => {
       const raw: Record<string, number> = {};
       let total = 0;
@@ -614,12 +607,9 @@ function ScrollNav({ active }: { active: string }) {
       setBarHeights(result);
     };
 
-    handleScroll();
-    window.addEventListener("scroll", handleScroll, { passive: true });
     const raf = requestAnimationFrame(measure);
     window.addEventListener("resize", measure);
     return () => {
-      window.removeEventListener("scroll", handleScroll);
       cancelAnimationFrame(raf);
       window.removeEventListener("resize", measure);
     };
@@ -627,28 +617,7 @@ function ScrollNav({ active }: { active: string }) {
 
   return (
     <nav aria-label="Section navigation" className="hidden lg:block" style={{ position: "fixed", right: "2rem", top: "50%", transform: "translateY(-50%)", zIndex: 50 }}>
-      {/* Scroll percentage indicator badge */}
       <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem", alignItems: "flex-end" }}>
-        <motion.div
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: "0.35rem",
-            background: "rgba(255, 255, 255, 0.95)",
-            backdropFilter: "blur(8px)",
-            border: "1px solid var(--border)",
-            borderRadius: "9999px",
-            padding: "0.3rem 0.65rem",
-            boxShadow: "0 4px 14px rgba(15,23,42,0.08)",
-            marginBottom: "0.5rem",
-          }}
-        >
-          <div style={{ width: "6px", height: "6px", borderRadius: "50%", background: "var(--cta)" }} />
-          <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.68rem", fontWeight: 700, color: "var(--foreground)", letterSpacing: "0.04em" }}>
-            {scrollPct}%
-          </span>
-        </motion.div>
-
         {sections.map(({ id, label }) => {
           const isActive = active === id;
           const barH = barHeights[id] ?? 40;
