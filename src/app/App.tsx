@@ -5,11 +5,12 @@ import {
   FileText, Users, TrendingUp, ChevronDown, ChevronLeft, ChevronRight,
   Zap, Shield, Clock, BarChart2, Heart, Star, CheckCircle,
   AlertTriangle, Linkedin, Facebook, Twitter,
+  BookOpen, Lock, Scale, FileCheck, Layers, Handshake, DollarSign, ShieldCheck, Sparkles, Check
 } from "lucide-react";
 import * as TooltipPrimitive from "@radix-ui/react-tooltip";
 import bgImage from "../imports/debora-pilati-dOG0z4-gqp0-unsplash_1.png";
 import logoSrc from "../imports/Group_1171280047.png";
-import { ImageWithFallback } from "@/app/components/figma/ImageWithFallback";
+import { ImageWithFallback } from "./components/figma/ImageWithFallback";
 import msmeForge from "../imports/Forre-Logo_1.png";
 import msmeFlashgard from "../imports/images__3__4.png";
 import msmeApporchid from "../imports/img132_1.png";
@@ -21,7 +22,8 @@ import certSoc2 from "../imports/images-1.png";
 import certIso27001 from "../imports/iso2001-logo-300x200-1.png";
 import ingrainLogo from "../imports/ingrain-logo.jpg";
 
-type ProductId = "invoice" | "ventures" | "startup";
+export type ProductId = "invoice" | "ventures" | "startup";
+export type PolicyKey = "privacy" | "terms" | "risk" | "cookies" | "grievance" | "fund-terms";
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
@@ -36,11 +38,29 @@ const CARD_MIN_WIDTH = 320;
 
 const products = {
   invoice: {
+    id: "invoice" as ProductId,
     title: "Karncy Financing",
+    badge: "Core Private Credit Engine",
+    subtitle: "Invoice & Accounts Receivable Financing",
     tagline: "Cash flow, unlocked from paper.",
-    cta: "Let's unlock",
+    cta: "Apply for Invoice Financing",
+    ctaSecondary: "Speak to Risk Team",
     description:
-      "Turn outstanding receivables into immediate working capital — without waiting weeks for buyer settlement. We underwrite fast and deploy faster.",
+      "Turn outstanding receivables into immediate working capital without waiting 30 to 90 days for buyer settlement. We underwrite within 48 hours and disburse directly to your account with zero equity dilution.",
+    metrics: [
+      { label: "Duration", value: "30–90 Days" },
+      { label: "Advance Rate", value: "80%–90%" },
+      { label: "Underwriting", value: "48 Hours" },
+      { label: "Settlement", value: "Self-Liquidating" },
+      { label: "Security", value: "Debtor Credit" },
+    ],
+    features: [
+      "Zero collateral or equity dilution required — credit based on buyer viability",
+      "Automated invoice verification via GST, Tally, SAP and Zoho integrations",
+      "Escrow-managed settlement with automatic reserve release upon buyer payment",
+      "Continuous capital recycling for revolving working capital needs",
+    ],
+    idealFor: "Manufacturers, exporters, distributors, and B2B suppliers dealing with 30-90 day enterprise buyer payment terms.",
     steps: [
       {
         title: "List Your Invoice",
@@ -65,11 +85,29 @@ const products = {
     ],
   },
   ventures: {
+    id: "ventures" as ProductId,
     title: "Karncy Ventures",
+    badge: "Income & Managed Joint Ventures",
+    subtitle: "Managed SME Project Partnerships",
     tagline: "We don't fund and disappear. We build alongside you.",
-    cta: "Let's venture",
+    cta: "Apply for Venture Partnership",
+    ctaSecondary: "Submit Project Opportunity",
     description:
-      "Present capital, not silent capital. We enter as active partners — contributing expertise, networks, and operational muscle alongside financial resources.",
+      "Present capital, not silent capital. We enter as active joint-venture partners with established SMEs executing high-value, assured contracts. We provide milestone funding, comptroller oversight, and operational scaffolding until payout at close.",
+    metrics: [
+      { label: "Structure", value: "Ring-Fenced JV" },
+      { label: "Deployment", value: "Milestone Tranches" },
+      { label: "Oversight", value: "Comptroller Control" },
+      { label: "Payout", value: "At Project Close" },
+      { label: "Horizon", value: "6–18 Months" },
+    ],
+    features: [
+      "Ring-fenced project vehicle ensuring capital goes 100% to verified project expenses",
+      "Karncy comptroller oversight over dedicated escrow banking and vendor disbursements",
+      "Milestone-based tranche releases tied to measurable execution checkpoints",
+      "Structured revenue-share and transparent profit distribution upon client delivery",
+    ],
+    idealFor: "SMEs with confirmed purchase orders, EPC contracts, or turnkey enterprise supply agreements requiring execution capital.",
     steps: [
       {
         title: "Viability Assessment",
@@ -94,11 +132,29 @@ const products = {
     ],
   },
   startup: {
+    id: "startup" as ProductId,
     title: "Karncy Equity",
+    badge: "Strategic & Early-Stage Sleeve",
+    subtitle: "Equity & Convertible Growth Capital",
     tagline: "Founders don't need money first. They need a partner first.",
-    cta: "Let's partner",
+    cta: "Apply for Startup Equity",
+    ctaSecondary: "Explore Strategic Terms",
     description:
-      "Network, operations, compliance scaffolding — we build the foundation so founders can build the business. Capital follows once the structure is solid.",
+      "Capped at ≤10% of our fund allocation, Karncy Equity provides early-stage backing and complete compliance scaffolding. We remove the regulatory, accounting, and legal friction so founders can focus solely on product and market traction.",
+    metrics: [
+      { label: "Fund Cap", value: "≤10% of Portfolio" },
+      { label: "Instruments", value: "Equity / Convertible" },
+      { label: "Scaffolding", value: "GST, Legal, Payroll" },
+      { label: "Network", value: "80+ Aligned Investors" },
+      { label: "Target Horizon", value: "3–5 Years" },
+    ],
+    features: [
+      "Turnkey institutional scaffolding: entity structure, GST filings, secretarial compliance",
+      "Direct introductions to sector-specific co-investors and Series A funds",
+      "Hands-on unit economics calibration, pricing strategy, and enterprise sales support",
+      "Structured 12-18 month preparation for strategic buyout or institutional rounds",
+    ],
+    idealFor: "Early-stage founders with proven product-market fit seeking smart, patient growth capital without governance overhead.",
     steps: [
       {
         title: "Deep Assessment",
@@ -337,13 +393,213 @@ function Tip({ content }: { content: string }) {
   );
 }
 
-// ─── Right scroll nav ─────────────────────────────────────────────────────────
+// ─── Policy Pages Data ────────────────────────────────────────────────────────
+
+export const policiesData: Record<PolicyKey, {
+  title: string;
+  badge: string;
+  lastUpdated: string;
+  summary: string;
+  sections: { heading: string; icon?: React.ReactNode; text: string; bullets?: string[] }[];
+}> = {
+  privacy: {
+    title: "Privacy Policy",
+    badge: "Data Governance & Protection",
+    lastUpdated: "January 2026",
+    summary: "Karncy Ventures Private Limited ('Karncy', 'we', 'our') is committed to protecting your organizational and personal data in strict compliance with the Digital Personal Data Protection (DPDP) Act, 2023, ISO/IEC 27001 standards, and global privacy best practices.",
+    sections: [
+      {
+        heading: "1. Information We Collect",
+        text: "In order to provide our financial underwriting, invoice factoring, and venture syndication services, we collect both organizational and authorized representative data.",
+        bullets: [
+          "Corporate & Financial Data: GSTIN, PAN, audited financial statements, ledger records, Tally/SAP/Zoho ERP data, bank account statements, and debtor trade receivables.",
+          "Representative Information: Full name, official email address, phone number, designation, and KYC verification records of directors and signing authorities.",
+          "Technical & Usage Information: IP address, device fingerprints, encrypted session cookies, and interaction logs on karncy.com and associated subdomains.",
+        ],
+      },
+      {
+        heading: "2. How We Use & Process Your Data",
+        text: "All collected data is processed strictly for legitimate commercial underwriting, regulatory compliance, and transaction settlement.",
+        bullets: [
+          "Underwriting & Risk Profiling: Verification of invoice genuineness, buyer credit scoring, and commercial CIBIL validation.",
+          "Escrow & Settlement Operations: Coordinating with partner escrow banking partners to disburse advances and reconcile buyer settlements.",
+          "Regulatory & Statutory Reporting: Compliance with RBI, MCA, GSTN, FIU-IND, and anti-money laundering (AML) requirements.",
+          "Platform Security & Fraud Prevention: Monitoring unauthorized logins, detecting altered PDF invoices, and safeguarding platform integrity.",
+        ],
+      },
+      {
+        heading: "3. Information Security & Encryption Standards",
+        text: "Karncy implements institutional-grade technical and organizational safeguards.",
+        bullets: [
+          "ISO/IEC 27001 Certified & SOC 2 Type II compliant controls across all data infrastructure.",
+          "End-to-end encryption: AES-256 for data at rest and TLS 1.3 for all data in transit.",
+          "Role-based access controls (RBAC) ensuring only credentialed risk analysts view proprietary enterprise records.",
+          "Periodic independent third-party penetration testing and vulnerability assessments.",
+        ],
+      },
+      {
+        heading: "4. Data Retention & User Rights",
+        text: "We retain transaction and financial records for a minimum statutory period of 8 years as required by Indian financial regulations. You retain the right to review, rectify, or request erasure of personal data not mandated by statutory retention requirements by contacting our Data Protection Officer at privacy@karncy.com.",
+      },
+    ],
+  },
+  terms: {
+    title: "Terms & Conditions",
+    badge: "Platform Agreement & Usage Terms",
+    lastUpdated: "January 2026",
+    summary: "These Terms of Service govern access to and use of the Karncy platform, digital portal, and syndication services provided by Karncy Ventures Private Limited.",
+    sections: [
+      {
+        heading: "1. Eligibility & Representation",
+        text: "Access to Karncy's financing and joint venture programs is restricted to legally registered entities (Proprietorships, LLPs, Private Limited, and Public Limited companies) operating in India, and accredited investors executing definitive agreements.",
+        bullets: [
+          "You warrant that all uploaded invoices, contracts, and financial disclosures are true, genuine, and legally enforceable.",
+          "You confirm that authorized signatories have full legal authority to enter binding factoring and revenue-share commitments.",
+        ],
+      },
+      {
+        heading: "2. Invoice Factoring & Escrow Mechanism",
+        text: "Invoice financing through Karncy operates via structured tri-party escrow or direct receivable assignments.",
+        bullets: [
+          "Approved invoices receive an advance rate typically between 80% and 90% of face value, net of agreed platform discount fees.",
+          "Upon receipt of full buyer payment into the designated escrow account, the residual reserve is automatically released to the SME within 30 minutes.",
+          "In the event of dispute or commercial default by the debtor, the primary borrower remains obligated pursuant to the definitive Master Factoring Agreement.",
+        ],
+      },
+      {
+        heading: "3. Intellectual Property & Acceptable Use",
+        text: "All algorithms, underwriting models, UI architectures, software code, and trade marks are the exclusive intellectual property of Karncy Ventures Private Limited. Users shall not reverse engineer, scrape, or automate extraction of proprietary deal data.",
+      },
+      {
+        heading: "4. Limitation of Liability & Governing Law",
+        text: "Karncy shall not be liable for indirect, incidental, or consequential damages resulting from third-party banking delays, GST network outages, or buyer commercial insolvencies. These Terms are governed by the laws of India, with exclusive jurisdiction in Hyderabad, Telangana.",
+      },
+    ],
+  },
+  risk: {
+    title: "Disclaimer & Risk Disclosure Policy",
+    badge: "Mandatory Regulatory & Offering Disclosures",
+    lastUpdated: "January 2026",
+    summary: "Detailed statements of disclosures, investor risk factors, and regulatory parameters as per governing offering documentation.",
+    sections: [
+      {
+        heading: "1. Informational & Private Offering Notice",
+        text: "This website is provided for informational and business evaluation purposes only. It does not constitute an offer to sell or a solicitation of an offer to buy securities except pursuant to definitive offering documents and applicable laws. Offering of interests in Karncy SME Synergy Fund, LLC is conducted under Regulation D Rule 506(c) and Section 4(a)(2) of the Securities Act of 1933, exclusively for Accredited Investors.",
+      },
+      {
+        heading: "2. Non-Guaranteed Preferred Return",
+        text: "Any mention of a 9% preferred return per annum represents a target priority distribution rate, non-compounding, payable strictly subject to the availability of distributable net cash flows from underlying SME repayments. It is NOT a guaranteed return, bank deposit, or insured fixed return.",
+      },
+      {
+        heading: "3. Illiquidity & Lock-Up Period",
+        text: "Investments in private credit and SME ventures are illiquid. Subscriptions are subject to a mandatory 36-month lock-up period. There is no active secondary trading market, and units cannot be redeemed on demand.",
+      },
+      {
+        heading: "4. Credit & SME Default Risks",
+        text: "Underlying SME transactions involve commercial risks including debtor payment delays, contractual disputes, supply chain disruptions, and potential defaults. While Karncy implements multi-layered due diligence, CIBIL scoring, and comptroller escrow controls, capital loss remains possible.",
+      },
+      {
+        heading: "5. Strategic Equity Sleeve Cap (≤10%)",
+        text: "Strategic and early-stage equity investments are capped at a maximum of 10% of total committed capital to preserve the debt-first, cash-flow-backed risk profile of the overall portfolio.",
+      },
+      {
+        heading: "6. Regulatory & Registration Status",
+        text: "Securities offered by Karncy SME Synergy Fund, LLC have not been registered under the Securities Act of 1933, state securities laws, or endorsed by the US SEC, RBI, or SEBI. Prospective investors must review the Private Placement Memorandum (PPM) and consult independent tax and legal advisers.",
+      },
+    ],
+  },
+  cookies: {
+    title: "Cookie & Tracking Policy",
+    badge: "Browser Storage & Analytics",
+    lastUpdated: "January 2026",
+    summary: "This Cookie Policy explains how Karncy utilizes browser storage, session cookies, and analytics tags to optimize your browsing experience.",
+    sections: [
+      {
+        heading: "1. What Are Cookies?",
+        text: "Cookies are compact text files stored on your browser or device that enable our platform to recognize your device, remember preferences, and analyze website performance.",
+      },
+      {
+        heading: "2. Categories of Cookies We Use",
+        bullets: [
+          "Strictly Necessary Cookies: Essential for secure navigation, CSRF protection, and application form persistence.",
+          "Performance & Analytics Cookies: Anonymized tracking (via privacy-compliant analytics) to measure page load speeds and scroll engagement.",
+          "Functionality Cookies: Remember user preferences such as theme settings, volume state, and modal dismissal history.",
+        ],
+      },
+      {
+        heading: "3. Managing Your Preferences",
+        text: "You can modify your browser settings to decline or delete cookies at any time. Note that blocking necessary cookies may impair platform interactivity and application submissions.",
+      },
+    ],
+  },
+  grievance: {
+    title: "Grievance Redressal Policy",
+    badge: "User Protection & Escalation Matrix",
+    lastUpdated: "January 2026",
+    summary: "Karncy is dedicated to transparent, fair, and prompt resolution of all customer, borrower, and partner queries.",
+    sections: [
+      {
+        heading: "1. Grievance Officer Details",
+        text: "In accordance with Information Technology rules and financial service standards, the details of our Principal Grievance Officer are:",
+        bullets: [
+          "Officer: Nithin S. (Principal Grievance & Compliance Officer)",
+          "Email: grievance@karncy.com / hello@karncy.com",
+          "Telephone: 040-42011067 (Mon–Fri, 10:00 AM – 6:00 PM IST)",
+          "Address: 5th Floor, The Park View, Gachibowli, Hyderabad, Telangana 500032, India",
+        ],
+      },
+      {
+        heading: "2. Grievance Escalation Matrix & Timelines",
+        bullets: [
+          "Level 1 (Submission & Acknowledgement): Every ticket is registered with a unique complaint reference ID and acknowledged within 48 hours.",
+          "Level 2 (Internal Assessment): The compliance desk reviews documents and provides an interim response or resolution proposal within 7 business days.",
+          "Level 3 (Final Resolution): Final resolution and closure report issued within a maximum of 15 business days from initial submission.",
+        ],
+      },
+    ],
+  },
+  "fund-terms": {
+    title: "Fund Terms & Structure",
+    badge: "Karncy SME Synergy Fund, LLC",
+    lastUpdated: "January 2026",
+    summary: "Headline parameters and structural overview for accredited investors and institutional partners.",
+    sections: [
+      {
+        heading: "1. Fund Architecture",
+        bullets: [
+          "Fund Entity: Karncy SME Synergy Fund, LLC (Texas Limited Liability Company / Pooled Investment Vehicle).",
+          "Offering Type: Class A Units — Regulation D Rule 506(c) and Section 4(a)(2).",
+          "Target Capital: USD 20,000,000 Maximum Offering.",
+          "Minimum Commitment: USD 100,000 (subject to Manager discretion).",
+        ],
+      },
+      {
+        heading: "2. Return Mechanism & Liquidity",
+        bullets: [
+          "Preferred Return: 9% per annum, non-compounding, payable quarterly from available distributable cash flows.",
+          "Lock-Up Period: 36 months from initial subscription date.",
+          "Fund Term: Perpetual until terminated pursuant to definitive governing company agreements.",
+          "Reporting: Quarterly detailed financial statements, MIS portfolio review, and risk analytics.",
+        ],
+      },
+    ],
+  },
+};
+
+// ─── Right scroll nav with Live Scroll Percentage ───────────────────────────
 
 function ScrollNav({ active }: { active: string }) {
   const [barHeights, setBarHeights] = useState<Record<string, number>>({});
+  const [scrollPct, setScrollPct] = useState(0);
   const scrollTo = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 
   useEffect(() => {
+    const handleScroll = () => {
+      const total = document.documentElement.scrollHeight - window.innerHeight;
+      const current = total > 0 ? Math.min(100, Math.max(0, Math.round((window.scrollY / total) * 100))) : 0;
+      setScrollPct(current);
+    };
+
     const measure = () => {
       const raw: Record<string, number> = {};
       let total = 0;
@@ -357,14 +613,42 @@ function ScrollNav({ active }: { active: string }) {
       sections.forEach(({ id }) => { result[id] = Math.max(16, Math.round(raw[id] * scale)); });
       setBarHeights(result);
     };
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
     const raf = requestAnimationFrame(measure);
     window.addEventListener("resize", measure);
-    return () => { cancelAnimationFrame(raf); window.removeEventListener("resize", measure); };
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      cancelAnimationFrame(raf);
+      window.removeEventListener("resize", measure);
+    };
   }, []);
 
   return (
     <nav aria-label="Section navigation" className="hidden lg:block" style={{ position: "fixed", right: "2rem", top: "50%", transform: "translateY(-50%)", zIndex: 50 }}>
-      <div style={{ display: "flex", flexDirection: "column", gap: "0.3rem", alignItems: "flex-end" }}>
+      {/* Scroll percentage indicator badge */}
+      <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem", alignItems: "flex-end" }}>
+        <motion.div
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "0.35rem",
+            background: "rgba(255, 255, 255, 0.95)",
+            backdropFilter: "blur(8px)",
+            border: "1px solid var(--border)",
+            borderRadius: "9999px",
+            padding: "0.3rem 0.65rem",
+            boxShadow: "0 4px 14px rgba(15,23,42,0.08)",
+            marginBottom: "0.5rem",
+          }}
+        >
+          <div style={{ width: "6px", height: "6px", borderRadius: "50%", background: "var(--cta)" }} />
+          <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.68rem", fontWeight: 700, color: "var(--foreground)", letterSpacing: "0.04em" }}>
+            {scrollPct}%
+          </span>
+        </motion.div>
+
         {sections.map(({ id, label }) => {
           const isActive = active === id;
           const barH = barHeights[id] ?? 40;
@@ -884,7 +1168,9 @@ function ChaptersScroll({ onOpen, onAction }: { onOpen?: (id: ProductId) => void
                   key={pid}
                   productId={pid}
                   onExplore={() => {
-                    if (i < ids.length - 1) {
+                    if (onOpen) {
+                      onOpen(pid);
+                    } else if (i < ids.length - 1) {
                       goToCard(i + 1);
                     } else {
                       document.getElementById("why-karncy")?.scrollIntoView({ behavior: "smooth" });
@@ -940,7 +1226,9 @@ function ChaptersScroll({ onOpen, onAction }: { onOpen?: (id: ProductId) => void
               <ChapterCard
                 productId={pid}
                 onExplore={() => {
-                  if (onAction) {
+                  if (onOpen) {
+                    onOpen(pid);
+                  } else if (onAction) {
                     onAction(pid === "invoice" ? "funding" : "business");
                   }
                 }}
@@ -955,61 +1243,869 @@ function ChaptersScroll({ onOpen, onAction }: { onOpen?: (id: ProductId) => void
   );
 }
 
-// ─── Product detail overlay ────────────────────────────────────────────────────
+// ─── Product detail overlay (Large Pop-up with Header, Close Button & Full Details) ───
 
-function ProductDetailOverlay({ id, onClose, onOpenContact }: { id: ProductId; onClose: () => void; onOpenContact: (type: ModalType) => void }) {
+function ProductDetailOverlay({
+  id,
+  onClose,
+  onOpenContact,
+}: {
+  id: ProductId;
+  onClose: () => void;
+  onOpenContact: (type: ModalType) => void;
+}) {
   const product = products[id];
+  const [activeTab, setActiveTab] = useState<"overview" | "process" | "terms">("overview");
+
   return (
     <motion.div
-      initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}
-      style={{ position: "fixed", inset: 0, zIndex: 200, display: "flex", alignItems: "center", justifyContent: "center", padding: "1.5rem", background: "rgba(20,20,43,0.5)", backdropFilter: "blur(16px)" }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.22 }}
+      style={{
+        position: "fixed",
+        inset: 0,
+        zIndex: 200,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "clamp(1rem, 3vw, 2rem)",
+        background: "rgba(15, 23, 42, 0.7)",
+        backdropFilter: "blur(16px)",
+      }}
       onClick={onClose}
     >
       <motion.div
-        initial={{ opacity: 0, scale: 0.96, y: 16 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.96, y: 16 }}
-        transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
-        style={{ width: "100%", maxWidth: "54rem", maxHeight: "90vh", overflowY: "auto", background: "var(--card)", border: "1px solid var(--border)", borderRadius: "var(--radius)", position: "relative" }}
+        initial={{ opacity: 0, scale: 0.95, y: 20 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.95, y: 20 }}
+        transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+        style={{
+          width: "100%",
+          maxWidth: "60rem",
+          maxHeight: "90vh",
+          display: "flex",
+          flexDirection: "column",
+          background: "#ffffff",
+          border: "1px solid var(--border)",
+          borderRadius: "calc(var(--radius) * 2)",
+          boxShadow: "0 25px 80px rgba(15,23,42,0.35)",
+          position: "relative",
+          overflow: "hidden",
+        }}
         onClick={(e) => e.stopPropagation()}
       >
-        <button onClick={onClose} style={{ position: "absolute", top: "1rem", right: "1rem", zIndex: 20, width: "2.1rem", height: "2.1rem", borderRadius: "50%", border: "1px solid var(--border)", background: "var(--card)", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", color: "var(--muted-foreground)" }}>
-          <X size={13} />
-        </button>
-        <div style={{ background: "var(--card)", borderBottom: "1px solid var(--border)", padding: "1.25rem 2rem" }}>
-          <h2 style={{ fontFamily: "var(--font-display)", fontSize: "1.05rem", fontWeight: 700, color: "var(--foreground)" }}>{product.title}</h2>
+        {/* ─── Modal Header Bar ─── */}
+        <div
+          style={{
+            background: "var(--primary)",
+            color: "var(--primary-foreground)",
+            padding: "1.5rem clamp(1.5rem, 3vw, 2.5rem)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            borderBottom: "1px solid rgba(255,255,255,0.12)",
+            position: "relative",
+            zIndex: 10,
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+            <div
+              style={{
+                width: "2.75rem",
+                height: "2.75rem",
+                borderRadius: "calc(var(--radius) * 1.2)",
+                background: "rgba(255,255,255,0.15)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                color: "#ffffff",
+                flexShrink: 0,
+              }}
+            >
+              {productIcons[id]}
+            </div>
+            <div>
+              <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.2rem" }}>
+                <span
+                  style={{
+                    fontFamily: "var(--font-sans)",
+                    fontSize: "0.68rem",
+                    fontWeight: 700,
+                    letterSpacing: "0.12em",
+                    textTransform: "uppercase",
+                    color: "var(--cta)",
+                    background: "rgba(255,255,255,0.12)",
+                    padding: "0.2rem 0.6rem",
+                    borderRadius: "9999px",
+                  }}
+                >
+                  {product.badge}
+                </span>
+              </div>
+              <h2
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "clamp(1.25rem, 2.5vw, 1.6rem)",
+                  fontWeight: 700,
+                  color: "#ffffff",
+                  letterSpacing: "-0.02em",
+                  margin: 0,
+                  lineHeight: 1.2,
+                }}
+              >
+                {product.title}
+              </h2>
+            </div>
+          </div>
+
+          {/* Top-Right Close Button (X) */}
+          <button
+            onClick={onClose}
+            aria-label="Close dialog"
+            style={{
+              width: "2.4rem",
+              height: "2.4rem",
+              borderRadius: "50%",
+              border: "1px solid rgba(255,255,255,0.3)",
+              background: "rgba(255,255,255,0.15)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              cursor: "pointer",
+              color: "#ffffff",
+              transition: "all 0.18s ease",
+            }}
+            onMouseEnter={(e) => {
+              (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,255,255,0.3)";
+              (e.currentTarget as HTMLButtonElement).style.transform = "scale(1.06)";
+            }}
+            onMouseLeave={(e) => {
+              (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,255,255,0.15)";
+              (e.currentTarget as HTMLButtonElement).style.transform = "scale(1)";
+            }}
+          >
+            <X size={16} />
+          </button>
         </div>
-        <div style={{ padding: "2.25rem 2rem" }}>
-          <p style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.6rem, 2.8vw, 2.2rem)", fontWeight: 700, fontStyle: "italic", color: "var(--primary)", marginBottom: "1rem", lineHeight: 1.2 }}>"{product.tagline}"</p>
-          <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.875rem", color: "var(--muted-foreground)", lineHeight: 1.72, marginBottom: "1.75rem" }}>{product.description}</p>
-          <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.67rem", letterSpacing: "0.13em", textTransform: "uppercase", color: "var(--muted-foreground)", marginBottom: "1.1rem" }}>The Process</p>
-          <div style={{ position: "relative" }}>
-            <div style={{ position: "absolute", left: 17, top: 22, bottom: 22, width: 1, background: "var(--border)" }} />
-            {product.steps.map((step, i) => (
-              <motion.div key={i} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.08 + i * 0.06 }}
-                style={{ display: "flex", gap: "1.25rem", alignItems: "flex-start", paddingBottom: i < product.steps.length - 1 ? "1.5rem" : 0 }}>
-                <div style={{ position: "relative", zIndex: 1, width: "2.1rem", height: "2.1rem", borderRadius: "50%", border: "1px solid var(--border)", background: "var(--card)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, fontFamily: "var(--font-sans)", fontSize: "0.67rem", color: "var(--primary)" }}>
-                  {i + 1}
-                </div>
-                <div style={{ paddingTop: "0.3rem" }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: "0.35rem", marginBottom: "0.2rem" }}>
-                    <h4 style={{ fontFamily: "var(--font-display)", fontSize: "0.875rem", fontWeight: 600, color: "var(--foreground)" }}>{step.title}</h4>
-                    <Tip content={step.tooltip} />
-                  </div>
-                  <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.8rem", color: "var(--muted-foreground)", lineHeight: 1.65 }}>{step.desc}</p>
-                </div>
-              </motion.div>
+
+        {/* ─── Modal Scrollable Body ─── */}
+        <div
+          style={{
+            flex: 1,
+            overflowY: "auto",
+            padding: "clamp(1.5rem, 3vw, 2.5rem)",
+            display: "flex",
+            flexDirection: "column",
+            gap: "2rem",
+          }}
+        >
+          {/* Tagline & Core Description */}
+          <div>
+            <p
+              style={{
+                fontFamily: "var(--font-display)",
+                fontSize: "clamp(1.4rem, 2.4vw, 1.85rem)",
+                fontWeight: 700,
+                fontStyle: "italic",
+                color: "var(--primary)",
+                lineHeight: 1.25,
+                marginBottom: "0.75rem",
+              }}
+            >
+              "{product.tagline}"
+            </p>
+            <p
+              style={{
+                fontFamily: "var(--font-sans)",
+                fontSize: "0.95rem",
+                color: "#334155",
+                lineHeight: 1.75,
+                margin: 0,
+              }}
+            >
+              {product.description}
+            </p>
+          </div>
+
+          {/* Key Metrics Chips */}
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))",
+              gap: "0.85rem",
+              padding: "1.25rem",
+              background: "#f8fafc",
+              border: "1px solid var(--border)",
+              borderRadius: "calc(var(--radius) * 1.5)",
+            }}
+          >
+            {product.metrics.map((m) => (
+              <div key={m.label} style={{ display: "flex", flexDirection: "column", gap: "0.2rem" }}>
+                <span
+                  style={{
+                    fontFamily: "var(--font-sans)",
+                    fontSize: "0.68rem",
+                    textTransform: "uppercase",
+                    letterSpacing: "0.08em",
+                    color: "var(--muted-foreground)",
+                    fontWeight: 600,
+                  }}
+                >
+                  {m.label}
+                </span>
+                <span
+                  style={{
+                    fontFamily: "var(--font-display)",
+                    fontSize: "0.95rem",
+                    fontWeight: 700,
+                    color: "var(--foreground)",
+                  }}
+                >
+                  {m.value}
+                </span>
+              </div>
             ))}
           </div>
-          <div style={{ marginTop: "2.25rem", paddingTop: "1.75rem", borderTop: "1px solid var(--border)" }}>
+
+          {/* Key Advantages Grid */}
+          <div>
+            <h4
+              style={{
+                fontFamily: "var(--font-sans)",
+                fontSize: "0.72rem",
+                letterSpacing: "0.14em",
+                textTransform: "uppercase",
+                color: "var(--muted-foreground)",
+                fontWeight: 700,
+                marginBottom: "0.85rem",
+              }}
+            >
+              Key Institutional Advantages
+            </h4>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "0.75rem" }}>
+              {product.features.map((feat, i) => (
+                <div
+                  key={i}
+                  style={{
+                    display: "flex",
+                    alignItems: "flex-start",
+                    gap: "0.65rem",
+                    padding: "0.85rem 1rem",
+                    background: "#ffffff",
+                    border: "1px solid var(--border)",
+                    borderRadius: "calc(var(--radius) * 1.2)",
+                  }}
+                >
+                  <div
+                    style={{
+                      width: "1.35rem",
+                      height: "1.35rem",
+                      borderRadius: "50%",
+                      background: "rgba(13,31,130,0.08)",
+                      color: "var(--primary)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      flexShrink: 0,
+                      marginTop: "0.1rem",
+                    }}
+                  >
+                    <Check size={11} />
+                  </div>
+                  <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.86rem", color: "#1e293b", lineHeight: 1.55 }}>
+                    {feat}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Ideal Candidate Profile */}
+          <div
+            style={{
+              padding: "1rem 1.25rem",
+              background: "rgba(255,105,0,0.06)",
+              border: "1px solid rgba(255,105,0,0.2)",
+              borderRadius: "calc(var(--radius) * 1.2)",
+              display: "flex",
+              alignItems: "flex-start",
+              gap: "0.75rem",
+            }}
+          >
+            <Sparkles size={18} style={{ color: "var(--cta)", flexShrink: 0, marginTop: "0.15rem" }} />
+            <div>
+              <p
+                style={{
+                  fontFamily: "var(--font-sans)",
+                  fontSize: "0.75rem",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.1em",
+                  color: "var(--cta)",
+                  fontWeight: 700,
+                  margin: "0 0 0.2rem 0",
+                }}
+              >
+                Ideal Candidate Profile
+              </p>
+              <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.875rem", color: "#334155", margin: 0, lineHeight: 1.6 }}>
+                {product.idealFor}
+              </p>
+            </div>
+          </div>
+
+          {/* 4-Step Process Timeline */}
+          <div>
+            <h4
+              style={{
+                fontFamily: "var(--font-sans)",
+                fontSize: "0.72rem",
+                letterSpacing: "0.14em",
+                textTransform: "uppercase",
+                color: "var(--muted-foreground)",
+                fontWeight: 700,
+                marginBottom: "1.25rem",
+              }}
+            >
+              Execution Workflow & Milestones
+            </h4>
+            <div style={{ position: "relative" }}>
+              <div
+                style={{
+                  position: "absolute",
+                  left: 17,
+                  top: 22,
+                  bottom: 22,
+                  width: 2,
+                  background: "var(--border)",
+                }}
+              />
+              {product.steps.map((step, i) => (
+                <div
+                  key={i}
+                  style={{
+                    display: "flex",
+                    gap: "1.25rem",
+                    alignItems: "flex-start",
+                    paddingBottom: i < product.steps.length - 1 ? "1.5rem" : 0,
+                  }}
+                >
+                  <div
+                    style={{
+                      position: "relative",
+                      zIndex: 1,
+                      width: "2.2rem",
+                      height: "2.2rem",
+                      borderRadius: "50%",
+                      border: "2px solid var(--primary)",
+                      background: "#ffffff",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      flexShrink: 0,
+                      fontFamily: "var(--font-display)",
+                      fontSize: "0.8rem",
+                      fontWeight: 700,
+                      color: "var(--primary)",
+                    }}
+                  >
+                    {i + 1}
+                  </div>
+                  <div style={{ paddingTop: "0.2rem", flex: 1 }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "0.45rem", marginBottom: "0.25rem" }}>
+                      <h5
+                        style={{
+                          fontFamily: "var(--font-display)",
+                          fontSize: "0.95rem",
+                          fontWeight: 700,
+                          color: "var(--foreground)",
+                          margin: 0,
+                        }}
+                      >
+                        {step.title}
+                      </h5>
+                      <Tip content={step.tooltip} />
+                    </div>
+                    <p
+                      style={{
+                        fontFamily: "var(--font-sans)",
+                        fontSize: "0.85rem",
+                        color: "var(--muted-foreground)",
+                        lineHeight: 1.65,
+                        margin: 0,
+                      }}
+                    >
+                      {step.desc}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* ─── Modal Action Bar ─── */}
+        <div
+          style={{
+            padding: "1.25rem clamp(1.5rem, 3vw, 2.5rem)",
+            background: "#f8fafc",
+            borderTop: "1px solid var(--border)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            flexWrap: "wrap",
+            gap: "1rem",
+          }}
+        >
+          <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
             <button
               onClick={() => {
                 onClose();
                 onOpenContact(id === "invoice" ? "funding" : "business");
               }}
-              style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.9rem", fontWeight: 600, padding: "0.875rem 2.25rem", background: "var(--primary)", color: "var(--primary-foreground)", borderRadius: "var(--radius)", border: "none", cursor: "pointer" }}
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "0.5rem",
+                fontFamily: "var(--font-sans)",
+                fontSize: "0.875rem",
+                fontWeight: 700,
+                padding: "0.85rem 2rem",
+                background: "var(--cta)",
+                color: "var(--cta-foreground)",
+                borderRadius: "var(--radius)",
+                border: "none",
+                cursor: "pointer",
+                boxShadow: "0 4px 14px rgba(255,105,0,0.25)",
+              }}
             >
               {product.cta} <ArrowRight size={14} />
             </button>
+            <button
+              onClick={() => {
+                onClose();
+                onOpenContact("business");
+              }}
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "0.5rem",
+                fontFamily: "var(--font-sans)",
+                fontSize: "0.875rem",
+                fontWeight: 600,
+                padding: "0.85rem 1.75rem",
+                background: "#ffffff",
+                color: "var(--primary)",
+                borderRadius: "var(--radius)",
+                border: "1.5px solid var(--primary)",
+                cursor: "pointer",
+              }}
+            >
+              {product.ctaSecondary}
+            </button>
           </div>
+          <button
+            onClick={onClose}
+            style={{
+              fontFamily: "var(--font-sans)",
+              fontSize: "0.85rem",
+              fontWeight: 600,
+              color: "var(--muted-foreground)",
+              background: "none",
+              border: "none",
+              cursor: "pointer",
+              padding: "0.5rem 0.75rem",
+            }}
+          >
+            Close
+          </button>
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+}
+
+// ─── Policy Storytelling Overlay (With Internal Scroll Percentage & Narrative Sections) ───
+
+function PolicyStorytellingOverlay({
+  policyKey,
+  onClose,
+  onSwitchPolicy,
+}: {
+  policyKey: PolicyKey;
+  onClose: () => void;
+  onSwitchPolicy?: (key: PolicyKey) => void;
+}) {
+  const policy = policiesData[policyKey];
+  const [scrollPct, setScrollPct] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const handleScroll = () => {
+    if (!containerRef.current) return;
+    const { scrollTop, scrollHeight, clientHeight } = containerRef.current;
+    const total = scrollHeight - clientHeight;
+    const current = total > 0 ? Math.min(100, Math.max(0, Math.round((scrollTop / total) * 100))) : 0;
+    setScrollPct(current);
+  };
+
+  const policyList: { key: PolicyKey; label: string }[] = [
+    { key: "privacy", label: "Privacy Policy" },
+    { key: "terms", label: "Terms & Conditions" },
+    { key: "risk", label: "Disclaimer & Risk Disclosures" },
+    { key: "cookies", label: "Cookie Policy" },
+    { key: "grievance", label: "Grievance Redressal" },
+    { key: "fund-terms", label: "Fund Terms & Statement" },
+  ];
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.24 }}
+      style={{
+        position: "fixed",
+        inset: 0,
+        zIndex: 210,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "clamp(0.75rem, 2.5vw, 2rem)",
+        background: "rgba(15, 23, 42, 0.75)",
+        backdropFilter: "blur(18px)",
+      }}
+      onClick={onClose}
+    >
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95, y: 24 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.95, y: 24 }}
+        transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
+        style={{
+          width: "100%",
+          maxWidth: "62rem",
+          height: "92vh",
+          display: "flex",
+          flexDirection: "column",
+          background: "#ffffff",
+          border: "1px solid var(--border)",
+          borderRadius: "calc(var(--radius) * 2)",
+          boxShadow: "0 30px 90px rgba(15,23,42,0.4)",
+          position: "relative",
+          overflow: "hidden",
+        }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Top Header */}
+        <div
+          style={{
+            background: "#0f172a",
+            color: "#ffffff",
+            padding: "1.25rem clamp(1.25rem, 3vw, 2.25rem)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            borderBottom: "1px solid rgba(255,255,255,0.1)",
+            position: "relative",
+            zIndex: 10,
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "center", gap: "0.85rem" }}>
+            <div
+              style={{
+                width: "2.5rem",
+                height: "2.5rem",
+                borderRadius: "50%",
+                background: "rgba(255,255,255,0.1)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                color: "var(--cta)",
+              }}
+            >
+              <FileCheck size={18} />
+            </div>
+            <div>
+              <span
+                style={{
+                  fontFamily: "var(--font-sans)",
+                  fontSize: "0.68rem",
+                  fontWeight: 700,
+                  letterSpacing: "0.12em",
+                  textTransform: "uppercase",
+                  color: "var(--cta)",
+                }}
+              >
+                {policy.badge}
+              </span>
+              <h2
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "clamp(1.15rem, 2vw, 1.45rem)",
+                  fontWeight: 700,
+                  color: "#ffffff",
+                  margin: 0,
+                  lineHeight: 1.2,
+                }}
+              >
+                {policy.title}
+              </h2>
+            </div>
+          </div>
+
+          <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+            {/* Scroll Percentage Meter */}
+            <div
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "0.4rem",
+                background: "rgba(255,255,255,0.12)",
+                padding: "0.3rem 0.75rem",
+                borderRadius: "9999px",
+                fontFamily: "var(--font-sans)",
+                fontSize: "0.72rem",
+                fontWeight: 700,
+                color: "#ffffff",
+              }}
+            >
+              <div style={{ width: "6px", height: "6px", borderRadius: "50%", background: "var(--cta)" }} />
+              {scrollPct}% read
+            </div>
+
+            {/* Close Button (X) */}
+            <button
+              onClick={onClose}
+              aria-label="Close policy modal"
+              style={{
+                width: "2.25rem",
+                height: "2.25rem",
+                borderRadius: "50%",
+                border: "1px solid rgba(255,255,255,0.25)",
+                background: "rgba(255,255,255,0.1)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                cursor: "pointer",
+                color: "#ffffff",
+                transition: "all 0.18s ease",
+              }}
+              onMouseEnter={(e) => {
+                (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,255,255,0.25)";
+              }}
+              onMouseLeave={(e) => {
+                (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,255,255,0.1)";
+              }}
+            >
+              <X size={15} />
+            </button>
+          </div>
+        </div>
+
+        {/* Quick Policy Switcher Bar */}
+        <div
+          style={{
+            background: "#f1f5f9",
+            borderBottom: "1px solid var(--border)",
+            padding: "0.5rem clamp(1rem, 3vw, 2.25rem)",
+            display: "flex",
+            alignItems: "center",
+            gap: "0.5rem",
+            overflowX: "auto",
+            whiteSpace: "nowrap",
+          }}
+        >
+          {policyList.map((p) => {
+            const isCurrent = p.key === policyKey;
+            return (
+              <button
+                key={p.key}
+                type="button"
+                onClick={() => onSwitchPolicy && onSwitchPolicy(p.key)}
+                style={{
+                  fontFamily: "var(--font-sans)",
+                  fontSize: "0.78rem",
+                  fontWeight: isCurrent ? 700 : 500,
+                  color: isCurrent ? "var(--primary)" : "#475569",
+                  background: isCurrent ? "#ffffff" : "transparent",
+                  border: isCurrent ? "1px solid var(--border)" : "none",
+                  padding: "0.35rem 0.75rem",
+                  borderRadius: "9999px",
+                  cursor: "pointer",
+                  boxShadow: isCurrent ? "0 2px 6px rgba(15,23,42,0.06)" : "none",
+                }}
+              >
+                {p.label}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Policy Body with Right-side Progress & Narrative Storytelling */}
+        <div
+          ref={containerRef}
+          onScroll={handleScroll}
+          style={{
+            flex: 1,
+            overflowY: "auto",
+            padding: "clamp(1.5rem, 3.5vw, 3rem)",
+            display: "flex",
+            flexDirection: "column",
+            gap: "2.25rem",
+            position: "relative",
+          }}
+        >
+          {/* Summary Box */}
+          <div
+            style={{
+              padding: "1.25rem 1.5rem",
+              background: "#f8fafc",
+              borderLeft: "4px solid var(--primary)",
+              borderRadius: "0 calc(var(--radius) * 1.2) calc(var(--radius) * 1.2) 0",
+            }}
+          >
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.4rem" }}>
+              <span
+                style={{
+                  fontFamily: "var(--font-sans)",
+                  fontSize: "0.68rem",
+                  fontWeight: 700,
+                  textTransform: "uppercase",
+                  letterSpacing: "0.1em",
+                  color: "var(--primary)",
+                }}
+              >
+                Executive Summary
+              </span>
+              <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.75rem", color: "var(--muted-foreground)" }}>
+                Last Updated: {policy.lastUpdated}
+              </span>
+            </div>
+            <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.92rem", color: "#334155", lineHeight: 1.7, margin: 0 }}>
+              {policy.summary}
+            </p>
+          </div>
+
+          {/* Narrative Policy Sections */}
+          <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
+            {policy.sections.map((sec, i) => (
+              <div
+                key={i}
+                style={{
+                  padding: "1.5rem",
+                  background: "#ffffff",
+                  border: "1px solid var(--border)",
+                  borderRadius: "calc(var(--radius) * 1.4)",
+                  boxShadow: "0 2px 10px rgba(15,23,42,0.03)",
+                }}
+              >
+                <h3
+                  style={{
+                    fontFamily: "var(--font-display)",
+                    fontSize: "1.1rem",
+                    fontWeight: 700,
+                    color: "var(--foreground)",
+                    marginBottom: "0.75rem",
+                    letterSpacing: "-0.01em",
+                  }}
+                >
+                  {sec.heading}
+                </h3>
+                {sec.text && (
+                  <p
+                    style={{
+                      fontFamily: "var(--font-sans)",
+                      fontSize: "0.9rem",
+                      color: "#475569",
+                      lineHeight: 1.75,
+                      marginBottom: sec.bullets ? "0.85rem" : 0,
+                    }}
+                  >
+                    {sec.text}
+                  </p>
+                )}
+                {sec.bullets && (
+                  <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.6rem" }}>
+                    {sec.bullets.map((b, bIdx) => (
+                      <li
+                        key={bIdx}
+                        style={{
+                          display: "flex",
+                          alignItems: "flex-start",
+                          gap: "0.65rem",
+                          fontFamily: "var(--font-sans)",
+                          fontSize: "0.88rem",
+                          color: "#334155",
+                          lineHeight: 1.65,
+                        }}
+                      >
+                        <span style={{ color: "var(--cta)", fontWeight: 700, flexShrink: 0 }}>•</span>
+                        <span>{b}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            ))}
+          </div>
+
+          {/* Important Disclosures / Seal */}
+          <div
+            style={{
+              padding: "1.25rem 1.5rem",
+              background: "#fafaf9",
+              border: "1px solid #e7e5e4",
+              borderRadius: "calc(var(--radius) * 1.2)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              flexWrap: "wrap",
+              gap: "1rem",
+            }}
+          >
+            <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+              <ShieldCheck size={20} style={{ color: "var(--primary)" }} />
+              <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.82rem", fontWeight: 600, color: "#44403c" }}>
+                Karncy Ventures Private Limited | Corporate Governance & Investor Relations
+              </span>
+            </div>
+            <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.78rem", color: "var(--muted-foreground)" }}>
+              Hyderabad, Telangana, India
+            </span>
+          </div>
+        </div>
+
+        {/* Modal Bottom Bar */}
+        <div
+          style={{
+            padding: "1rem clamp(1.25rem, 3vw, 2.25rem)",
+            background: "#f8fafc",
+            borderTop: "1px solid var(--border)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.8rem", color: "var(--muted-foreground)" }}>
+            Need legal clarification? Contact <a href="mailto:privacy@karncy.com" style={{ color: "var(--primary)", fontWeight: 600, textDecoration: "none" }}>privacy@karncy.com</a>
+          </span>
+          <button
+            onClick={onClose}
+            style={{
+              fontFamily: "var(--font-sans)",
+              fontSize: "0.875rem",
+              fontWeight: 700,
+              padding: "0.65rem 1.75rem",
+              background: "var(--foreground)",
+              color: "var(--background)",
+              borderRadius: "var(--radius)",
+              border: "none",
+              cursor: "pointer",
+            }}
+          >
+            Close Document
+          </button>
         </div>
       </motion.div>
     </motion.div>
@@ -1018,7 +2114,13 @@ function ProductDetailOverlay({ id, onClose, onOpenContact }: { id: ProductId; o
 
 // ─── Quick links sub-menu ─────────────────────────────────────────────────────
 
-function QuickLinksMenu({ onSelectProduct }: { onSelectProduct?: (pid: ProductId) => void }) {
+function QuickLinksMenu({
+  onSelectProduct,
+  onSelectPolicy,
+}: {
+  onSelectProduct?: (pid: ProductId) => void;
+  onSelectPolicy?: (pkey: PolicyKey) => void;
+}) {
   const [open, setOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -1505,29 +2607,19 @@ function SectionLabel({ n }: { n: string }) {
 
 export default function App() {
   const [activeProduct, setActiveProduct] = useState<ProductId | null>(null);
+  const [activePolicy, setActivePolicy] = useState<PolicyKey | null>(null);
   const [activeModal, setActiveModal] = useState<ModalType | null>(null);
   const activeSection = useActiveSection();
 
   useEffect(() => {
-    document.body.style.overflow = (activeProduct || activeModal) ? "hidden" : "";
+    document.body.style.overflow = (activeProduct || activePolicy || activeModal) ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
-  }, [activeProduct, activeModal]);
+  }, [activeProduct, activePolicy, activeModal]);
 
   const scrollTo = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 
   const scrollToChapterCard = (pid: ProductId) => {
-    const isMobile = typeof window !== "undefined" && window.innerWidth <= 768;
-    if (isMobile) {
-      const el = document.getElementById(`chapter-card-${pid}`);
-      if (el) {
-        el.scrollIntoView({ behavior: "smooth", block: "start" });
-        return;
-      }
-    }
-    const cardIdx = (["invoice", "ventures", "startup"] as ProductId[]).indexOf(pid);
-    if (cardIdx >= 0) {
-      window.dispatchEvent(new CustomEvent("goToChapterCard", { detail: { cardIdx, pid } }));
-    }
+    setActiveProduct(pid);
   };
 
   const sectionBase: React.CSSProperties = { padding: "7rem 0" };
@@ -1639,7 +2731,7 @@ export default function App() {
                     ].map((item) => (
                       <li
                         key={item.text}
-                        onClick={() => scrollToChapterCard(item.pid)}
+                        onClick={() => setActiveProduct(item.pid)}
                         style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.875rem", color: "var(--muted-foreground)", cursor: "pointer", transition: "color 0.15s" }}
                         onMouseEnter={(e) => ((e.currentTarget as HTMLLIElement).style.color = "var(--foreground)")}
                         onMouseLeave={(e) => ((e.currentTarget as HTMLLIElement).style.color = "var(--muted-foreground)")}
@@ -1680,7 +2772,7 @@ export default function App() {
                     ].map((item) => (
                       <li
                         key={item.text}
-                        onClick={() => scrollToChapterCard(item.pid)}
+                        onClick={() => setActiveProduct(item.pid)}
                         style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.875rem", color: "var(--muted-foreground)", cursor: "pointer", transition: "color 0.15s" }}
                         onMouseEnter={(e) => ((e.currentTarget as HTMLLIElement).style.color = "var(--foreground)")}
                         onMouseLeave={(e) => ((e.currentTarget as HTMLLIElement).style.color = "var(--muted-foreground)")}
@@ -1724,7 +2816,7 @@ export default function App() {
                     <motion.div
                       key={pid}
                       className="compass-door-card"
-                      onClick={() => scrollToChapterCard(pid)}
+                      onClick={() => setActiveProduct(pid)}
                       whileHover={{ backgroundColor: "rgba(255,105,0,0.03)" }}
                       transition={{ duration: 0.2 }}
                       style={{ width: "100%", height: "100%", textAlign: "left", padding: "4rem 2.25rem", background: "rgba(255,255,255,0.92)", backdropFilter: "blur(6px)", borderRight: i < 2 ? "1px solid var(--border)" : "none", cursor: "pointer", display: "flex", flexDirection: "column", boxSizing: "border-box" }}
@@ -1742,7 +2834,7 @@ export default function App() {
                         type="button"
                         onClick={(e) => {
                           e.stopPropagation();
-                          scrollToChapterCard(pid);
+                          setActiveProduct(pid);
                         }}
                         style={{ border: "none", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: "0.5rem", fontSize: "0.875rem", fontWeight: 700, color: "var(--cta-foreground)", fontFamily: "var(--font-sans)", background: "var(--cta)", padding: "0.6rem 1.4rem", borderRadius: "var(--radius)", alignSelf: "flex-start", transition: "transform 0.15s ease" }}
                         onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.transform = "translateY(-2px)")}
@@ -1758,7 +2850,7 @@ export default function App() {
         </section>
 
         {/* ─── Our Products (sticky scroll on desktop, line-by-line on mobile) ─── */}
-        <ChaptersScroll onAction={(type) => setActiveModal(type)} />
+        <ChaptersScroll onOpen={(pid) => setActiveProduct(pid)} onAction={(type) => setActiveModal(type)} />
 
         {/* ─── Operations ──────────────────────────────────────────────── */}
         <section id="operations" style={sectionBase}>
@@ -2011,84 +3103,203 @@ export default function App() {
               </div>
             </div>
 
-            {/* Footer Navigation Menu + Copyright Bar — unified clean design */}
-            <div style={{ borderTop: "1px solid var(--border)", padding: "1.25rem 0" }}>
-              {/* Unified Menu Bar */}
+            {/* ─── Comprehensive Storytelling Footer Navigation & Policy Matrix ─── */}
+            <div style={{ borderTop: "1px solid var(--border)", padding: "2rem 0 1.5rem" }}>
               <div style={{ width: SECTION_W, margin: AUTO }}>
-                <nav style={{ display: "flex", flexWrap: "wrap", gap: "1rem 2rem", alignItems: "center", justifyContent: "center", paddingBottom: "1.25rem", borderBottom: "1px solid var(--border)" }}>
-                  {["About", "Blog", "Careers", "Privacy", "Terms", "Risk Disclosure Policy"].map((item) => (
-                    <button
-                      key={item}
-                      onClick={() => {
-                        if (item === "About") scrollTo("why-karncy");
-                      }}
-                      style={{ background: "none", border: "none", padding: "0.25rem 0", fontFamily: "var(--font-sans)", fontSize: "0.95rem", fontWeight: 600, color: "#0f172a", cursor: "pointer", transition: "color 0.15s ease" }}
-                      onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.color = "var(--primary)")}
-                      onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.color = "#0f172a")}
-                    >
-                      {item}
-                    </button>
-                  ))}
-                  {[
-                    { label: "Financing", pid: "invoice" as const },
-                    { label: "Ventures", pid: "ventures" as const },
-                    { label: "Equity", pid: "startup" as const },
-                  ].map((prod) => (
-                    <button
-                      key={prod.label}
-                      onClick={() => scrollToChapterCard(prod.pid)}
-                      style={{ background: "none", border: "none", padding: 0, fontFamily: "var(--font-sans)", fontSize: "1rem", fontWeight: 700, color: "var(--cta)", cursor: "pointer", transition: "transform 0.15s ease, opacity 0.15s ease" }}
-                      onMouseEnter={(e) => {
-                        (e.currentTarget as HTMLButtonElement).style.transform = "translateY(-1px)";
-                        (e.currentTarget as HTMLButtonElement).style.opacity = "0.85";
-                      }}
-                      onMouseLeave={(e) => {
-                        (e.currentTarget as HTMLButtonElement).style.transform = "translateY(0)";
-                        (e.currentTarget as HTMLButtonElement).style.opacity = "1";
-                      }}
-                    >
-                      {prod.label}
-                    </button>
-                  ))}
-                </nav>
-              </div>
 
-              {/* Copyright & Socials row */}
-              <div style={{ width: SECTION_W, margin: AUTO, paddingTop: "1.25rem", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "1rem" }}>
-                <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.82rem", fontWeight: 500, color: "var(--muted-foreground)" }}>
-                  © 2026 Karncy Ventures Private Limited. All rights reserved.
-                </span>
-                <div style={{ display: "flex", alignItems: "center", gap: "1.5rem" }}>
-                  {/* Social icons */}
-                  <div style={{ display: "flex", gap: "0.5rem" }}>
-                    <a href="https://www.linkedin.com/karncy" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"
-                      style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: "2rem", height: "2rem", borderRadius: "50%", background: "#0077B5", color: "#fff", textDecoration: "none", transition: "opacity 0.15s, transform 0.15s" }}
-                      onMouseEnter={(e) => { const el = e.currentTarget as HTMLAnchorElement; el.style.opacity = "0.85"; el.style.transform = "translateY(-1px)"; }}
-                      onMouseLeave={(e) => { const el = e.currentTarget as HTMLAnchorElement; el.style.opacity = "1"; el.style.transform = "translateY(0)"; }}
-                    >
-                      <Linkedin size={13} />
-                    </a>
-                    <a href="https://www.facebook.com/karncy" target="_blank" rel="noopener noreferrer" aria-label="Facebook"
-                      style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: "2rem", height: "2rem", borderRadius: "50%", background: "#1877F2", color: "#fff", textDecoration: "none", transition: "opacity 0.15s, transform 0.15s" }}
-                      onMouseEnter={(e) => { const el = e.currentTarget as HTMLAnchorElement; el.style.opacity = "0.85"; el.style.transform = "translateY(-1px)"; }}
-                      onMouseLeave={(e) => { const el = e.currentTarget as HTMLAnchorElement; el.style.opacity = "1"; el.style.transform = "translateY(0)"; }}
-                    >
-                      <Facebook size={13} />
-                    </a>
-                    <a href="https://x.com/karncy" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)"
-                      style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: "2rem", height: "2rem", borderRadius: "50%", background: "var(--foreground)", color: "var(--background)", textDecoration: "none", transition: "opacity 0.15s, transform 0.15s" }}
-                      onMouseEnter={(e) => { const el = e.currentTarget as HTMLAnchorElement; el.style.opacity = "0.85"; el.style.transform = "translateY(-1px)"; }}
-                      onMouseLeave={(e) => { const el = e.currentTarget as HTMLAnchorElement; el.style.opacity = "1"; el.style.transform = "translateY(0)"; }}
-                    >
-                      <Twitter size={13} />
-                    </a>
+                {/* Primary Products & Storytelling Actions Bar */}
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    flexWrap: "wrap",
+                    gap: "1.25rem",
+                    paddingBottom: "1.75rem",
+                    borderBottom: "1px solid var(--border)",
+                  }}
+                >
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+                    <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.12em", color: "var(--muted-foreground)" }}>
+                      Products:
+                    </span>
+                    <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+                      {[
+                        { label: "Karncy Financing", pid: "invoice" as const, badge: "Invoice Working Capital" },
+                        { label: "Karncy Ventures", pid: "ventures" as const, badge: "Joint Ventures" },
+                        { label: "Karncy Equity", pid: "startup" as const, badge: "Early Stage" },
+                      ].map((p) => (
+                        <button
+                          key={p.pid}
+                          onClick={() => setActiveProduct(p.pid)}
+                          style={{
+                            display: "inline-flex",
+                            alignItems: "center",
+                            gap: "0.4rem",
+                            fontFamily: "var(--font-sans)",
+                            fontSize: "0.85rem",
+                            fontWeight: 700,
+                            padding: "0.45rem 1rem",
+                            borderRadius: "9999px",
+                            background: "#ffffff",
+                            border: "1px solid var(--border)",
+                            color: "var(--primary)",
+                            cursor: "pointer",
+                            boxShadow: "0 2px 8px rgba(15,23,42,0.04)",
+                            transition: "all 0.15s ease",
+                          }}
+                          onMouseEnter={(e) => {
+                            (e.currentTarget as HTMLButtonElement).style.borderColor = "var(--primary)";
+                            (e.currentTarget as HTMLButtonElement).style.background = "rgba(13,31,130,0.04)";
+                          }}
+                          onMouseLeave={(e) => {
+                            (e.currentTarget as HTMLButtonElement).style.borderColor = "var(--border)";
+                            (e.currentTarget as HTMLButtonElement).style.background = "#ffffff";
+                          }}
+                        >
+                          <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "var(--cta)" }} />
+                          {p.label}
+                        </button>
+                      ))}
+                    </div>
                   </div>
-                  <button onClick={() => scrollTo("prologue")} style={{ fontFamily: "var(--font-sans)", fontSize: "0.92rem", fontWeight: 600, color: "var(--muted-foreground)", background: "none", border: "none", cursor: "pointer", transition: "color 0.15s" }}
-                    onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.color = "var(--foreground)"; }}
-                    onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.color = "var(--muted-foreground)"; }}
+
+                  {/* Quick links popover */}
+                  <QuickLinksMenu
+                    onSelectProduct={(pid) => setActiveProduct(pid)}
+                    onSelectPolicy={(pkey) => setActivePolicy(pkey)}
+                  />
+                </div>
+
+                {/* Policies & Institutional Links Row */}
+                <nav
+                  aria-label="Footer legal and policy navigation"
+                  style={{
+                    display: "flex",
+                    flexWrap: "wrap",
+                    gap: "0.85rem 1.75rem",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    padding: "1.5rem 0",
+                    borderBottom: "1px solid var(--border)",
+                  }}
+                >
+                  <button
+                    onClick={() => scrollTo("why-karncy")}
+                    style={{ background: "none", border: "none", padding: 0, fontFamily: "var(--font-sans)", fontSize: "0.88rem", fontWeight: 600, color: "#334155", cursor: "pointer", transition: "color 0.15s" }}
+                    onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.color = "var(--primary)")}
+                    onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.color = "#334155")}
                   >
-                    Back to top ↑
+                    About Karncy
                   </button>
+                  <button
+                    onClick={() => setActivePolicy("privacy")}
+                    style={{ background: "none", border: "none", padding: 0, fontFamily: "var(--font-sans)", fontSize: "0.88rem", fontWeight: 600, color: "#334155", cursor: "pointer", transition: "color 0.15s" }}
+                    onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.color = "var(--primary)")}
+                    onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.color = "#334155")}
+                  >
+                    Privacy Policy
+                  </button>
+                  <button
+                    onClick={() => setActivePolicy("terms")}
+                    style={{ background: "none", border: "none", padding: 0, fontFamily: "var(--font-sans)", fontSize: "0.88rem", fontWeight: 600, color: "#334155", cursor: "pointer", transition: "color 0.15s" }}
+                    onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.color = "var(--primary)")}
+                    onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.color = "#334155")}
+                  >
+                    Terms & Conditions
+                  </button>
+                  <button
+                    onClick={() => setActivePolicy("risk")}
+                    style={{ background: "none", border: "none", padding: 0, fontFamily: "var(--font-sans)", fontSize: "0.88rem", fontWeight: 700, color: "var(--cta)", cursor: "pointer", transition: "color 0.15s" }}
+                    onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.opacity = "0.8")}
+                    onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.opacity = "1")}
+                  >
+                    Disclaimer & Risk Disclosures
+                  </button>
+                  <button
+                    onClick={() => setActivePolicy("cookies")}
+                    style={{ background: "none", border: "none", padding: 0, fontFamily: "var(--font-sans)", fontSize: "0.88rem", fontWeight: 600, color: "#334155", cursor: "pointer", transition: "color 0.15s" }}
+                    onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.color = "var(--primary)")}
+                    onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.color = "#334155")}
+                  >
+                    Cookie Policy
+                  </button>
+                  <button
+                    onClick={() => setActivePolicy("grievance")}
+                    style={{ background: "none", border: "none", padding: 0, fontFamily: "var(--font-sans)", fontSize: "0.88rem", fontWeight: 600, color: "#334155", cursor: "pointer", transition: "color 0.15s" }}
+                    onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.color = "var(--primary)")}
+                    onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.color = "#334155")}
+                  >
+                    Grievance Redressal
+                  </button>
+                  <button
+                    onClick={() => setActivePolicy("fund-terms")}
+                    style={{ background: "none", border: "none", padding: 0, fontFamily: "var(--font-sans)", fontSize: "0.88rem", fontWeight: 600, color: "#334155", cursor: "pointer", transition: "color 0.15s" }}
+                    onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.color = "var(--primary)")}
+                    onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.color = "#334155")}
+                  >
+                    Fund Terms
+                  </button>
+                  <button
+                    onClick={() => setActiveModal("business")}
+                    style={{ background: "none", border: "none", padding: 0, fontFamily: "var(--font-sans)", fontSize: "0.88rem", fontWeight: 600, color: "#334155", cursor: "pointer", transition: "color 0.15s" }}
+                    onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.color = "var(--primary)")}
+                    onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.color = "#334155")}
+                  >
+                    Contact Team
+                  </button>
+                </nav>
+
+                {/* Important Disclaimer Notice (as per smefund PPM guidelines) */}
+                <div style={{ padding: "1.25rem 0", maxWidth: "48rem", margin: "0 auto", textAlign: "center" }}>
+                  <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.74rem", color: "var(--muted-foreground)", lineHeight: 1.65, margin: "0 0 0.5rem 0" }}>
+                    <strong>Regulatory Disclaimer:</strong> Karncy SME Synergy Fund, LLC offerings are made pursuant to Regulation D Rule 506(c) and Section 4(a)(2) of the Securities Act of 1933 exclusively for Accredited Investors. Investments in private credit involve risk of illiquidity and potential capital loss. Target preferred returns (9% p.a.) are payable strictly from distributable cash flows and are not guaranteed.
+                  </p>
+                  <button
+                    onClick={() => setActivePolicy("risk")}
+                    style={{ background: "none", border: "none", padding: 0, fontFamily: "var(--font-sans)", fontSize: "0.76rem", fontWeight: 700, color: "var(--primary)", cursor: "pointer", textDecoration: "underline" }}
+                  >
+                    Read Detailed Statement of Disclosures (PPM) →
+                  </button>
+                </div>
+
+                {/* Copyright & Socials row */}
+                <div style={{ paddingTop: "1.25rem", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "1rem", borderTop: "1px solid var(--border)" }}>
+                  <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.82rem", fontWeight: 500, color: "var(--muted-foreground)" }}>
+                    © 2026 Karncy Ventures Private Limited. All rights reserved.
+                  </span>
+                  <div style={{ display: "flex", alignItems: "center", gap: "1.5rem" }}>
+                    {/* Social icons */}
+                    <div style={{ display: "flex", gap: "0.5rem" }}>
+                      <a href="https://www.linkedin.com/karncy" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"
+                        style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: "2rem", height: "2rem", borderRadius: "50%", background: "#0077B5", color: "#fff", textDecoration: "none", transition: "opacity 0.15s, transform 0.15s" }}
+                        onMouseEnter={(e) => { const el = e.currentTarget as HTMLAnchorElement; el.style.opacity = "0.85"; el.style.transform = "translateY(-1px)"; }}
+                        onMouseLeave={(e) => { const el = e.currentTarget as HTMLAnchorElement; el.style.opacity = "1"; el.style.transform = "translateY(0)"; }}
+                      >
+                        <Linkedin size={13} />
+                      </a>
+                      <a href="https://www.facebook.com/karncy" target="_blank" rel="noopener noreferrer" aria-label="Facebook"
+                        style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: "2rem", height: "2rem", borderRadius: "50%", background: "#1877F2", color: "#fff", textDecoration: "none", transition: "opacity 0.15s, transform 0.15s" }}
+                        onMouseEnter={(e) => { const el = e.currentTarget as HTMLAnchorElement; el.style.opacity = "0.85"; el.style.transform = "translateY(-1px)"; }}
+                        onMouseLeave={(e) => { const el = e.currentTarget as HTMLAnchorElement; el.style.opacity = "1"; el.style.transform = "translateY(0)"; }}
+                      >
+                        <Facebook size={13} />
+                      </a>
+                      <a href="https://x.com/karncy" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)"
+                        style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: "2rem", height: "2rem", borderRadius: "50%", background: "var(--foreground)", color: "var(--background)", textDecoration: "none", transition: "opacity 0.15s, transform 0.15s" }}
+                        onMouseEnter={(e) => { const el = e.currentTarget as HTMLAnchorElement; el.style.opacity = "0.85"; el.style.transform = "translateY(-1px)"; }}
+                        onMouseLeave={(e) => { const el = e.currentTarget as HTMLAnchorElement; el.style.opacity = "1"; el.style.transform = "translateY(0)"; }}
+                      >
+                        <Twitter size={13} />
+                      </a>
+                    </div>
+                    <button onClick={() => scrollTo("prologue")} style={{ fontFamily: "var(--font-sans)", fontSize: "0.92rem", fontWeight: 600, color: "var(--muted-foreground)", background: "none", border: "none", cursor: "pointer", transition: "color 0.15s" }}
+                      onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.color = "var(--foreground)"; }}
+                      onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.color = "var(--muted-foreground)"; }}
+                    >
+                      Back to top ↑
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -2097,6 +3308,23 @@ export default function App() {
       </main>
 
       <AnimatePresence>
+        {activeProduct && (
+          <ProductDetailOverlay
+            id={activeProduct}
+            onClose={() => setActiveProduct(null)}
+            onOpenContact={(type) => {
+              setActiveProduct(null);
+              setActiveModal(type);
+            }}
+          />
+        )}
+        {activePolicy && (
+          <PolicyStorytellingOverlay
+            policyKey={activePolicy}
+            onClose={() => setActivePolicy(null)}
+            onSwitchPolicy={(key) => setActivePolicy(key)}
+          />
+        )}
         {activeModal && (
           <ContactModal type={activeModal} onClose={() => setActiveModal(null)} />
         )}
