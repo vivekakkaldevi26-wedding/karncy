@@ -43,7 +43,7 @@ const products = {
     badge: "Core Private Credit Engine",
     subtitle: "Invoice & Accounts Receivable Financing",
     tagline: "Cash flow, unlocked from paper.",
-    cta: "Apply for Invoice Financing",
+    cta: "Let's Unlock",
     ctaSecondary: "Speak to Risk Team",
     description:
       "Turn outstanding receivables into immediate working capital without waiting 30 to 90 days for buyer settlement. We underwrite within 48 hours and disburse directly to your account with zero equity dilution.",
@@ -90,7 +90,7 @@ const products = {
     badge: "Income & Managed Joint Ventures",
     subtitle: "Managed SME Project Partnerships",
     tagline: "We don't fund and disappear. We build alongside you.",
-    cta: "Apply for Venture Partnership",
+    cta: "Let's Venture",
     ctaSecondary: "Submit Project Opportunity",
     description:
       "Present capital, not silent capital. We enter as active joint-venture partners with established SMEs executing high-value, assured contracts. We provide milestone funding, comptroller oversight, and operational scaffolding until payout at close.",
@@ -137,7 +137,7 @@ const products = {
     badge: "Strategic & Early-Stage Sleeve",
     subtitle: "Equity & Convertible Growth Capital",
     tagline: "Founders don't need money first. They need a partner first.",
-    cta: "Apply for Startup Equity",
+    cta: "Let's Partner",
     ctaSecondary: "Explore Strategic Terms",
     description:
       "Capped at ≤10% of our fund allocation, Karncy Equity provides early-stage backing and complete compliance scaffolding. We remove the regulatory, accounting, and legal friction so founders can focus solely on product and market traction.",
