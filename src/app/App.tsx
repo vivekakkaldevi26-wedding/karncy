@@ -1720,38 +1720,17 @@ function ProductDetailOverlay({
   );
 }
 
-// ─── Policy Storytelling Overlay (With Internal Scroll Percentage & Narrative Sections) ───
+// ─── Policy Storytelling Overlay ──────────────────────────────────────────────
 
 function PolicyStorytellingOverlay({
   policyKey,
   onClose,
-  onSwitchPolicy,
 }: {
   policyKey: PolicyKey;
   onClose: () => void;
   onSwitchPolicy?: (key: PolicyKey) => void;
 }) {
   const policy = policiesData[policyKey];
-  const [scrollPct, setScrollPct] = useState(0);
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  const handleScroll = () => {
-    if (!containerRef.current) return;
-    const { scrollTop, scrollHeight, clientHeight } = containerRef.current;
-    const total = scrollHeight - clientHeight;
-    const current = total > 0 ? Math.min(100, Math.max(0, Math.round((scrollTop / total) * 100))) : 0;
-    setScrollPct(current);
-  };
-
-  const policyList: { key: PolicyKey; label: string }[] = [
-    { key: "about", label: "About Karncy" },
-    { key: "privacy", label: "Privacy Policy" },
-    { key: "terms", label: "Terms & Conditions" },
-    { key: "risk", label: "Disclaimer & Risk Disclosures" },
-    { key: "cookies", label: "Cookie Policy" },
-    { key: "grievance", label: "Grievance Redressal" },
-    { key: "fund-terms", label: "Fund Terms & Statement" },
-  ];
 
   return (
     <motion.div
@@ -1834,25 +1813,6 @@ function PolicyStorytellingOverlay({
           </div>
 
           <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-            {/* Scroll Percentage Meter */}
-            <div
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "0.4rem",
-                background: "rgba(255,255,255,0.12)",
-                padding: "0.3rem 0.75rem",
-                borderRadius: "9999px",
-                fontFamily: "var(--font-sans)",
-                fontSize: "0.72rem",
-                fontWeight: 700,
-                color: "#ffffff",
-              }}
-            >
-              <div style={{ width: "6px", height: "6px", borderRadius: "50%", background: "var(--cta)" }} />
-              {scrollPct}% read
-            </div>
-
             {/* Close Button (X) */}
             <button
               onClick={onClose}
@@ -1882,49 +1842,8 @@ function PolicyStorytellingOverlay({
           </div>
         </div>
 
-        {/* Quick Policy Switcher Bar */}
+        {/* Policy Body */}
         <div
-          style={{
-            background: "#f1f5f9",
-            borderBottom: "1px solid var(--border)",
-            padding: "0.5rem clamp(1rem, 3vw, 2.25rem)",
-            display: "flex",
-            alignItems: "center",
-            gap: "0.5rem",
-            overflowX: "auto",
-            whiteSpace: "nowrap",
-          }}
-        >
-          {policyList.map((p) => {
-            const isCurrent = p.key === policyKey;
-            return (
-              <button
-                key={p.key}
-                type="button"
-                onClick={() => onSwitchPolicy && onSwitchPolicy(p.key)}
-                style={{
-                  fontFamily: "var(--font-sans)",
-                  fontSize: "0.78rem",
-                  fontWeight: isCurrent ? 700 : 500,
-                  color: isCurrent ? "var(--primary)" : "#475569",
-                  background: isCurrent ? "#ffffff" : "transparent",
-                  border: isCurrent ? "1px solid var(--border)" : "none",
-                  padding: "0.35rem 0.75rem",
-                  borderRadius: "9999px",
-                  cursor: "pointer",
-                  boxShadow: isCurrent ? "0 2px 6px rgba(15,23,42,0.06)" : "none",
-                }}
-              >
-                {p.label}
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Policy Body with Right-side Progress & Narrative Storytelling */}
-        <div
-          ref={containerRef}
-          onScroll={handleScroll}
           style={{
             flex: 1,
             overflowY: "auto",
@@ -1966,19 +1885,10 @@ function PolicyStorytellingOverlay({
             </p>
           </div>
 
-          {/* Narrative Policy Sections */}
-          <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
+          {/* Narrative Policy Sections (Clean document view without card borders) */}
+          <div style={{ display: "flex", flexDirection: "column", gap: "1.75rem" }}>
             {policy.sections.map((sec, i) => (
-              <div
-                key={i}
-                style={{
-                  padding: "1.5rem",
-                  background: "#ffffff",
-                  border: "1px solid var(--border)",
-                  borderRadius: "calc(var(--radius) * 1.4)",
-                  boxShadow: "0 2px 10px rgba(15,23,42,0.03)",
-                }}
-              >
+              <div key={i}>
                 <h3
                   style={{
                     fontFamily: "var(--font-display)",
@@ -2208,7 +2118,7 @@ function QuickLinksMenu({
 
 // ─── Contact Form Modal ───────────────────────────────────────────────────────
 
-type ModalType = "funding" | "business";
+type ModalType = "funding" | "business" | "contact";
 
 function ContactModal({ type, onClose }: { type: ModalType; onClose: () => void }) {
   const [submitted, setSubmitted] = useState(false);
@@ -2218,7 +2128,7 @@ function ContactModal({ type, onClose }: { type: ModalType; onClose: () => void 
     phone: "",
     companyName: "",
     fundingRequirement: "₹25L–₹50L",
-    howCanWeHelp: "Business Funding",
+    howCanWeHelp: "General Inquiry",
   });
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -2227,6 +2137,19 @@ function ContactModal({ type, onClose }: { type: ModalType; onClose: () => void 
   };
 
   const isFunding = type === "funding";
+  const isContact = type === "contact";
+
+  const getTitle = () => {
+    if (type === "funding") return "Apply for Funding";
+    if (type === "business") return "Apply for Business";
+    return "Reach Us";
+  };
+
+  const getSubtitle = () => {
+    if (type === "funding") return "Tell us about your business to get working capital unlocked in 48 hours.";
+    if (type === "business") return "Let's explore growth, joint venture, or investment opportunities together.";
+    return "Reach out to our team for general inquiries, feedback, or support.";
+  };
 
   return (
     <motion.div
@@ -2304,12 +2227,10 @@ function ContactModal({ type, onClose }: { type: ModalType; onClose: () => void 
         {/* Modal Header */}
         <div style={{ padding: "1.75rem 2rem 1.25rem", borderBottom: "1px solid var(--border)", background: isFunding ? "rgba(255,105,0,0.03)" : "rgba(13,31,130,0.03)" }}>
           <h3 style={{ fontFamily: "var(--font-display)", fontSize: "1.45rem", fontWeight: 700, color: "#0f172a", letterSpacing: "-0.02em" }}>
-            {isFunding ? "Apply for Funding" : "Apply for Business"}
+            {getTitle()}
           </h3>
           <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.85rem", color: "#64748b", marginTop: "0.25rem", lineHeight: 1.5 }}>
-            {isFunding
-              ? "Tell us about your business to get working capital unlocked in 48 hours."
-              : "Let's explore growth, joint venture, or investment opportunities together."}
+            {getSubtitle()}
           </p>
         </div>
 
@@ -2325,10 +2246,10 @@ function ContactModal({ type, onClose }: { type: ModalType; onClose: () => void 
                 <CheckCircle size={28} />
               </div>
               <h4 style={{ fontFamily: "var(--font-display)", fontSize: "1.3rem", fontWeight: 700, color: "#0f172a", marginBottom: "0.5rem" }}>
-                Application Received!
+                {isContact ? "Message Sent!" : "Application Received!"}
               </h4>
               <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.9rem", color: "#475569", lineHeight: 1.6, marginBottom: "1.75rem" }}>
-                Thank you, <strong>{formData.fullName}</strong>. Our team will review <strong>{formData.companyName}</strong>'s request and contact you at <strong>{formData.workEmail}</strong> within 24 hours.
+                Thank you, <strong>{formData.fullName}</strong>. Our team will reach back to you at <strong>{formData.workEmail}</strong> within 24 hours.
               </p>
               <button
                 type="button"
@@ -2379,7 +2300,7 @@ function ContactModal({ type, onClose }: { type: ModalType; onClose: () => void 
               {/* Work Email */}
               <div>
                 <label style={{ display: "block", fontFamily: "var(--font-sans)", fontSize: "0.82rem", fontWeight: 600, color: "#334155", marginBottom: "0.35rem" }}>
-                  Work Email <span style={{ color: "#e11d48" }}>*</span>
+                  Email <span style={{ color: "#e11d48" }}>*</span>
                 </label>
                 <input
                   type="email"
@@ -2431,11 +2352,10 @@ function ContactModal({ type, onClose }: { type: ModalType; onClose: () => void 
               {/* Business / Company Name */}
               <div>
                 <label style={{ display: "block", fontFamily: "var(--font-sans)", fontSize: "0.82rem", fontWeight: 600, color: "#334155", marginBottom: "0.35rem" }}>
-                  Business / Company Name <span style={{ color: "#e11d48" }}>*</span>
+                  Business / Company Name <span style={{ color: "#64748b", fontWeight: 400 }}>(Optional)</span>
                 </label>
                 <input
                   type="text"
-                  required
                   placeholder="e.g. Acme Enterprises Pvt Ltd"
                   value={formData.companyName}
                   onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
@@ -2508,11 +2428,23 @@ function ContactModal({ type, onClose }: { type: ModalType; onClose: () => void 
                       cursor: "pointer",
                     }}
                   >
-                    <option value="Business Funding">Business Funding</option>
-                    <option value="Partnership">Partnership</option>
-                    <option value="Joint Venture">Joint Venture</option>
-                    <option value="Investment">Investment</option>
-                    <option value="Invoice Financing">Invoice Financing</option>
+                    {isContact ? (
+                      <>
+                        <option value="General Inquiry">General Inquiry</option>
+                        <option value="Partnerships">Partnerships</option>
+                        <option value="Customer Support">Customer Support</option>
+                        <option value="Feedback">Feedback</option>
+                        <option value="Other">Other</option>
+                      </>
+                    ) : (
+                      <>
+                        <option value="Business Funding">Business Funding</option>
+                        <option value="Partnership">Partnership</option>
+                        <option value="Joint Venture">Joint Venture</option>
+                        <option value="Investment">Investment</option>
+                        <option value="Invoice Financing">Invoice Financing</option>
+                      </>
+                    )}
                   </select>
                 </div>
               )}
@@ -2542,7 +2474,7 @@ function ContactModal({ type, onClose }: { type: ModalType; onClose: () => void 
                 onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.opacity = "0.92")}
                 onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.opacity = "1")}
               >
-                {isFunding ? "Request Funding" : "Connect With Us"} <ArrowRight size={16} />
+                {isFunding ? "Request Funding" : isContact ? "Reach Us" : "Connect With Us"} <ArrowRight size={16} />
               </button>
             </form>
           )}
@@ -3174,7 +3106,7 @@ export default function App() {
                     Fund Terms
                   </button>
                   <button
-                    onClick={() => setActiveModal("business")}
+                    onClick={() => setActiveModal("contact")}
                     style={{ background: "none", border: "none", padding: 0, fontFamily: "var(--font-sans)", fontSize: "0.88rem", fontWeight: 600, color: "#334155", cursor: "pointer", transition: "color 0.15s" }}
                     onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.color = "var(--primary)")}
                     onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.color = "#334155")}
