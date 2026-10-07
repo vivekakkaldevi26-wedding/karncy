@@ -21,6 +21,7 @@ import msmeQbic from "../imports/nuzrBBNFnrnekt4aoIu9UgHMz6m1735188281962_200x20
 import certSoc2 from "../imports/images-1.png";
 import certIso27001 from "../imports/iso2001-logo-300x200-1.png";
 import ingrainLogo from "../imports/ingrain-logo.jpg";
+import { AIChatbot } from "./components/AIChatbot";
 
 export type ProductId = "invoice" | "ventures" | "startup";
 export type PolicyKey = "about" | "privacy" | "terms" | "risk" | "cookies" | "grievance" | "fund-terms";
@@ -3171,6 +3172,9 @@ export default function App() {
           <ContactModal type={activeModal} onClose={() => setActiveModal(null)} />
         )}
       </AnimatePresence>
+
+      {/* Floating Action Button (FAB) AI Chatbot */}
+      <AIChatbot onOpenModal={(type) => setActiveModal(type)} />
     </div>
   );
 }
