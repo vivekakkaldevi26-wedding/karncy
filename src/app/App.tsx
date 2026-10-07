@@ -2712,7 +2712,7 @@ export default function App() {
                     ].map((item) => (
                       <li
                         key={item.text}
-                        onClick={() => setActiveProduct(item.pid)}
+                        onClick={() => scrollToSection3Card(item.pid)}
                         style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.875rem", color: "var(--muted-foreground)", cursor: "pointer", transition: "color 0.15s" }}
                         onMouseEnter={(e) => ((e.currentTarget as HTMLLIElement).style.color = "var(--foreground)")}
                         onMouseLeave={(e) => ((e.currentTarget as HTMLLIElement).style.color = "var(--muted-foreground)")}
@@ -2753,7 +2753,7 @@ export default function App() {
                     ].map((item) => (
                       <li
                         key={item.text}
-                        onClick={() => setActiveProduct(item.pid)}
+                        onClick={() => scrollToSection3Card(item.pid)}
                         style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.875rem", color: "var(--muted-foreground)", cursor: "pointer", transition: "color 0.15s" }}
                         onMouseEnter={(e) => ((e.currentTarget as HTMLLIElement).style.color = "var(--foreground)")}
                         onMouseLeave={(e) => ((e.currentTarget as HTMLLIElement).style.color = "var(--muted-foreground)")}
@@ -3115,7 +3115,7 @@ export default function App() {
                       ].map((p) => (
                         <button
                           key={p.pid}
-                          onClick={() => setActiveProduct(p.pid)}
+                          onClick={() => scrollToSection3Card(p.pid)}
                           style={{
                             display: "inline-flex",
                             alignItems: "center",
@@ -3150,7 +3150,7 @@ export default function App() {
 
                   {/* Quick links popover */}
                   <QuickLinksMenu
-                    onSelectProduct={(pid) => setActiveProduct(pid)}
+                    onSelectProduct={(pid) => scrollToSection3Card(pid)}
                     onSelectPolicy={(pkey) => setActivePolicy(pkey)}
                   />
                 </div>
