@@ -23,7 +23,7 @@ import certIso27001 from "../imports/iso2001-logo-300x200-1.png";
 import ingrainLogo from "../imports/ingrain-logo.jpg";
 
 export type ProductId = "invoice" | "ventures" | "startup";
-export type PolicyKey = "privacy" | "terms" | "risk" | "cookies" | "grievance" | "fund-terms";
+export type PolicyKey = "about" | "privacy" | "terms" | "risk" | "cookies" | "grievance" | "fund-terms";
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
@@ -402,6 +402,30 @@ export const policiesData: Record<PolicyKey, {
   summary: string;
   sections: { heading: string; icon?: React.ReactNode; text?: string; bullets?: string[] }[];
 }> = {
+  about: {
+    title: "About Karncy",
+    badge: "Embedded Growth Partner",
+    lastUpdated: "January 2026",
+    summary: "Karncy Ventures Private Limited is an embedded financial partner for Indian SMEs, offering invoice financing, milestone joint venture capital, and early-stage equity scaffolding.",
+    sections: [
+      {
+        heading: "1. Institutional Vision & Moat",
+        text: "Capital alone does not build durable enterprises — execution scaffolding does. Karncy bridges credit access gaps for Indian SMEs by underwriting receivables, co-investing in verified purchase order contracts, and providing active comptroller oversight.",
+      },
+      {
+        heading: "2. Our Core Pillars",
+        bullets: [
+          "Technology-Driven Underwriting: 48-hour turnarounds using GST, Tally, SAP, and bank statement verification.",
+          "Escrow & Comptroller Control: Dedicated tri-party escrow routing ensures transparent deployment and automatic reserve release.",
+          "Operational Scaffolding: Turnkey support across MCA filings, GST compliance, labor laws, and investor syndication.",
+        ],
+      },
+      {
+        heading: "3. Corporate Governance & Operations",
+        text: "Headquartered in Hyderabad, Telangana, Karncy operates with strict ISO/IEC 27001 data security compliance and SOC 2 Type II controls under Indian regulatory standards.",
+      },
+    ],
+  },
   privacy: {
     title: "Privacy Policy",
     badge: "Data Governance & Protection",
@@ -1720,6 +1744,7 @@ function PolicyStorytellingOverlay({
   };
 
   const policyList: { key: PolicyKey; label: string }[] = [
+    { key: "about", label: "About Karncy" },
     { key: "privacy", label: "Privacy Policy" },
     { key: "terms", label: "Terms & Conditions" },
     { key: "risk", label: "Disclaimer & Risk Disclosures" },
@@ -1781,47 +1806,31 @@ function PolicyStorytellingOverlay({
             zIndex: 10,
           }}
         >
-          <div style={{ display: "flex", alignItems: "center", gap: "0.85rem" }}>
-            <div
+          <div>
+            <span
               style={{
-                width: "2.5rem",
-                height: "2.5rem",
-                borderRadius: "50%",
-                background: "rgba(255,255,255,0.1)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
+                fontFamily: "var(--font-sans)",
+                fontSize: "0.68rem",
+                fontWeight: 700,
+                letterSpacing: "0.12em",
+                textTransform: "uppercase",
                 color: "var(--cta)",
               }}
             >
-              <FileCheck size={18} />
-            </div>
-            <div>
-              <span
-                style={{
-                  fontFamily: "var(--font-sans)",
-                  fontSize: "0.68rem",
-                  fontWeight: 700,
-                  letterSpacing: "0.12em",
-                  textTransform: "uppercase",
-                  color: "var(--cta)",
-                }}
-              >
-                {policy.badge}
-              </span>
-              <h2
-                style={{
-                  fontFamily: "var(--font-display)",
-                  fontSize: "clamp(1.15rem, 2vw, 1.45rem)",
-                  fontWeight: 700,
-                  color: "#ffffff",
-                  margin: 0,
-                  lineHeight: 1.2,
-                }}
-              >
-                {policy.title}
-              </h2>
-            </div>
+              {policy.badge}
+            </span>
+            <h2
+              style={{
+                fontFamily: "var(--font-display)",
+                fontSize: "clamp(1.15rem, 2vw, 1.45rem)",
+                fontWeight: 700,
+                color: "#ffffff",
+                margin: 0,
+                lineHeight: 1.2,
+              }}
+            >
+              {policy.title}
+            </h2>
           </div>
 
           <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
@@ -2060,22 +2069,6 @@ function PolicyStorytellingOverlay({
           <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.8rem", color: "var(--muted-foreground)" }}>
             Need legal clarification? Contact <a href="mailto:privacy@karncy.com" style={{ color: "var(--primary)", fontWeight: 600, textDecoration: "none" }}>privacy@karncy.com</a>
           </span>
-          <button
-            onClick={onClose}
-            style={{
-              fontFamily: "var(--font-sans)",
-              fontSize: "0.875rem",
-              fontWeight: 700,
-              padding: "0.65rem 1.75rem",
-              background: "var(--foreground)",
-              color: "var(--background)",
-              borderRadius: "var(--radius)",
-              border: "none",
-              cursor: "pointer",
-            }}
-          >
-            Close Document
-          </button>
         </div>
       </motion.div>
     </motion.div>
@@ -3107,73 +3100,9 @@ export default function App() {
               </div>
             </div>
 
-            {/* ─── Comprehensive Storytelling Footer Navigation & Policy Matrix ─── */}
+            {/* ─── Storytelling Footer Navigation & Policy Matrix ─── */}
             <div style={{ borderTop: "1px solid var(--border)", padding: "2rem 0 1.5rem" }}>
               <div style={{ width: SECTION_W, margin: AUTO }}>
-
-                {/* Primary Products & Storytelling Actions Bar */}
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    flexWrap: "wrap",
-                    gap: "1.25rem",
-                    paddingBottom: "1.75rem",
-                    borderBottom: "1px solid var(--border)",
-                  }}
-                >
-                  <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
-                    <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.12em", color: "var(--muted-foreground)" }}>
-                      Products:
-                    </span>
-                    <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
-                      {[
-                        { label: "Karncy Financing", pid: "invoice" as const, badge: "Invoice Working Capital" },
-                        { label: "Karncy Ventures", pid: "ventures" as const, badge: "Joint Ventures" },
-                        { label: "Karncy Equity", pid: "startup" as const, badge: "Early Stage" },
-                      ].map((p) => (
-                        <button
-                          key={p.pid}
-                          onClick={() => scrollToSection3Card(p.pid)}
-                          style={{
-                            display: "inline-flex",
-                            alignItems: "center",
-                            gap: "0.4rem",
-                            fontFamily: "var(--font-sans)",
-                            fontSize: "0.85rem",
-                            fontWeight: 700,
-                            padding: "0.45rem 1rem",
-                            borderRadius: "9999px",
-                            background: "#ffffff",
-                            border: "1px solid var(--border)",
-                            color: "var(--primary)",
-                            cursor: "pointer",
-                            boxShadow: "0 2px 8px rgba(15,23,42,0.04)",
-                            transition: "all 0.15s ease",
-                          }}
-                          onMouseEnter={(e) => {
-                            (e.currentTarget as HTMLButtonElement).style.borderColor = "var(--primary)";
-                            (e.currentTarget as HTMLButtonElement).style.background = "rgba(13,31,130,0.04)";
-                          }}
-                          onMouseLeave={(e) => {
-                            (e.currentTarget as HTMLButtonElement).style.borderColor = "var(--border)";
-                            (e.currentTarget as HTMLButtonElement).style.background = "#ffffff";
-                          }}
-                        >
-                          <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "var(--cta)" }} />
-                          {p.label}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Quick links popover */}
-                  <QuickLinksMenu
-                    onSelectProduct={(pid) => scrollToSection3Card(pid)}
-                    onSelectPolicy={(pkey) => setActivePolicy(pkey)}
-                  />
-                </div>
 
                 {/* Policies & Institutional Links Row */}
                 <nav
@@ -3189,7 +3118,7 @@ export default function App() {
                   }}
                 >
                   <button
-                    onClick={() => scrollTo("why-karncy")}
+                    onClick={() => setActivePolicy("about")}
                     style={{ background: "none", border: "none", padding: 0, fontFamily: "var(--font-sans)", fontSize: "0.88rem", fontWeight: 600, color: "#334155", cursor: "pointer", transition: "color 0.15s" }}
                     onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.color = "var(--primary)")}
                     onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.color = "#334155")}
