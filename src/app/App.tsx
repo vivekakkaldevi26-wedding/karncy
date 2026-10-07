@@ -2591,26 +2591,16 @@ export default function App() {
       startup: 2,
     };
     const cardIdx = cardMap[pid];
-    const isMobile = window.innerWidth <= 768;
 
-    if (isMobile) {
-      const mobileCardEl = document.getElementById(`chapter-card-${pid}`);
-      if (mobileCardEl) {
-        mobileCardEl.scrollIntoView({ behavior: "smooth" });
-      } else {
-        document.getElementById("chapters-mobile")?.scrollIntoView({ behavior: "smooth" });
-      }
+    const mobileCardEl = document.getElementById(`chapter-card-${pid}`);
+    const isMobileVisible = mobileCardEl && window.getComputedStyle(mobileCardEl).display !== "none" && mobileCardEl.offsetWidth > 0;
+
+    if (isMobileVisible) {
+      mobileCardEl.scrollIntoView({ behavior: "smooth" });
     } else {
       window.dispatchEvent(
         new CustomEvent("goToChapterCard", { detail: { cardIdx, pid } })
       );
-      const chaptersEl = document.getElementById("chapters");
-      if (chaptersEl) {
-        const sectionTop = chaptersEl.getBoundingClientRect().top + window.scrollY;
-        const range = chaptersEl.offsetHeight - window.innerHeight;
-        const targetY = sectionTop + (3 > 1 ? (cardIdx / 2) * range : 0);
-        window.scrollTo({ top: targetY, behavior: "smooth" });
-      }
     }
   };
 
