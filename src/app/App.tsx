@@ -931,7 +931,7 @@ function ChapterCard({
             onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,255,255,0.22)"; (e.currentTarget as HTMLButtonElement).style.borderColor = "rgba(255,255,255,0.8)"; }}
             onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,255,255,0.1)"; (e.currentTarget as HTMLButtonElement).style.borderColor = "rgba(255,255,255,0.5)"; }}
           >
-            {product.cta} <ArrowDown size={14} />
+            {product.cta} <ArrowRight size={14} />
           </button>
         </div>
       </div>
@@ -2105,13 +2105,13 @@ function QuickLinksMenu({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [open]);
 
-  const items: { label: string; pid?: ProductId }[] = [
+  const items: { label: string; pid?: ProductId; pkey?: PolicyKey }[] = [
     { label: "Karncy Financing", pid: "invoice" },
     { label: "Karncy Ventures", pid: "ventures" },
     { label: "Karncy Equity", pid: "startup" },
-    { label: "Risk Disclosure policy" },
-    { label: "Blog" },
-    { label: "Careers" },
+    { label: "Privacy Policy", pkey: "privacy" },
+    { label: "Terms & Conditions", pkey: "terms" },
+    { label: "Risk Disclosure policy", pkey: "risk" },
   ];
 
   return (
@@ -2174,6 +2174,8 @@ function QuickLinksMenu({
                   setOpen(false);
                   if (item.pid && onSelectProduct) {
                     onSelectProduct(item.pid);
+                  } else if (item.pkey && onSelectPolicy) {
+                    onSelectPolicy(item.pkey);
                   }
                 }}
                 style={{
@@ -2307,11 +2309,6 @@ function ContactModal({ type, onClose }: { type: ModalType; onClose: () => void 
 
         {/* Modal Header */}
         <div style={{ padding: "1.75rem 2rem 1.25rem", borderBottom: "1px solid var(--border)", background: isFunding ? "rgba(255,105,0,0.03)" : "rgba(13,31,130,0.03)" }}>
-          <div style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.4rem" }}>
-            <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: isFunding ? "var(--cta)" : "var(--primary)" }}>
-              {isFunding ? "Fast 48-Hour Approval" : "Karncy Business Network"}
-            </span>
-          </div>
           <h3 style={{ fontFamily: "var(--font-display)", fontSize: "1.45rem", fontWeight: 700, color: "#0f172a", letterSpacing: "-0.02em" }}>
             {isFunding ? "Apply for Funding" : "Apply for Business"}
           </h3>
@@ -2587,8 +2584,23 @@ export default function App() {
 
   const scrollTo = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 
-  const scrollToChapterCard = (pid: ProductId) => {
-    setActiveProduct(pid);
+  const scrollToSection3Card = (pid: ProductId) => {
+    const cardMap: Record<ProductId, number> = {
+      invoice: 0,
+      ventures: 1,
+      startup: 2,
+    };
+    const cardIdx = cardMap[pid];
+    const mobileCardEl = document.getElementById(`chapter-card-${pid}`);
+    const isMobile = window.innerWidth <= 768;
+
+    if (isMobile && mobileCardEl) {
+      mobileCardEl.scrollIntoView({ behavior: "smooth" });
+    } else {
+      window.dispatchEvent(
+        new CustomEvent("goToChapterCard", { detail: { cardIdx, pid } })
+      );
+    }
   };
 
   const sectionBase: React.CSSProperties = { padding: "7rem 0" };
@@ -2785,7 +2797,7 @@ export default function App() {
                     <motion.div
                       key={pid}
                       className="compass-door-card"
-                      onClick={() => setActiveProduct(pid)}
+                      onClick={() => scrollToSection3Card(pid)}
                       whileHover={{ backgroundColor: "rgba(255,105,0,0.03)" }}
                       transition={{ duration: 0.2 }}
                       style={{ width: "100%", height: "100%", textAlign: "left", padding: "4rem 2.25rem", background: "rgba(255,255,255,0.92)", backdropFilter: "blur(6px)", borderRight: i < 2 ? "1px solid var(--border)" : "none", cursor: "pointer", display: "flex", flexDirection: "column", boxSizing: "border-box" }}
@@ -2803,7 +2815,7 @@ export default function App() {
                         type="button"
                         onClick={(e) => {
                           e.stopPropagation();
-                          setActiveProduct(pid);
+                          scrollToSection3Card(pid);
                         }}
                         style={{ border: "none", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: "0.5rem", fontSize: "0.875rem", fontWeight: 700, color: "var(--cta-foreground)", fontFamily: "var(--font-sans)", background: "var(--cta)", padding: "0.6rem 1.4rem", borderRadius: "var(--radius)", alignSelf: "flex-start", transition: "transform 0.15s ease" }}
                         onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.transform = "translateY(-2px)")}
@@ -2819,7 +2831,10 @@ export default function App() {
         </section>
 
         {/* ─── Our Products (sticky scroll on desktop, line-by-line on mobile) ─── */}
-        <ChaptersScroll onOpen={(pid) => setActiveProduct(pid)} onAction={(type) => setActiveModal(type)} />
+        <ChaptersScroll
+          onOpen={(pid) => setActiveModal(pid === "invoice" ? "funding" : "business")}
+          onAction={(type) => setActiveModal(type)}
+        />
 
         {/* ─── Operations ──────────────────────────────────────────────── */}
         <section id="operations" style={sectionBase}>
