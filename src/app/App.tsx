@@ -1939,30 +1939,7 @@ function PolicyStorytellingOverlay({
             ))}
           </div>
 
-          {/* Important Disclosures / Seal */}
-          <div
-            style={{
-              padding: "1.25rem 1.5rem",
-              background: "#fafaf9",
-              border: "1px solid #e7e5e4",
-              borderRadius: "calc(var(--radius) * 1.2)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              flexWrap: "wrap",
-              gap: "1rem",
-            }}
-          >
-            <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
-              <ShieldCheck size={20} style={{ color: "var(--primary)" }} />
-              <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.82rem", fontWeight: 600, color: "#44403c" }}>
-                Karncy Ventures Private Limited | Corporate Governance & Investor Relations
-              </span>
-            </div>
-            <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.78rem", color: "var(--muted-foreground)" }}>
-              Hyderabad, Telangana, India
-            </span>
-          </div>
+
         </div>
 
         {/* Modal Bottom Bar */}
