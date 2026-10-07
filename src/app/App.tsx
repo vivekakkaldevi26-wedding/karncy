@@ -2598,19 +2598,27 @@ export default function App() {
 
     if (isMobileVisible) {
       mobileCardEl.scrollIntoView({ behavior: "smooth" });
-    } else {
-      window.dispatchEvent(
-        new CustomEvent("goToChapterCard", { detail: { cardIdx, pid } })
-      );
+      return;
+    }
 
-      const chaptersEl = document.getElementById("chapters");
-      if (chaptersEl) {
-        const rect = chaptersEl.getBoundingClientRect();
-        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        const sectionTop = rect.top + scrollTop;
-        const targetY = sectionTop + cardIdx * window.innerHeight;
+    // 1. Dispatch custom event to switch target card in Section 3
+    window.dispatchEvent(
+      new CustomEvent("goToChapterCard", { detail: { cardIdx, pid } })
+    );
 
-        window.scrollTo({ top: targetY, behavior: "smooth" });
+    // 2. Scroll Section 3 (#chapters) directly into view at top of screen
+    const chaptersEl = document.getElementById("chapters");
+    if (chaptersEl) {
+      chaptersEl.scrollIntoView({ behavior: "smooth", block: "start" });
+
+      if (cardIdx > 0) {
+        setTimeout(() => {
+          const rect = chaptersEl.getBoundingClientRect();
+          const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+          const sectionTop = rect.top + scrollTop;
+          const targetY = sectionTop + cardIdx * window.innerHeight;
+          window.scrollTo({ top: targetY, behavior: "smooth" });
+        }, 250);
       }
     }
   };
