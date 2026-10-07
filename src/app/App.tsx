@@ -1017,12 +1017,13 @@ function ChaptersScroll({ onOpen, onAction }: { onOpen?: (id: ProductId) => void
     const handleGoTo = (e: Event) => {
       const customEvent = e as CustomEvent<{ cardIdx: number; pid?: ProductId }>;
       if (customEvent.detail && typeof customEvent.detail.cardIdx === "number") {
-        goToCard(customEvent.detail.cardIdx);
+        activeCardRef.current = customEvent.detail.cardIdx;
+        setActiveCard(customEvent.detail.cardIdx);
       }
     };
     window.addEventListener("goToChapterCard", handleGoTo);
     return () => window.removeEventListener("goToChapterCard", handleGoTo);
-  }, [goToCard]);
+  }, []);
 
   // ── Wheel interception ────────────────────────────────────────────────────
   useEffect(() => {
@@ -2601,6 +2602,16 @@ export default function App() {
       window.dispatchEvent(
         new CustomEvent("goToChapterCard", { detail: { cardIdx, pid } })
       );
+
+      const chaptersEl = document.getElementById("chapters");
+      if (chaptersEl) {
+        const rect = chaptersEl.getBoundingClientRect();
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const sectionTop = rect.top + scrollTop;
+        const targetY = sectionTop + cardIdx * window.innerHeight;
+
+        window.scrollTo({ top: targetY, behavior: "smooth" });
+      }
     }
   };
 
