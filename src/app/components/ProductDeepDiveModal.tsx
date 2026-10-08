@@ -525,22 +525,68 @@ export function ProductDeepDiveModal({ id, onClose, onOpenContact }: ProductDeep
                 </div>
               </div>
 
-              {/* Priority Waterfall Distribution — Full Width, No Background Box */}
-              <div style={{ width: "100%", borderTop: "1px solid var(--border)", paddingTop: "2rem" }}>
-                <h4 style={{ fontFamily: "var(--font-display)", fontSize: "1.1rem", fontWeight: 700, color: "#0f172a", marginBottom: "1rem" }}>
-                  Priority Waterfall Cash-Flow Distribution
-                </h4>
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "1rem" }}>
+              {/* Priority Waterfall Distribution — Balanced 2x2 Grid */}
+              <div style={{ width: "100%", borderTop: "1px solid var(--border)", paddingTop: "2.25rem" }}>
+                <div style={{ marginBottom: "1.5rem" }}>
+                  <h4 style={{ fontFamily: "var(--font-display)", fontSize: "1.2rem", fontWeight: 700, color: "#0f172a", margin: "0 0 0.35rem 0" }}>
+                    Priority Waterfall Cash-Flow Distribution
+                  </h4>
+                  <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.85rem", color: "var(--muted-foreground)", margin: 0 }}>
+                    Structured 4-step cash waterfall ensuring statutory compliance, capital protection, and profit distribution
+                  </p>
+                </div>
+
+                <div
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 280px), 1fr))",
+                    gap: "1.25rem",
+                  }}
+                >
                   {[
-                    { num: "01", title: "Statutory & Essential Ops", desc: "Statutory obligations and essential project operating expenses paid first." },
-                    { num: "02", title: "Investor Principal", desc: "100% repayment of investor principal." },
-                    { num: "03", title: "Agreed Investor Returns", desc: "Distribution of agreed commercial investor returns." },
-                    { num: "04", title: "Residual Surplus", desc: "Residual project surplus released entirely to the business." },
+                    { num: "01", title: "Statutory & Essential Ops", desc: "Statutory obligations, taxes, and essential project operating expenses paid first." },
+                    { num: "02", title: "Investor Principal", desc: "100% full repayment of initial investor principal." },
+                    { num: "03", title: "Agreed Investor Returns", desc: "Distribution of agreed commercial investor yields and preferred returns." },
+                    { num: "04", title: "Residual Surplus", desc: "100% residual project surplus released entirely to the business." },
                   ].map((w, i) => (
-                    <div key={i} style={{ padding: "1rem", background: "#f8fafc", borderRadius: "calc(var(--radius) * 1.2)", border: "1px solid var(--border)" }}>
-                      <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.72rem", fontWeight: 700, color: "var(--cta)", display: "block", marginBottom: "0.2rem" }}>Step {w.num}</span>
-                      <h5 style={{ fontFamily: "var(--font-display)", fontSize: "0.92rem", fontWeight: 700, color: "#0f172a", margin: "0.2rem 0 0.4rem 0" }}>{w.title}</h5>
-                      <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.8rem", color: "#64748b", margin: 0, lineHeight: 1.5 }}>{w.desc}</p>
+                    <div
+                      key={i}
+                      style={{
+                        padding: "1.25rem 1.4rem",
+                        background: "#ffffff",
+                        border: "1px solid var(--border)",
+                        borderRadius: "calc(var(--radius) * 1.2)",
+                        boxShadow: "0 4px 18px rgba(15, 23, 42, 0.04)",
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: "0.5rem",
+                        position: "relative",
+                        overflow: "hidden",
+                      }}
+                    >
+                      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                        <span
+                          style={{
+                            fontFamily: "var(--font-sans)",
+                            fontSize: "0.72rem",
+                            fontWeight: 700,
+                            letterSpacing: "0.06em",
+                            textTransform: "uppercase",
+                            color: "var(--cta)",
+                            background: "rgba(255,105,0,0.08)",
+                            padding: "0.25rem 0.65rem",
+                            borderRadius: "9999px",
+                          }}
+                        >
+                          Step {w.num}
+                        </span>
+                      </div>
+                      <h5 style={{ fontFamily: "var(--font-display)", fontSize: "1.02rem", fontWeight: 700, color: "#0f172a", margin: 0, lineHeight: 1.25 }}>
+                        {w.title}
+                      </h5>
+                      <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.85rem", color: "#475569", margin: 0, lineHeight: 1.55 }}>
+                        {w.desc}
+                      </p>
                     </div>
                   ))}
                 </div>
