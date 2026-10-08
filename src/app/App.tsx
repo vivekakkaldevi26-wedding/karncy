@@ -20,6 +20,7 @@ import msmeScratchgard from "../imports/Logo-2-e1715860301443_1.png";
 import msmeQbic from "../imports/nuzrBBNFnrnekt4aoIu9UgHMz6m1735188281962_200x200_1.png";
 import certSoc2 from "../imports/images-1.png";
 import certIso27001 from "../imports/iso2001-logo-300x200-1.png";
+import certDuns from "../imports/duns-registered-logo.png";
 import ingrainLogo from "../imports/ingrain-logo.jpg";
 import { AIChatbot } from "./components/AIChatbot";
 import { ProductDeepDiveModal } from "./components/ProductDeepDiveModal";
@@ -2997,6 +2998,7 @@ export default function App() {
                       <div style={{ display: "flex", gap: "1.25rem", alignItems: "center", flexWrap: "wrap" }}>
                         <img src={certIso27001} alt="ISO 27001 Information Security Certified" style={{ height: "82px", width: "auto", objectFit: "contain", opacity: 0.95 }} />
                         <img src={certSoc2} alt="AICPA SOC 2 Type II Security Certified" style={{ height: "88px", width: "auto", objectFit: "contain", opacity: 1 }} />
+                        <img src={certDuns} alt="Dun & Bradstreet D-U-N-S Registered" style={{ height: "72px", width: "auto", objectFit: "contain", opacity: 0.98 }} />
                       </div>
                     </div>
 
