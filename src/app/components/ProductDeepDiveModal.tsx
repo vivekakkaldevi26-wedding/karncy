@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "motion/react";
-import { X, ArrowRight, CheckCircle, ShieldCheck, Zap, Layers, TrendingUp, Check, ChevronRight } from "lucide-react";
+import { X, ArrowRight, CheckCircle, ShieldCheck, Zap, Layers, TrendingUp, Check, ChevronRight, FileText, Users, Scale, DollarSign } from "lucide-react";
 import { ProductId } from "../App";
 
 interface ProductDeepDiveModalProps {
@@ -210,42 +210,104 @@ export function ProductDeepDiveModal({ id, onClose, onOpenContact }: ProductDeep
                 </div>
               </div>
 
-              {/* How It Flows — Centered Flow without numbers */}
-              <div style={{ width: "100%", textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center" }}>
-                <h3 style={{ fontFamily: "var(--font-display)", fontSize: "1.2rem", fontWeight: 700, color: "#0f172a", marginBottom: "2rem", textAlign: "center" }}>
-                  How It Flows — The 48-Hour Path
-                </h3>
-                <div style={{ maxWidth: "38rem", width: "100%", position: "relative", display: "flex", flexDirection: "column", alignItems: "center", gap: "2.25rem" }}>
-                  {/* Center Connecting Line */}
-                  <div aria-hidden style={{ position: "absolute", top: "0.5rem", bottom: "0.5rem", left: "50%", transform: "translateX(-50%)", width: "2px", background: "rgba(255, 105, 0, 0.25)", zIndex: 0 }} />
-                  {[
-                    { title: "Onboard", desc: "KYC, GST, banking, and buyer references submitted once." },
-                    { title: "List Invoice", desc: "Upload invoice, PO, and proof of delivery / acceptance." },
-                    { title: "Buyer Verification", desc: "We confirm the payable directly with the buyer AP team." },
-                    { title: "Underwrite", desc: "Risk desk approves advance rate and tenor within 24–48 hours." },
-                    { title: "Fund", desc: "80% of invoice value released directly to your account." },
-                    { title: "Settle", desc: "Buyer pays into escrow on due date; balance released same day." },
-                  ].map((s, i) => (
-                    <div key={i} style={{ position: "relative", zIndex: 1, background: "#ffffff", padding: "0.4rem 1.25rem", textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center" }}>
-                      <div
-                        style={{
-                          width: "1rem",
-                          height: "1rem",
-                          borderRadius: "50%",
-                          background: "var(--cta)",
-                          border: "3px solid #ffffff",
-                          boxShadow: "0 0 0 2px rgba(255,105,0,0.35)",
-                          marginBottom: "0.45rem",
-                        }}
-                      />
-                      <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.85rem", fontWeight: 700, color: "var(--cta)", letterSpacing: "0.04em", textTransform: "uppercase", marginBottom: "0.25rem" }}>
-                        {s.title}
-                      </span>
-                      <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.88rem", color: "#334155", margin: 0, lineHeight: 1.55, maxWidth: "28rem" }}>
-                        {s.desc}
-                      </p>
-                    </div>
-                  ))}
+              {/* How It Flows — Timeline UI Design matching reference model */}
+              <div style={{ width: "100%", padding: "0.5rem 0" }}>
+                <div style={{ textAlign: "center", marginBottom: "2.5rem" }}>
+                  <h3 style={{ fontFamily: "var(--font-display)", fontSize: "1.4rem", fontWeight: 700, color: "#0f172a", margin: "0 0 0.4rem 0", display: "inline-block", position: "relative" }}>
+                    How It <span style={{ color: "var(--cta)" }}>Flows</span>
+                    <div style={{ width: "50%", height: "3px", background: "var(--cta)", borderRadius: "9999px", margin: "0.4rem auto 0" }} />
+                  </h3>
+                  <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.85rem", color: "var(--muted-foreground)", margin: 0 }}>
+                    The 48-Hour Path from invoice upload to instant capital disbursal
+                  </p>
+                </div>
+
+                <div style={{ position: "relative", maxWidth: "48rem", margin: "0 auto" }}>
+                  {/* Vertical Accent Line */}
+                  <div
+                    aria-hidden
+                    style={{
+                      position: "absolute",
+                      top: "1.5rem",
+                      bottom: "1.5rem",
+                      left: "calc(5.5rem + 1.25rem)",
+                      width: "2px",
+                      background: "rgba(255, 105, 0, 0.25)",
+                      zIndex: 0,
+                    }}
+                  />
+
+                  <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+                    {[
+                      { icon: <Users size={16} />, title: "Onboard", desc: "KYC, GST, banking, and buyer references submitted once." },
+                      { icon: <FileText size={16} />, title: "List Invoice", desc: "Upload invoice, PO, and proof of delivery / acceptance." },
+                      { icon: <ShieldCheck size={16} />, title: "Buyer Verification", desc: "We confirm the payable directly with the buyer AP team." },
+                      { icon: <Scale size={16} />, title: "Underwrite", desc: "Risk desk approves advance rate and tenor within 24–48 hours." },
+                      { icon: <DollarSign size={16} />, title: "Fund", desc: "80% of invoice value released directly to your account." },
+                      { icon: <CheckCircle size={16} />, title: "Settle", desc: "Buyer pays into escrow on due date; balance released same day." },
+                    ].map((s, i) => (
+                      <div key={i} style={{ display: "grid", gridTemplateColumns: "5.5rem 2.5rem 1fr", gap: "1rem", alignItems: "center", position: "relative", zIndex: 1 }}>
+                        {/* Left Phase indicator */}
+                        <div style={{ textAlign: "right", fontFamily: "var(--font-sans)", fontSize: "0.8rem", fontWeight: 700, color: "var(--muted-foreground)", letterSpacing: "0.03em" }}>
+                          Phase 0{i + 1}
+                        </div>
+
+                        {/* Node Icon Circle */}
+                        <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                          <div
+                            style={{
+                              width: "2.5rem",
+                              height: "2.5rem",
+                              borderRadius: "50%",
+                              background: "#ffffff",
+                              border: "2px solid var(--cta)",
+                              color: "var(--cta)",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              boxShadow: "0 0 0 4px rgba(255, 105, 0, 0.12)",
+                            }}
+                          >
+                            {s.icon}
+                          </div>
+                        </div>
+
+                        {/* Right Card Box with Left Triangle Pointer */}
+                        <div
+                          style={{
+                            position: "relative",
+                            background: "#ffffff",
+                            border: "1px solid var(--border)",
+                            borderRadius: "calc(var(--radius) * 1.2)",
+                            padding: "1rem 1.35rem",
+                            boxShadow: "0 4px 18px rgba(15, 23, 42, 0.05)",
+                          }}
+                        >
+                          {/* Pointer Arrow */}
+                          <div
+                            style={{
+                              position: "absolute",
+                              top: "50%",
+                              left: "-7px",
+                              transform: "translateY(-50%) rotate(45deg)",
+                              width: "12px",
+                              height: "12px",
+                              background: "#ffffff",
+                              borderLeft: "1px solid var(--border)",
+                              borderBottom: "1px solid var(--border)",
+                            }}
+                          />
+
+                          <h4 style={{ fontFamily: "var(--font-display)", fontSize: "1.02rem", fontWeight: 700, color: "#0f172a", margin: "0 0 0.35rem 0", lineHeight: 1.2 }}>
+                            {s.title}
+                          </h4>
+                          <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.85rem", color: "#475569", margin: 0, lineHeight: 1.55 }}>
+                            {s.desc}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
 
