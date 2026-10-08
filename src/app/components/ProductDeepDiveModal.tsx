@@ -550,77 +550,178 @@ export function ProductDeepDiveModal({ id, onClose, onOpenContact }: ProductDeep
 
           {/* STARTUP EQUITY DEEP DIVE */}
           {isStartup && (
-            <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
-              {/* Who We Back & Deep Assessment */}
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "1rem" }}>
-                <div style={{ padding: "1.25rem", background: "#ffffff", border: "1px solid var(--border)", borderRadius: "calc(var(--radius) * 1.2)" }}>
-                  <h4 style={{ fontFamily: "var(--font-display)", fontSize: "1rem", fontWeight: 700, color: "#0f172a", marginBottom: "0.6rem" }}>
-                    Who We Back
-                  </h4>
-                  <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.4rem" }}>
-                    {[
-                      "Sector-agnostic (manufacturing, D2C, SaaS, logistics, agri)",
-                      "Post-revenue or clear path to revenue",
-                      "Founders open to co-piloting operations",
-                      "Unit economics that can be underwritten",
-                      "Rounds from ₹1 Crore to ₹25 Crores",
-                    ].map((item, i) => (
-                      <li key={i} style={{ fontFamily: "var(--font-sans)", fontSize: "0.82rem", color: "#475569", display: "flex", gap: "0.4rem" }}>
-                        <span style={{ color: "var(--primary)" }}>•</span> {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div style={{ padding: "1.25rem", background: "#ffffff", border: "1px solid var(--border)", borderRadius: "calc(var(--radius) * 1.2)" }}>
-                  <h4 style={{ fontFamily: "var(--font-display)", fontSize: "1rem", fontWeight: 700, color: "#0f172a", marginBottom: "0.6rem" }}>
-                    Operational Scaffolding
-                  </h4>
-                  <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.4rem" }}>
-                    {[
-                      "Weekly cash-flow review & FP&A support",
-                      "Pre-vetted vendor network access",
-                      "Distributor & buyer intros (retail & export)",
-                      "Procurement cost optimization",
-                      "Standardized MIS dashboards & Series A readiness",
-                    ].map((item, i) => (
-                      <li key={i} style={{ fontFamily: "var(--font-sans)", fontSize: "0.82rem", color: "#475569", display: "flex", gap: "0.4rem" }}>
-                        <span style={{ color: "var(--cta)" }}>•</span> {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-
-              {/* Milestone Tranches */}
-              <div>
-                <h3 style={{ fontFamily: "var(--font-display)", fontSize: "1.15rem", fontWeight: 700, color: "#0f172a", marginBottom: "0.85rem" }}>
-                  Milestone Tranche Deployment
-                </h3>
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "0.75rem" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "3rem" }}>
+              {/* Who We Back — Full Width, No Background Box */}
+              <div style={{ width: "100%", borderTop: "1px solid var(--border)", paddingTop: "2rem" }}>
+                <h4 style={{ fontFamily: "var(--font-display)", fontSize: "1.15rem", fontWeight: 700, color: "#0f172a", marginBottom: "0.85rem" }}>
+                  Who We Back
+                </h4>
+                <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "0.85rem 1.75rem" }}>
                   {[
-                    { title: "01 Seed Tranche", desc: "Team, product development, and initial ops setup." },
-                    { title: "02 Traction Tranche", desc: "Revenue milestones and market validation targets." },
-                    { title: "03 Scale Tranche", desc: "Capex deployment, geo expansion, and hiring plan." },
-                    { title: "04 Growth Tranche", desc: "Institutional round bridge and Series A readiness." },
-                  ].map((t, i) => (
-                    <div key={i} style={{ padding: "0.85rem 1rem", background: "#f8fafc", border: "1px solid var(--border)", borderRadius: "calc(var(--radius) * 1.2)" }}>
-                      <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.72rem", fontWeight: 700, color: "var(--primary)", display: "block", marginBottom: "0.2rem" }}>{t.title}</span>
-                      <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.82rem", color: "#475569", margin: 0, lineHeight: 1.5 }}>{t.desc}</p>
-                    </div>
+                    "Sector-agnostic (manufacturing, D2C, SaaS, logistics, agri)",
+                    "Post-revenue or clear path to customer monetization",
+                    "Founders open to active operational partnership",
+                    "Unit economics that can be rigorously underwritten",
+                    "Investment rounds from ₹1 Crore up to ₹25 Crores",
+                  ].map((item, i) => (
+                    <li key={i} style={{ fontFamily: "var(--font-sans)", fontSize: "0.88rem", color: "#334155", display: "flex", alignItems: "center", gap: "0.6rem" }}>
+                      <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "var(--primary)", flexShrink: 0 }} />
+                      {item}
+                    </li>
                   ))}
+                </ul>
+              </div>
+
+              {/* Operational Scaffolding — Full Width, No Background Box */}
+              <div style={{ width: "100%", borderTop: "1px solid var(--border)", paddingTop: "2rem" }}>
+                <h4 style={{ fontFamily: "var(--font-display)", fontSize: "1.15rem", fontWeight: 700, color: "#0f172a", marginBottom: "0.85rem" }}>
+                  Operational Scaffolding
+                </h4>
+                <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "0.85rem 1.75rem" }}>
+                  {[
+                    "Weekly cash-flow review & FP&A operating support",
+                    "Access to Karncy's pre-vetted corporate vendor network",
+                    "Distributor & institutional buyer introductions (retail & export)",
+                    "Procurement cost optimization & supply chain audit",
+                    "Standardized MIS executive dashboards & Series A governance readiness",
+                  ].map((item, i) => (
+                    <li key={i} style={{ fontFamily: "var(--font-sans)", fontSize: "0.88rem", color: "#334155", display: "flex", alignItems: "center", gap: "0.6rem" }}>
+                      <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "var(--cta)", flexShrink: 0 }} />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Milestone Tranche Deployment — Timeline UI Design */}
+              <div style={{ width: "100%", borderTop: "1px solid var(--border)", paddingTop: "2.5rem" }}>
+                <div style={{ textAlign: "center", marginBottom: "2.5rem" }}>
+                  <h3 style={{ fontFamily: "var(--font-display)", fontSize: "1.4rem", fontWeight: 700, color: "#0f172a", margin: "0 0 0.4rem 0", display: "inline-block", position: "relative" }}>
+                    Milestone Tranche <span style={{ color: "var(--cta)" }}>Deployment</span>
+                    <div style={{ width: "50%", height: "3px", background: "var(--cta)", borderRadius: "9999px", margin: "0.4rem auto 0" }} />
+                  </h3>
+                  <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.85rem", color: "var(--muted-foreground)", margin: 0 }}>
+                    Capital released strictly against pre-agreed operational and commercial milestones
+                  </p>
+                </div>
+
+                <div style={{ position: "relative", maxWidth: "48rem", margin: "0 auto" }}>
+                  {/* Vertical Accent Line */}
+                  <div
+                    aria-hidden
+                    style={{
+                      position: "absolute",
+                      top: "1.5rem",
+                      bottom: "1.5rem",
+                      left: "calc(clamp(3.5rem, 14vw, 5.25rem) + 0.75rem + 1.25rem)",
+                      transform: "translateX(-50%)",
+                      width: "2px",
+                      background: "rgba(255, 105, 0, 0.35)",
+                      zIndex: 0,
+                    }}
+                  />
+
+                  <div style={{ display: "flex", flexDirection: "column", gap: "1.35rem" }}>
+                    {[
+                      { icon: <Layers size={16} />, title: "Seed Tranche", desc: "Core team assembly, MVP product iteration, and foundational ops setup." },
+                      { icon: <TrendingUp size={16} />, title: "Traction Tranche", desc: "Key revenue target validation, unit economic validation, and customer retention." },
+                      { icon: <Zap size={16} />, title: "Scale Tranche", desc: "Capex deployment, geographic channel expansion, and key executive hiring." },
+                      { icon: <CheckCircle size={16} />, title: "Growth Tranche", desc: "Institutional round bridge, cap table cleanup & Series A readiness." },
+                    ].map((s, i) => (
+                      <div
+                        key={i}
+                        style={{
+                          display: "grid",
+                          gridTemplateColumns: "clamp(3.5rem, 14vw, 5.25rem) 2.5rem 1fr",
+                          gap: "0.75rem",
+                          alignItems: "center",
+                          position: "relative",
+                          zIndex: 1,
+                        }}
+                      >
+                        {/* Left Step indicator */}
+                        <div
+                          style={{
+                            textAlign: "right",
+                            fontFamily: "var(--font-sans)",
+                            fontSize: "clamp(0.72rem, 2vw, 0.8rem)",
+                            fontWeight: 700,
+                            color: "var(--muted-foreground)",
+                            letterSpacing: "0.02em",
+                            whiteSpace: "nowrap",
+                          }}
+                        >
+                          Step 0{i + 1}
+                        </div>
+
+                        {/* Node Icon Circle */}
+                        <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                          <div
+                            style={{
+                              width: "2.5rem",
+                              height: "2.5rem",
+                              borderRadius: "50%",
+                              background: "#ffffff",
+                              border: "2px solid var(--cta)",
+                              color: "var(--cta)",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              boxShadow: "0 0 0 4px rgba(255, 105, 0, 0.12)",
+                              flexShrink: 0,
+                            }}
+                          >
+                            {s.icon}
+                          </div>
+                        </div>
+
+                        {/* Right Card Box with Left Pointer */}
+                        <div
+                          style={{
+                            position: "relative",
+                            background: "#ffffff",
+                            border: "1px solid var(--border)",
+                            borderRadius: "calc(var(--radius) * 1.2)",
+                            padding: "clamp(0.75rem, 2.5vw, 1.1rem) clamp(0.85rem, 3vw, 1.35rem)",
+                            boxShadow: "0 4px 18px rgba(15, 23, 42, 0.05)",
+                          }}
+                        >
+                          <div
+                            style={{
+                              position: "absolute",
+                              top: "50%",
+                              left: "-6px",
+                              transform: "translateY(-50%) rotate(45deg)",
+                              width: "10px",
+                              height: "10px",
+                              background: "#ffffff",
+                              borderLeft: "1px solid var(--border)",
+                              borderBottom: "1px solid var(--border)",
+                            }}
+                          />
+
+                          <h4 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(0.92rem, 2.5vw, 1.05rem)", fontWeight: 700, color: "#0f172a", margin: "0 0 0.25rem 0", lineHeight: 1.2 }}>
+                            {s.title}
+                          </h4>
+                          <p style={{ fontFamily: "var(--font-sans)", fontSize: "clamp(0.78rem, 2vw, 0.85rem)", color: "#475569", margin: 0, lineHeight: 1.5 }}>
+                            {s.desc}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
 
-              {/* Positioning Note */}
-              <div style={{ padding: "1.25rem", background: "#f8fafc", border: "1px solid var(--border)", borderRadius: "calc(var(--radius) * 1.2)" }}>
-                <h4 style={{ fontFamily: "var(--font-display)", fontSize: "0.98rem", fontWeight: 700, color: "#0f172a", marginBottom: "0.5rem" }}>
+              {/* Our Positioning — Full Width, No Background Box */}
+              <div style={{ width: "100%", borderTop: "1px solid var(--border)", paddingTop: "2rem" }}>
+                <h4 style={{ fontFamily: "var(--font-display)", fontSize: "1.1rem", fontWeight: 700, color: "#0f172a", marginBottom: "0.85rem" }}>
                   Our Positioning
                 </h4>
-                <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.84rem", color: "#475569", lineHeight: 1.6, margin: 0 }}>
-                  <strong>Not a VC Fund:</strong> We don't chase 10x outliers or force unnatural pace. Every venture is underwritten on real cash flows.<br />
-                  <strong>Not an Accelerator:</strong> No cohorts, no demo days. Direct one-to-one operating partnership.<br />
-                  <strong>Not a CFO Service:</strong> We don't sell hours. We share responsibility for outcomes under a defined mandate.
+                <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.88rem", color: "#334155", lineHeight: 1.7, margin: 0 }}>
+                  <strong>Not a Passive VC Fund:</strong> We don't chase 100x speculative outliers or force unnatural burn rates. Every venture is underwritten on real operating cash flows.<br />
+                  <strong>Not an Accelerator:</strong> No batch cohorts, demo days, or generic lectures. Direct, hands-on operating partnership.<br />
+                  <strong>Not an External CFO Service:</strong> We don't bill hourly consulting fees. We share co-responsibility for operational and commercial milestones under a unified mandate.
                 </p>
               </div>
             </div>

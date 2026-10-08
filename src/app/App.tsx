@@ -986,7 +986,7 @@ function ChapterCard({
                   (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 4px 14px rgba(255,105,0,0.35)";
                 }}
               >
-                Deep dive <BookOpen size={14} />
+                Deep dive
               </button>
             )}
           </div>
