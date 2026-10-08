@@ -2,61 +2,77 @@ import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { MessageSquare, Send, X, RefreshCw, ArrowRight } from "lucide-react";
 
-interface Message {
+export interface Message {
   id: string;
   sender: "bot" | "user";
   text: string;
   timestamp: string;
+  options?: string[];
   action?: {
     label: string;
     modalType: "funding" | "business" | "contact";
   };
 }
 
-interface PreexistingQuestion {
-  id: string;
-  question: string;
-  answer: string;
-  actionLabel?: string;
-  modalType?: "funding" | "business" | "contact";
+interface UserData {
+  product?: string;
+  fundingNeed?: string;
+  hasUnpaidInvoices?: string;
+  invoiceValue?: string;
+  timeframe?: string;
+  ventureType?: string;
+  hasProjectPlan?: string;
+  ventureFunding?: string;
+  ventureStage?: string;
+  startupStage?: string;
+  startupFunding?: string;
+  fundingUse?: string;
+  startupRevenue?: string;
+  name?: string;
+  phone?: string;
+  email?: string;
+  handoffTopic?: string;
 }
 
-const PREEXISTING_QUESTIONS: PreexistingQuestion[] = [
-  {
-    id: "funding-speed",
-    question: "How fast can I get invoice funding?",
-    answer: "Our automated risk underwriting engine evaluates verified invoices within 24 to 48 hours. Once approved, working capital is disbursed directly into your business bank account with zero equity dilution.",
-    actionLabel: "Let's Unlock Capital",
-    modalType: "funding",
-  },
-  {
-    id: "eligibility",
-    question: "What criteria are required for Karncy Financing?",
-    answer: "To qualify for invoice financing: 1) Active B2B/MSME business operating in India, 2) Verified unpaid customer invoices or purchase orders, 3) Minimum 6 months banking history. Capital ranges from ₹5 Lakhs up to ₹5 Crores.",
-    actionLabel: "Apply for Funding",
-    modalType: "funding",
-  },
-  {
-    id: "ventures",
-    question: "How does Karncy Equity venture partnership work?",
-    answer: "Karncy Equity collaborates with early and growth-stage startups. We provide growth capital, institutional credit access, and strategic mentorship in exchange for equity ownership.",
-    actionLabel: "Let's Partner",
-    modalType: "business",
-  },
-  {
-    id: "documents",
-    question: "What documents are needed to apply?",
-    answer: "You only need: 1) GST Returns & Bank Statements (last 6 months), 2) Copy of unpaid customer invoices/POs, and 3) Basic business registration (GST/Udyam/PAN).",
-    actionLabel: "Talk to Karncy directly",
-    modalType: "funding",
-  },
-  {
-    id: "contact",
-    question: "How can I reach the Karncy team?",
-    answer: "You can click 'Reach Us' to submit a direct inquiry, or email our support team directly at privacy@karncy.com for general assistance.",
-    actionLabel: "Reach Us Now",
-    modalType: "contact",
-  },
+type FlowState =
+  | "main_menu"
+  // Invoice flow
+  | "invoice_q1"
+  | "invoice_q2"
+  | "invoice_q3"
+  | "invoice_q4"
+  | "invoice_complete"
+  // Joint Ventures flow
+  | "jv_q1"
+  | "jv_q2"
+  | "jv_q3"
+  | "jv_q4"
+  | "jv_complete"
+  // Startup Funding flow
+  | "startup_q1"
+  | "startup_q2"
+  | "startup_q3"
+  | "startup_q4"
+  | "startup_complete"
+  // Investment flow
+  | "invest_menu"
+  // Handoff flow
+  | "handoff_name"
+  | "handoff_phone"
+  | "handoff_email"
+  | "handoff_topic"
+  | "handoff_complete"
+  // General Q
+  | "general_q"
+  | "unknown_fallback";
+
+const MAIN_MENU_OPTIONS = [
+  "Invoice Financing",
+  "Joint Ventures",
+  "Startup Funding",
+  "I want to invest",
+  "General Question",
+  "Talk to the Team",
 ];
 
 interface AIChatbotProps {
@@ -68,13 +84,18 @@ export function AIChatbot({ onOpenModal }: AIChatbotProps) {
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [hasUnread, setHasUnread] = useState(true);
+  const [flowState, setFlowState] = useState<FlowState>("main_menu");
+  const [userData, setUserData] = useState<UserData>({});
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const getTimestamp = () => new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
 
   const initialMessage: Message = {
     id: "welcome-1",
     sender: "bot",
-    text: "Hello! I am Karncy Assistant. How can I help unlock your business growth today?",
-    timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+    text: "Hi 👋 Welcome to Karncy.\nHow can we help you today?",
+    timestamp: getTimestamp(),
+    options: MAIN_MENU_OPTIONS,
   };
 
   const [messages, setMessages] = useState<Message[]>([initialMessage]);
@@ -90,28 +111,225 @@ export function AIChatbot({ onOpenModal }: AIChatbotProps) {
     }
   }, [isOpen, messages, isTyping]);
 
-  const handleSelectQuestion = (q: PreexistingQuestion) => {
-    const userMsg: Message = {
-      id: `user-${Date.now()}`,
-      sender: "user",
-      text: q.question,
-      timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
-    };
+  const handleReset = () => {
+    setFlowState("main_menu");
+    setUserData({});
+    setMessages([initialMessage]);
+  };
 
-    setMessages((prev) => [...prev, userMsg]);
+  const addBotReply = (text: string, options?: string[], action?: Message["action"], delay = 500) => {
     setIsTyping(true);
-
     setTimeout(() => {
       const botMsg: Message = {
         id: `bot-${Date.now()}`,
         sender: "bot",
-        text: q.answer,
-        timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
-        action: q.actionLabel && q.modalType ? { label: q.actionLabel, modalType: q.modalType } : undefined,
+        text,
+        timestamp: getTimestamp(),
+        options,
+        action,
       };
       setMessages((prev) => [...prev, botMsg]);
       setIsTyping(false);
-    }, 600);
+    }, delay);
+  };
+
+  const handleOptionClick = (optionText: string) => {
+    // 1. Render user message
+    const userMsg: Message = {
+      id: `user-${Date.now()}`,
+      sender: "user",
+      text: optionText,
+      timestamp: getTimestamp(),
+    };
+    setMessages((prev) => [...prev, userMsg]);
+
+    // 2. State Machine Transitions
+    const lower = optionText.toLowerCase();
+
+    // Check Global Handoff or Menu triggers
+    if (optionText === "Talk to the Team" || optionText === "Talk to Team" || optionText === "Connect with the Team" || optionText === "Request a Callback") {
+      startHandoffFlow();
+      return;
+    }
+    if (optionText === "Main Menu" || optionText === "Ask Another Question" || optionText === "Continue Exploring") {
+      setFlowState("main_menu");
+      addBotReply("Hi 👋 Welcome back to Karncy.\nHow can we help you today?", MAIN_MENU_OPTIONS);
+      return;
+    }
+    if (optionText === "Apply Now" || optionText === "Let's Unlock Capital") {
+      onOpenModal("funding");
+      addBotReply("Opening the Karncy Financing application modal for you now...", ["Main Menu", "Talk to the Team"]);
+      return;
+    }
+    if (optionText === "Submit Project" || optionText === "Let's Partner") {
+      onOpenModal("business");
+      addBotReply("Opening the Joint Venture & Equity application modal for you now...", ["Main Menu", "Talk to the Team"]);
+      return;
+    }
+    if (optionText === "Reach Us Now") {
+      onOpenModal("contact");
+      addBotReply("Opening the Reach Us contact form for you now...", ["Main Menu", "Talk to the Team"]);
+      return;
+    }
+
+    // --- State Machine ---
+    switch (flowState) {
+      case "main_menu":
+        if (optionText === "Invoice Financing") {
+          setFlowState("invoice_q1");
+          setUserData((prev) => ({ ...prev, product: "Invoice Financing" }));
+          addBotReply(
+            "Sure. I can help you understand Invoice Financing and check your basic requirement.\n\nWhat do you need funding for?",
+            ["Working Capital", "Business Expenses", "Cash Flow", "Other"]
+          );
+        } else if (optionText === "Joint Ventures") {
+          setFlowState("jv_q1");
+          setUserData((prev) => ({ ...prev, product: "Joint Ventures" }));
+          addBotReply(
+            "Sure. Let me understand your Joint Venture requirement.\n\nWhat type of venture are you planning?",
+            ["Real Estate", "Business Project", "Commercial Project", "Other"]
+          );
+        } else if (optionText === "Startup Funding") {
+          setFlowState("startup_q1");
+          setUserData((prev) => ({ ...prev, product: "Startup Funding" }));
+          addBotReply(
+            "Sure. Let me understand your startup and funding requirement.\n\nWhat stage is your startup currently in?",
+            ["Idea Stage", "Early Stage", "Revenue Generating", "Growth / Expansion"]
+          );
+        } else if (optionText === "I want to invest") {
+          setFlowState("invest_menu");
+          addBotReply(
+            "Sure. Karncy also helps users explore investment opportunities.\nTo help you better, would you like to:",
+            ["Explore Opportunities", "Learn How It Works", "Talk to the Team", "Main Menu"]
+          );
+        } else if (optionText === "General Question") {
+          setFlowState("general_q");
+          addBotReply(
+            "Karncy provides funding solutions for businesses, ventures, and startups through three main products:\n\n• Invoice Financing\n• Joint Ventures\n• Startup Funding\n\nWhat would you like to know about?",
+            ["Invoice Financing", "Joint Ventures", "Startup Funding", "Talk to the Team"]
+          );
+        }
+        break;
+
+      // --- Invoice Flow ---
+      case "invoice_q1":
+        setUserData((prev) => ({ ...prev, fundingNeed: optionText }));
+        setFlowState("invoice_q2");
+        addBotReply("Do you currently have unpaid invoices from your customers?", ["Yes", "No", "Not Sure"]);
+        break;
+
+      case "invoice_q2":
+        setUserData((prev) => ({ ...prev, hasUnpaidInvoices: optionText }));
+        setFlowState("invoice_q3");
+        addBotReply("What is the approximate value of the invoices?", ["Below ₹10 Lakhs", "₹10–50 Lakhs", "₹50 Lakhs–₹1 Crore", "Above ₹1 Crore", "Not Sure"]);
+        break;
+
+      case "invoice_q3":
+        setUserData((prev) => ({ ...prev, invoiceValue: optionText }));
+        setFlowState("invoice_q4");
+        addBotReply("How soon do you need the funding?", ["Immediately", "Within 1 Week", "Within 1 Month", "Just Exploring"]);
+        break;
+
+      case "invoice_q4":
+        setUserData((prev) => ({ ...prev, timeframe: optionText }));
+        setFlowState("invoice_complete");
+        addBotReply(
+          "Thanks. I have the basic details about your requirement.\nOur team can review your requirement and guide you through the next steps.",
+          ["Apply Now", "Talk to the Team", "Ask Another Question", "Main Menu"],
+          { label: "Apply Now", modalType: "funding" }
+        );
+        break;
+
+      // --- Joint Ventures Flow ---
+      case "jv_q1":
+        setUserData((prev) => ({ ...prev, ventureType: optionText }));
+        setFlowState("jv_q2");
+        addBotReply("Do you already have a project or business plan?", ["Yes", "No", "In Progress"]);
+        break;
+
+      case "jv_q2":
+        setUserData((prev) => ({ ...prev, hasProjectPlan: optionText }));
+        setFlowState("jv_q3");
+        addBotReply("What is the approximate funding requirement?", ["Below ₹25 Lakhs", "₹25–50 Lakhs", "₹50 Lakhs–₹1 Crore", "Above ₹1 Crore", "Not Sure"]);
+        break;
+
+      case "jv_q3":
+        setUserData((prev) => ({ ...prev, ventureFunding: optionText }));
+        setFlowState("jv_q4");
+        addBotReply("What stage is your project currently in?", ["Planning", "Ready to Start", "Already Operating", "Expansion"]);
+        break;
+
+      case "jv_q4":
+        setUserData((prev) => ({ ...prev, ventureStage: optionText }));
+        setFlowState("jv_complete");
+        addBotReply(
+          "Thanks. I have the basic details about your venture.\nA detailed discussion with our team may be required to understand the project and funding requirement.",
+          ["Submit Project", "Talk to the Team", "Ask Another Question", "Main Menu"],
+          { label: "Submit Project", modalType: "business" }
+        );
+        break;
+
+      // --- Startup Funding Flow ---
+      case "startup_q1":
+        setUserData((prev) => ({ ...prev, startupStage: optionText }));
+        setFlowState("startup_q2");
+        addBotReply("How much funding are you looking for?", ["Below ₹25 Lakhs", "₹25–50 Lakhs", "₹50 Lakhs–₹1 Crore", "Above ₹1 Crore", "Not Sure"]);
+        break;
+
+      case "startup_q2":
+        setUserData((prev) => ({ ...prev, startupFunding: optionText }));
+        setFlowState("startup_q3");
+        addBotReply("What will the funding mainly be used for?", ["Product Development", "Marketing", "Hiring", "Expansion", "Working Capital", "Other"]);
+        break;
+
+      case "startup_q3":
+        setUserData((prev) => ({ ...prev, fundingUse: optionText }));
+        setFlowState("startup_q4");
+        addBotReply("Is your startup currently generating revenue?", ["Yes", "No", "Starting Soon"]);
+        break;
+
+      case "startup_q4":
+        setUserData((prev) => ({ ...prev, startupRevenue: optionText }));
+        setFlowState("startup_complete");
+        addBotReply(
+          "Thanks. I have the basic details about your startup.\nOur team can review your requirement and discuss the appropriate next steps with you.",
+          ["Apply Now", "Talk to the Team", "Ask Another Question", "Main Menu"],
+          { label: "Apply Now", modalType: "business" }
+        );
+        break;
+
+      // --- Investment Flow ---
+      case "invest_menu":
+        if (optionText === "Explore Opportunities" || optionText === "Learn How It Works") {
+          addBotReply(
+            "Karncy SME Synergy Fund connects accredited and institutional investors with curated private credit opportunities.\nTarget preferred returns are payable strictly from distributable cash flow.",
+            ["Talk to the Team", "Main Menu"],
+            { label: "Reach Us", modalType: "contact" }
+          );
+        }
+        break;
+
+      // --- Handoff Topic ---
+      case "handoff_topic":
+        setUserData((prev) => ({ ...prev, handoffTopic: optionText }));
+        setFlowState("handoff_complete");
+        addBotReply(
+          `Thank you, ${userData.name || "valued visitor"}.\nWe have received your request. The Karncy team can review your requirement and contact you shortly.`,
+          ["Main Menu"],
+          { label: "Reach Us", modalType: "contact" }
+        );
+        break;
+
+      default:
+        setFlowState("main_menu");
+        addBotReply("How can we help you today?", MAIN_MENU_OPTIONS);
+        break;
+    }
+  };
+
+  const startHandoffFlow = () => {
+    setFlowState("handoff_name");
+    addBotReply("Sure. I can help you connect with the Karncy team.\n\nWhat is your name?");
   };
 
   const handleSendMessage = (e?: React.FormEvent) => {
@@ -119,58 +337,91 @@ export function AIChatbot({ onOpenModal }: AIChatbotProps) {
     const query = input.trim();
     if (!query) return;
 
+    // 1. Render user message
     const userMsg: Message = {
       id: `user-${Date.now()}`,
       sender: "user",
       text: query,
-      timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+      timestamp: getTimestamp(),
     };
-
     setMessages((prev) => [...prev, userMsg]);
     setInput("");
-    setIsTyping(true);
 
-    // Knowledge matching logic
-    setTimeout(() => {
-      const lower = query.toLowerCase();
-      let replyText = "";
-      let actionObj: Message["action"] = undefined;
+    const lower = query.toLowerCase();
 
-      if (lower.includes("fast") || lower.includes("speed") || lower.includes("time") || lower.includes("hours") || lower.includes("how long")) {
-        replyText = "Karncy processes working capital requests within 24 to 48 hours upon document verification. Disbursements are fast and equity-free!";
-        actionObj = { label: "Apply for Funding", modalType: "funding" };
-      } else if (lower.includes("invoice") || lower.includes("financing") || lower.includes("credit") || lower.includes("capital")) {
-        replyText = "Karncy Financing allows MSMEs to convert unpaid invoices into instant cash flow from ₹5L up to ₹5Cr with transparent terms.";
-        actionObj = { label: "Let's Unlock", modalType: "funding" };
-      } else if (lower.includes("venture") || lower.includes("equity") || lower.includes("startup") || lower.includes("partner")) {
-        replyText = "Karncy Ventures & Equity program offers strategic growth capital and institutional partnership for high-velocity companies.";
-        actionObj = { label: "Let's Partner", modalType: "business" };
-      } else if (lower.includes("contact") || lower.includes("reach") || lower.includes("phone") || lower.includes("email") || lower.includes("team")) {
-        replyText = "You can connect with our team directly through the 'Reach Us' portal or email privacy@karncy.com.";
-        actionObj = { label: "Reach Us", modalType: "contact" };
-      } else if (lower.includes("doc") || lower.includes("gst") || lower.includes("require") || lower.includes("eligib")) {
-        replyText = "Required documents include GST returns, bank statements for the last 6 months, and verified invoice/purchase order copies.";
-        actionObj = { label: "Talk to Karncy directly", modalType: "funding" };
-      } else {
-        replyText = "Thank you for reaching out! Our team is available to assist you with tailored credit solutions or venture partnerships.";
-        actionObj = { label: "Talk to Karncy directly", modalType: "contact" };
-      }
+    // Check for Human Handoff Triggers
+    const humanTriggers = ["human", "talk to someone", "contact team", "call me", "speak to someone", "contact karncy", "need help", "expert", "talk to an expert"];
+    if (humanTriggers.some((t) => lower.includes(t))) {
+      startHandoffFlow();
+      return;
+    }
 
-      const botMsg: Message = {
-        id: `bot-${Date.now()}`,
-        sender: "bot",
-        text: replyText,
-        timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
-        action: actionObj,
-      };
+    // Handing text inputs in Handoff Flow
+    if (flowState === "handoff_name") {
+      setUserData((prev) => ({ ...prev, name: query }));
+      setFlowState("handoff_phone");
+      addBotReply(`Thank you, ${query}.\nWhat is your phone number?`);
+      return;
+    }
 
-      setMessages((prev) => [...prev, botMsg]);
-      setIsTyping(false);
-    }, 700);
-  };
+    if (flowState === "handoff_phone") {
+      setUserData((prev) => ({ ...prev, phone: query }));
+      setFlowState("handoff_email");
+      addBotReply("What is your email address?");
+      return;
+    }
 
-  const handleReset = () => {
-    setMessages([initialMessage]);
+    if (flowState === "handoff_email") {
+      setUserData((prev) => ({ ...prev, email: query }));
+      setFlowState("handoff_topic");
+      addBotReply("What would you like to discuss?", [
+        "Invoice Financing",
+        "Joint Ventures",
+        "Startup Funding",
+        "Investment",
+        "Other",
+      ]);
+      return;
+    }
+
+    // Knowledge & Product Answers (No invented promises)
+    if (lower.includes("invoice") && (lower.includes("what") || lower.includes("how") || lower.includes("work"))) {
+      addBotReply(
+        "Invoice Financing turns outstanding receivables into immediate working capital without waiting 30–90 days for buyer settlement.\n\nWould you like to check your requirement with a few quick questions?",
+        ["Invoice Financing", "Talk to the Team", "Main Menu"]
+      );
+      return;
+    }
+
+    if (lower.includes("venture") && (lower.includes("what") || lower.includes("how") || lower.includes("work"))) {
+      addBotReply(
+        "Joint Ventures with Karncy provide co-investment, project funding, and strategic execution for commercial & real estate projects.\n\nWould you like to check your venture requirement?",
+        ["Joint Ventures", "Talk to the Team", "Main Menu"]
+      );
+      return;
+    }
+
+    if (lower.includes("startup") && (lower.includes("what") || lower.includes("how") || lower.includes("work"))) {
+      addBotReply(
+        "Startup Funding provides non-dilutive and growth equity partnerships for early to expansion stage startups.\n\nWould you like to check your startup requirement?",
+        ["Startup Funding", "Talk to the Team", "Main Menu"]
+      );
+      return;
+    }
+
+    if (lower.includes("karncy") && lower.includes("what")) {
+      addBotReply(
+        "Karncy provides funding solutions for businesses, ventures, and startups through three main products:\n\n• Invoice Financing\n• Joint Ventures\n• Startup Funding\n\nWhat would you like to know about?",
+        ["Invoice Financing", "Joint Ventures", "Startup Funding", "Talk to the Team"]
+      );
+      return;
+    }
+
+    // Fallback for complex/unknown questions
+    addBotReply(
+      "That's a detailed question and may depend on your specific situation.\nIt's better to discuss this directly with the Karncy team.",
+      ["Connect with the Team", "Request a Callback", "Main Menu"]
+    );
   };
 
   return (
@@ -277,7 +528,7 @@ export function AIChatbot({ onOpenModal }: AIChatbotProps) {
               zIndex: 260,
             }}
           >
-            {/* Header (No robot head icon, Header title: Karncy Assistant) */}
+            {/* Header (Karncy Assistant, status green dot, reset & close) */}
             <div
               style={{
                 background: "linear-gradient(135deg, #0f172a 0%, #1e293b 100%)",
@@ -393,6 +644,7 @@ export function AIChatbot({ onOpenModal }: AIChatbotProps) {
                       fontFamily: "var(--font-sans)",
                       fontSize: "0.85rem",
                       lineHeight: 1.55,
+                      whiteSpace: "pre-line",
                     }}
                   >
                     {msg.text}
@@ -428,6 +680,51 @@ export function AIChatbot({ onOpenModal }: AIChatbotProps) {
                       </div>
                     )}
                   </div>
+
+                  {/* Options List directly in chat message */}
+                  {msg.sender === "bot" && msg.options && msg.options.length > 0 && (
+                    <div style={{ marginTop: "0.5rem", display: "flex", flexDirection: "column", gap: "0.4rem", width: "90%" }}>
+                      {msg.options.map((opt) => (
+                        <button
+                          key={opt}
+                          type="button"
+                          onClick={() => handleOptionClick(opt)}
+                          style={{
+                            fontFamily: "var(--font-sans)",
+                            fontSize: "0.82rem",
+                            fontWeight: 600,
+                            color: "var(--primary)",
+                            background: "#ffffff",
+                            border: "1px solid rgba(13,31,130,0.16)",
+                            borderRadius: "0.65rem",
+                            padding: "0.55rem 0.85rem",
+                            textAlign: "left",
+                            cursor: "pointer",
+                            boxShadow: "0 2px 6px rgba(15,23,42,0.03)",
+                            transition: "all 0.15s ease",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "space-between",
+                            gap: "0.5rem",
+                          }}
+                          onMouseEnter={(e) => {
+                            const btn = e.currentTarget as HTMLButtonElement;
+                            btn.style.background = "rgba(13,31,130,0.04)";
+                            btn.style.borderColor = "var(--primary)";
+                          }}
+                          onMouseLeave={(e) => {
+                            const btn = e.currentTarget as HTMLButtonElement;
+                            btn.style.background = "#ffffff";
+                            btn.style.borderColor = "rgba(13,31,130,0.16)";
+                          }}
+                        >
+                          <span>{opt}</span>
+                          <ArrowRight size={12} style={{ color: "var(--primary)", flexShrink: 0 }} />
+                        </button>
+                      ))}
+                    </div>
+                  )}
+
                   <span
                     style={{
                       fontFamily: "var(--font-sans)",
@@ -441,62 +738,6 @@ export function AIChatbot({ onOpenModal }: AIChatbotProps) {
                   </span>
                 </div>
               ))}
-
-              {/* Suggested Questions List displayed directly in Chat Body */}
-              {messages.length === 1 && (
-                <div style={{ marginTop: "0.2rem", display: "flex", flexDirection: "column", gap: "0.45rem", maxWidth: "92%" }}>
-                  <span
-                    style={{
-                      fontFamily: "var(--font-sans)",
-                      fontSize: "0.68rem",
-                      fontWeight: 700,
-                      color: "#64748b",
-                      textTransform: "uppercase",
-                      letterSpacing: "0.06em",
-                      marginBottom: "0.1rem",
-                    }}
-                  >
-                    Suggested Questions
-                  </span>
-                  {PREEXISTING_QUESTIONS.map((q) => (
-                    <button
-                      key={q.id}
-                      type="button"
-                      onClick={() => handleSelectQuestion(q)}
-                      style={{
-                        fontFamily: "var(--font-sans)",
-                        fontSize: "0.82rem",
-                        fontWeight: 600,
-                        color: "var(--primary)",
-                        background: "#ffffff",
-                        border: "1px solid rgba(13,31,130,0.16)",
-                        borderRadius: "0.65rem",
-                        padding: "0.55rem 0.85rem",
-                        textAlign: "left",
-                        cursor: "pointer",
-                        boxShadow: "0 2px 6px rgba(15,23,42,0.03)",
-                        transition: "all 0.15s ease",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                        gap: "0.5rem",
-                      }}
-                      onMouseEnter={(e) => {
-                        const btn = e.currentTarget as HTMLButtonElement;
-                        btn.style.background = "rgba(13,31,130,0.04)";
-                        btn.style.borderColor = "var(--primary)";
-                      }}
-                      onMouseLeave={(e) => {
-                        const btn = e.currentTarget as HTMLButtonElement;
-                        btn.style.background = "#ffffff";
-                        btn.style.borderColor = "rgba(13,31,130,0.16)";
-                      }}
-                    >
-                      <span>{q.question}</span>
-                    </button>
-                  ))}
-                </div>
-              )}
 
               {/* Typing Indicator */}
               {isTyping && (
@@ -548,7 +789,7 @@ export function AIChatbot({ onOpenModal }: AIChatbotProps) {
             >
               <input
                 type="text"
-                placeholder="Ask about funding, criteria, rates..."
+                placeholder="Type your message or answer..."
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 style={{
