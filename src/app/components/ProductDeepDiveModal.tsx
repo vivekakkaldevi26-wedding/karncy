@@ -247,9 +247,9 @@ export function ProductDeepDiveModal({ id, onClose, onOpenContact }: ProductDeep
                       { icon: <CheckCircle size={16} />, title: "Settle", desc: "Buyer pays into escrow on due date; balance released same day." },
                     ].map((s, i) => (
                       <div key={i} style={{ display: "grid", gridTemplateColumns: "5.5rem 2.5rem 1fr", gap: "1rem", alignItems: "center", position: "relative", zIndex: 1 }}>
-                        {/* Left Phase indicator */}
+                        {/* Left Step indicator */}
                         <div style={{ textAlign: "right", fontFamily: "var(--font-sans)", fontSize: "0.8rem", fontWeight: 700, color: "var(--muted-foreground)", letterSpacing: "0.03em" }}>
-                          Phase 0{i + 1}
+                          Step 0{i + 1}
                         </div>
 
                         {/* Node Icon Circle */}
