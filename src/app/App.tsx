@@ -2118,18 +2118,6 @@ function ContactModal({ type, onClose }: { type: ModalType; onClose: () => void 
   const isFunding = type === "funding";
   const isContact = type === "contact";
 
-  const getTitle = () => {
-    if (type === "funding") return "Apply for Funding";
-    if (type === "business") return "Apply for Business";
-    return "Reach Us";
-  };
-
-  const getSubtitle = () => {
-    if (type === "funding") return "Tell us about your business to get working capital unlocked in 48 hours.";
-    if (type === "business") return "Let's explore growth, joint venture, or investment opportunities together.";
-    return "Reach out to our team for general inquiries, feedback, or support.";
-  };
-
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -2203,18 +2191,8 @@ function ContactModal({ type, onClose }: { type: ModalType; onClose: () => void 
           <X size={14} />
         </button>
 
-        {/* Modal Header */}
-        <div style={{ padding: "1.75rem 2rem 1.25rem", borderBottom: "1px solid var(--border)", background: isFunding ? "rgba(255,105,0,0.03)" : "rgba(13,31,130,0.03)" }}>
-          <h3 style={{ fontFamily: "var(--font-display)", fontSize: "1.45rem", fontWeight: 700, color: "#0f172a", letterSpacing: "-0.02em" }}>
-            {getTitle()}
-          </h3>
-          <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.85rem", color: "#64748b", marginTop: "0.25rem", lineHeight: 1.5 }}>
-            {getSubtitle()}
-          </p>
-        </div>
-
         {/* Modal Body / Form */}
-        <div style={{ padding: "1.5rem 2rem 2rem" }}>
+        <div style={{ padding: "2.5rem 2rem 2rem" }}>
           {submitted ? (
             <motion.div
               initial={{ opacity: 0, y: 10 }}
@@ -2227,26 +2205,9 @@ function ContactModal({ type, onClose }: { type: ModalType; onClose: () => void 
               <h4 style={{ fontFamily: "var(--font-display)", fontSize: "1.3rem", fontWeight: 700, color: "#0f172a", marginBottom: "0.5rem" }}>
                 {isContact ? "Message Sent!" : "Application Received!"}
               </h4>
-              <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.9rem", color: "#475569", lineHeight: 1.6, marginBottom: "1.75rem" }}>
+              <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.9rem", color: "#475569", lineHeight: 1.6, margin: 0 }}>
                 Thank you, <strong>{formData.fullName}</strong>. Our team will reach back to you at <strong>{formData.workEmail}</strong> within 24 hours.
               </p>
-              <button
-                type="button"
-                onClick={onClose}
-                style={{
-                  fontFamily: "var(--font-sans)",
-                  fontSize: "0.875rem",
-                  fontWeight: 700,
-                  padding: "0.8rem 2rem",
-                  background: "#0f172a",
-                  color: "#ffffff",
-                  border: "none",
-                  borderRadius: "calc(var(--radius) * 0.7)",
-                  cursor: "pointer",
-                }}
-              >
-                Close Window
-              </button>
             </motion.div>
           ) : (
             <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "1.1rem" }}>
