@@ -128,10 +128,10 @@ export function ProductDeepDiveModal({ id, onClose, onOpenContact }: ProductDeep
           style={{
             flex: 1,
             overflowY: "auto",
-            padding: "clamp(1.5rem, 3.5vw, 3rem)",
+            padding: "clamp(2rem, 4vw, 3.5rem)",
             display: "flex",
             flexDirection: "column",
-            gap: "2.25rem",
+            gap: "3rem",
           }}
         >
           {/* Executive Summary Quote Box */}
@@ -164,22 +164,21 @@ export function ProductDeepDiveModal({ id, onClose, onOpenContact }: ProductDeep
             </p>
           </div>
 
-          {/* Philosophy Banner */}
+          {/* Philosophy Banner — Clean, No Background Box */}
           <div
             style={{
-              padding: "1rem 1.25rem",
-              background: "rgba(255,105,0,0.06)",
-              border: "1px solid rgba(255,105,0,0.2)",
-              borderRadius: "calc(var(--radius) * 1.2)",
+              padding: "0.5rem 0",
+              borderLeft: "3px solid var(--cta)",
+              paddingLeft: "1.25rem",
             }}
           >
-            <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.72rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", color: "var(--cta)", display: "block", marginBottom: "0.2rem" }}>
+            <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.72rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.12em", color: "var(--cta)", display: "block", marginBottom: "0.35rem" }}>
               Our Philosophy
             </span>
-            <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.88rem", fontWeight: 600, color: "#1e293b", margin: 0, lineHeight: 1.6 }}>
-              {isInvoice && "Growth should not wait on a buyer's 60-day payment cycle. Capital tied up in paper is capital denied to the next order, the next hire, the next shipment."}
-              {isVentures && "Businesses should raise capital without sacrificing ownership. Investors should earn attractive returns without depending solely on an uncertain equity exit. Karncy is the framework where both objectives coexist — through disciplined project execution."}
-              {isStartup && "Founders don't need money first — they need a partner first. Capital without operating support is the reason most early ventures stall between two rounds."}
+            <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.95rem", fontWeight: 600, color: "#1e293b", margin: 0, lineHeight: 1.65, fontStyle: "italic" }}>
+              {isInvoice && "“Growth should not wait on a buyer's 60-day payment cycle. Capital tied up in paper is capital denied to the next order, the next hire, the next shipment.”"}
+              {isVentures && "“Businesses should raise capital without sacrificing ownership. Investors should earn attractive returns without depending solely on an uncertain equity exit. Karncy is the framework where both objectives coexist — through disciplined project execution.”"}
+              {isStartup && "“Founders don't need money first — they need a partner first. Capital without operating support is the reason most early ventures stall between two rounds.”"}
             </p>
           </div>
 
@@ -187,13 +186,13 @@ export function ProductDeepDiveModal({ id, onClose, onOpenContact }: ProductDeep
 
           {/* INVOICE FINANCING DEEP DIVE */}
           {isInvoice && (
-            <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "2.75rem" }}>
               {/* Who Qualifies */}
               <div>
-                <h3 style={{ fontFamily: "var(--font-display)", fontSize: "1.15rem", fontWeight: 700, color: "#0f172a", marginBottom: "0.85rem" }}>
+                <h3 style={{ fontFamily: "var(--font-display)", fontSize: "1.15rem", fontWeight: 700, color: "#0f172a", marginBottom: "1rem" }}>
                   Who Qualifies
                 </h3>
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "0.65rem" }}>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "0.75rem" }}>
                   {[
                     "GST-registered supplier operating in India or exports",
                     "2+ years of active trading history",
@@ -203,7 +202,7 @@ export function ProductDeepDiveModal({ id, onClose, onOpenContact }: ProductDeep
                     "Ticket sizes from ₹5 Lakhs up to ₹1 Crore+",
                     "Flexible tenor up to 90 days",
                   ].map((q, i) => (
-                    <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: "0.5rem", padding: "0.65rem 0.85rem", background: "#f8fafc", border: "1px solid var(--border)", borderRadius: "var(--radius)" }}>
+                    <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: "0.5rem", padding: "0.75rem 0.9rem", background: "#f8fafc", border: "1px solid var(--border)", borderRadius: "var(--radius)" }}>
                       <Check size={14} style={{ color: "var(--primary)", marginTop: "0.15rem", flexShrink: 0 }} />
                       <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.84rem", color: "#334155" }}>{q}</span>
                     </div>
@@ -211,54 +210,51 @@ export function ProductDeepDiveModal({ id, onClose, onOpenContact }: ProductDeep
                 </div>
               </div>
 
-              {/* 48-Hour Flow Steps — Timeline UI Design */}
-              <div>
-                <h3 style={{ fontFamily: "var(--font-display)", fontSize: "1.15rem", fontWeight: 700, color: "#0f172a", marginBottom: "1.5rem" }}>
+              {/* How It Flows — Centered Flow without numbers */}
+              <div style={{ width: "100%", textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center" }}>
+                <h3 style={{ fontFamily: "var(--font-display)", fontSize: "1.2rem", fontWeight: 700, color: "#0f172a", marginBottom: "2rem", textAlign: "center" }}>
                   How It Flows — The 48-Hour Path
                 </h3>
-                <div style={{ position: "relative", paddingLeft: "1.75rem", borderLeft: "2px solid rgba(255, 105, 0, 0.3)", display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+                <div style={{ maxWidth: "38rem", width: "100%", position: "relative", display: "flex", flexDirection: "column", alignItems: "center", gap: "2.25rem" }}>
+                  {/* Center Connecting Line */}
+                  <div aria-hidden style={{ position: "absolute", top: "0.5rem", bottom: "0.5rem", left: "50%", transform: "translateX(-50%)", width: "2px", background: "rgba(255, 105, 0, 0.25)", zIndex: 0 }} />
                   {[
-                    { title: "01 Onboard", desc: "KYC, GST, banking, and buyer references submitted once." },
-                    { title: "02 List Invoice", desc: "Upload invoice, PO, and proof of delivery / acceptance." },
-                    { title: "03 Buyer Verification", desc: "We confirm the payable directly with the buyer AP team." },
-                    { title: "04 Underwrite", desc: "Risk desk approves advance rate and tenor within 24–48 hours." },
-                    { title: "05 Fund", desc: "80% of invoice value released directly to your account." },
-                    { title: "06 Settle", desc: "Buyer pays into escrow on due date; balance released same day." },
+                    { title: "Onboard", desc: "KYC, GST, banking, and buyer references submitted once." },
+                    { title: "List Invoice", desc: "Upload invoice, PO, and proof of delivery / acceptance." },
+                    { title: "Buyer Verification", desc: "We confirm the payable directly with the buyer AP team." },
+                    { title: "Underwrite", desc: "Risk desk approves advance rate and tenor within 24–48 hours." },
+                    { title: "Fund", desc: "80% of invoice value released directly to your account." },
+                    { title: "Settle", desc: "Buyer pays into escrow on due date; balance released same day." },
                   ].map((s, i) => (
-                    <div key={i} style={{ position: "relative" }}>
-                      {/* Timeline Node Dot */}
+                    <div key={i} style={{ position: "relative", zIndex: 1, background: "#ffffff", padding: "0.4rem 1.25rem", textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center" }}>
                       <div
                         style={{
-                          position: "absolute",
-                          left: "-2.35rem",
-                          top: "0.2rem",
-                          width: "1.1rem",
-                          height: "1.1rem",
+                          width: "1rem",
+                          height: "1rem",
                           borderRadius: "50%",
                           background: "var(--cta)",
                           border: "3px solid #ffffff",
                           boxShadow: "0 0 0 2px rgba(255,105,0,0.35)",
+                          marginBottom: "0.45rem",
                         }}
                       />
-                      <div style={{ display: "flex", flexDirection: "column", gap: "0.2rem" }}>
-                        <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.8rem", fontWeight: 700, color: "var(--cta)", letterSpacing: "0.06em", textTransform: "uppercase" }}>
-                          {s.title}
-                        </span>
-                        <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.88rem", color: "#334155", margin: 0, lineHeight: 1.6 }}>
-                          {s.desc}
-                        </p>
-                      </div>
+                      <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.85rem", fontWeight: 700, color: "var(--cta)", letterSpacing: "0.04em", textTransform: "uppercase", marginBottom: "0.25rem" }}>
+                        {s.title}
+                      </span>
+                      <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.88rem", color: "#334155", margin: 0, lineHeight: 1.55, maxWidth: "28rem" }}>
+                        {s.desc}
+                      </p>
                     </div>
                   ))}
                 </div>
               </div>
 
               {/* How We Underwrite — Full Width, No Background Box */}
-              <div style={{ width: "100%", borderTop: "1px solid var(--border)", paddingTop: "1.5rem" }}>
-                <h4 style={{ fontFamily: "var(--font-display)", fontSize: "1.1rem", fontWeight: 700, color: "#0f172a", marginBottom: "0.85rem" }}>
+              <div style={{ width: "100%", borderTop: "1px solid var(--border)", paddingTop: "2rem" }}>
+                <h4 style={{ fontFamily: "var(--font-display)", fontSize: "1.1rem", fontWeight: 700, color: "#0f172a", marginBottom: "1rem" }}>
                   How We Underwrite
                 </h4>
-                <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "0.75rem 1.5rem" }}>
+                <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "0.85rem 1.75rem" }}>
                   {[
                     "Buyer credit rating & payment history",
                     "Sector concentration analysis",
@@ -275,11 +271,11 @@ export function ProductDeepDiveModal({ id, onClose, onOpenContact }: ProductDeep
               </div>
 
               {/* Pricing & Structure — Full Width, No Background Box */}
-              <div style={{ width: "100%", borderTop: "1px solid var(--border)", paddingTop: "1.5rem" }}>
-                <h4 style={{ fontFamily: "var(--font-display)", fontSize: "1.1rem", fontWeight: 700, color: "#0f172a", marginBottom: "0.85rem" }}>
+              <div style={{ width: "100%", borderTop: "1px solid var(--border)", paddingTop: "2rem" }}>
+                <h4 style={{ fontFamily: "var(--font-display)", fontSize: "1.1rem", fontWeight: 700, color: "#0f172a", marginBottom: "1rem" }}>
                   Pricing & Structure
                 </h4>
-                <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+                <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
                   <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.88rem", color: "#334155", lineHeight: 1.7, margin: 0 }}>
                     <strong>Advance Rate:</strong> 80% of invoice value on approval.<br />
                     <strong>Discount Fee:</strong> Priced against buyer risk & tenor — quoted upfront, no hidden reset.<br />
