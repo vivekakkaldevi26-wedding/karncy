@@ -211,12 +211,12 @@ export function ProductDeepDiveModal({ id, onClose, onOpenContact }: ProductDeep
                 </div>
               </div>
 
-              {/* 48-Hour Flow Steps */}
+              {/* 48-Hour Flow Steps — Timeline UI Design */}
               <div>
-                <h3 style={{ fontFamily: "var(--font-display)", fontSize: "1.15rem", fontWeight: 700, color: "#0f172a", marginBottom: "0.85rem" }}>
+                <h3 style={{ fontFamily: "var(--font-display)", fontSize: "1.15rem", fontWeight: 700, color: "#0f172a", marginBottom: "1.5rem" }}>
                   How It Flows — The 48-Hour Path
                 </h3>
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "0.75rem" }}>
+                <div style={{ position: "relative", paddingLeft: "1.75rem", borderLeft: "2px solid rgba(255, 105, 0, 0.3)", display: "flex", flexDirection: "column", gap: "1.5rem" }}>
                   {[
                     { title: "01 Onboard", desc: "KYC, GST, banking, and buyer references submitted once." },
                     { title: "02 List Invoice", desc: "Upload invoice, PO, and proof of delivery / acceptance." },
@@ -225,45 +225,67 @@ export function ProductDeepDiveModal({ id, onClose, onOpenContact }: ProductDeep
                     { title: "05 Fund", desc: "80% of invoice value released directly to your account." },
                     { title: "06 Settle", desc: "Buyer pays into escrow on due date; balance released same day." },
                   ].map((s, i) => (
-                    <div key={i} style={{ padding: "0.85rem 1rem", background: "#ffffff", border: "1px solid var(--border)", borderRadius: "calc(var(--radius) * 1.2)" }}>
-                      <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.72rem", fontWeight: 700, color: "var(--cta)", display: "block", marginBottom: "0.2rem" }}>{s.title}</span>
-                      <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.82rem", color: "#475569", margin: 0, lineHeight: 1.5 }}>{s.desc}</p>
+                    <div key={i} style={{ position: "relative" }}>
+                      {/* Timeline Node Dot */}
+                      <div
+                        style={{
+                          position: "absolute",
+                          left: "-2.35rem",
+                          top: "0.2rem",
+                          width: "1.1rem",
+                          height: "1.1rem",
+                          borderRadius: "50%",
+                          background: "var(--cta)",
+                          border: "3px solid #ffffff",
+                          boxShadow: "0 0 0 2px rgba(255,105,0,0.35)",
+                        }}
+                      />
+                      <div style={{ display: "flex", flexDirection: "column", gap: "0.2rem" }}>
+                        <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.8rem", fontWeight: 700, color: "var(--cta)", letterSpacing: "0.06em", textTransform: "uppercase" }}>
+                          {s.title}
+                        </span>
+                        <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.88rem", color: "#334155", margin: 0, lineHeight: 1.6 }}>
+                          {s.desc}
+                        </p>
+                      </div>
                     </div>
                   ))}
                 </div>
               </div>
 
-              {/* Underwriting & Safeguards Grid */}
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "1rem" }}>
-                <div style={{ padding: "1.25rem", background: "#f8fafc", border: "1px solid var(--border)", borderRadius: "calc(var(--radius) * 1.2)" }}>
-                  <h4 style={{ fontFamily: "var(--font-display)", fontSize: "0.98rem", fontWeight: 700, color: "#0f172a", marginBottom: "0.6rem" }}>
-                    How We Underwrite
-                  </h4>
-                  <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.4rem" }}>
-                    {[
-                      "Buyer credit rating & payment history",
-                      "Sector concentration analysis",
-                      "Contract, PO & GST e-invoice matching",
-                      "Delivery & acceptance evidence",
-                      "Escrow-ability of underlying receivable",
-                    ].map((item, i) => (
-                      <li key={i} style={{ fontFamily: "var(--font-sans)", fontSize: "0.82rem", color: "#475569", display: "flex", gap: "0.4rem" }}>
-                        <span style={{ color: "var(--primary)" }}>•</span> {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+              {/* How We Underwrite — Full Width, No Background Box */}
+              <div style={{ width: "100%", borderTop: "1px solid var(--border)", paddingTop: "1.5rem" }}>
+                <h4 style={{ fontFamily: "var(--font-display)", fontSize: "1.1rem", fontWeight: 700, color: "#0f172a", marginBottom: "0.85rem" }}>
+                  How We Underwrite
+                </h4>
+                <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "0.75rem 1.5rem" }}>
+                  {[
+                    "Buyer credit rating & payment history",
+                    "Sector concentration analysis",
+                    "Contract, PO & GST e-invoice matching",
+                    "Delivery & acceptance evidence",
+                    "Escrow-ability of underlying receivable",
+                  ].map((item, i) => (
+                    <li key={i} style={{ fontFamily: "var(--font-sans)", fontSize: "0.88rem", color: "#334155", display: "flex", alignItems: "center", gap: "0.6rem" }}>
+                      <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "var(--primary)", flexShrink: 0 }} />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
 
-                <div style={{ padding: "1.25rem", background: "#f8fafc", border: "1px solid var(--border)", borderRadius: "calc(var(--radius) * 1.2)" }}>
-                  <h4 style={{ fontFamily: "var(--font-display)", fontSize: "0.98rem", fontWeight: 700, color: "#0f172a", marginBottom: "0.6rem" }}>
-                    Pricing & Structure
-                  </h4>
-                  <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.82rem", color: "#475569", lineHeight: 1.6, margin: "0 0 0.5rem 0" }}>
+              {/* Pricing & Structure — Full Width, No Background Box */}
+              <div style={{ width: "100%", borderTop: "1px solid var(--border)", paddingTop: "1.5rem" }}>
+                <h4 style={{ fontFamily: "var(--font-display)", fontSize: "1.1rem", fontWeight: 700, color: "#0f172a", marginBottom: "0.85rem" }}>
+                  Pricing & Structure
+                </h4>
+                <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+                  <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.88rem", color: "#334155", lineHeight: 1.7, margin: 0 }}>
                     <strong>Advance Rate:</strong> 80% of invoice value on approval.<br />
                     <strong>Discount Fee:</strong> Priced against buyer risk & tenor — quoted upfront, no hidden reset.<br />
                     <strong>Settlement:</strong> Buyer pays into a Karncy-managed escrow; balance released same day.
                   </p>
-                  <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.75rem", color: "var(--muted-foreground)" }}>
+                  <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.8rem", color: "var(--muted-foreground)", fontStyle: "italic" }}>
                     No collateral outside receivable. No personal guarantees for approved buyer categories.
                   </span>
                 </div>
@@ -425,75 +447,37 @@ export function ProductDeepDiveModal({ id, onClose, onOpenContact }: ProductDeep
             borderTop: "1px solid var(--border)",
             display: "flex",
             alignItems: "center",
-            justifyContent: "space-between",
-            flexWrap: "wrap",
-            gap: "1rem",
+            justifyContent: "center",
           }}
         >
-          <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
-            <button
-              onClick={() => {
-                onClose();
-                onOpenContact(isInvoice ? "funding" : "business");
-              }}
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "0.5rem",
-                fontFamily: "var(--font-sans)",
-                fontSize: "0.875rem",
-                fontWeight: 700,
-                padding: "0.85rem 2rem",
-                background: "var(--cta)",
-                color: "var(--cta-foreground)",
-                borderRadius: "var(--radius)",
-                border: "none",
-                cursor: "pointer",
-                boxShadow: "0 4px 14px rgba(255,105,0,0.25)",
-              }}
-            >
-              {isInvoice && "Let's Unlock"}
-              {isVentures && "Let's Venture"}
-              {isStartup && "Let's Partner"} <ArrowRight size={14} />
-            </button>
-            <button
-              onClick={() => {
-                onClose();
-                onOpenContact("contact");
-              }}
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "0.5rem",
-                fontFamily: "var(--font-sans)",
-                fontSize: "0.875rem",
-                fontWeight: 600,
-                padding: "0.85rem 1.75rem",
-                background: "#ffffff",
-                color: "var(--primary)",
-                borderRadius: "var(--radius)",
-                border: "1.5px solid var(--primary)",
-                cursor: "pointer",
-              }}
-            >
-              Talk to Team <ArrowRight size={14} />
-            </button>
-          </div>
-
           <button
-            onClick={onClose}
+            onClick={() => {
+              onClose();
+              onOpenContact(isInvoice ? "funding" : "business");
+            }}
             style={{
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "0.5rem",
               fontFamily: "var(--font-sans)",
-              fontSize: "0.85rem",
-              fontWeight: 600,
-              color: "var(--muted-foreground)",
-              background: "none",
+              fontSize: "0.95rem",
+              fontWeight: 700,
+              padding: "0.85rem 2.5rem",
+              background: "var(--cta)",
+              color: "var(--cta-foreground)",
+              borderRadius: "var(--radius)",
               border: "none",
               cursor: "pointer",
-              padding: "0.5rem 0.75rem",
+              boxShadow: "0 4px 14px rgba(255,105,0,0.25)",
+              transition: "transform 0.15s ease",
             }}
+            onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.transform = "translateY(-1px)")}
+            onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.transform = "translateY(0)")}
           >
-            Close
+            {isInvoice && "Let's Unlock"}
+            {isVentures && "Let's Venture"}
+            {isStartup && "Let's Partner"} <ArrowRight size={15} />
           </button>
         </div>
       </motion.div>
