@@ -2107,6 +2107,7 @@ function ContactModal({ type, onClose }: { type: ModalType; onClose: () => void 
     companyName: "",
     fundingRequirement: "₹25L–₹50L",
     howCanWeHelp: "General Inquiry",
+    message: "",
   });
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -2426,6 +2427,32 @@ function ContactModal({ type, onClose }: { type: ModalType; onClose: () => void 
                   </select>
                 </div>
               )}
+
+              {/* Write Your Message */}
+              <div>
+                <label style={{ display: "block", fontFamily: "var(--font-sans)", fontSize: "0.82rem", fontWeight: 600, color: "#334155", marginBottom: "0.35rem" }}>
+                  Write Your Message <span style={{ color: "#64748b", fontWeight: 400 }}>(Optional)</span>
+                </label>
+                <textarea
+                  rows={3}
+                  placeholder="Type your message or inquiry here..."
+                  value={formData.message}
+                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                  style={{
+                    width: "100%",
+                    padding: "0.7rem 0.9rem",
+                    fontFamily: "var(--font-sans)",
+                    fontSize: "0.9rem",
+                    color: "#0f172a",
+                    background: "#f8fafc",
+                    border: "1px solid #cbd5e1",
+                    borderRadius: "calc(var(--radius) * 0.7)",
+                    outline: "none",
+                    boxSizing: "border-box",
+                    resize: "vertical",
+                  }}
+                />
+              </div>
 
               {/* Submit CTA Button */}
               <button
