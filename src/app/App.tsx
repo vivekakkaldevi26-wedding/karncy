@@ -22,6 +22,7 @@ import certSoc2 from "../imports/images-1.png";
 import certIso27001 from "../imports/iso2001-logo-300x200-1.png";
 import ingrainLogo from "../imports/ingrain-logo.jpg";
 import { AIChatbot } from "./components/AIChatbot";
+import { ProductDeepDiveModal } from "./components/ProductDeepDiveModal";
 
 export type ProductId = "invoice" | "ventures" | "startup";
 export type PolicyKey = "about" | "privacy" | "terms" | "risk" | "cookies" | "grievance" | "fund-terms";
@@ -900,22 +901,21 @@ function MsmeMarquee() {
 function ChapterCard({
   productId,
   onExplore,
+  onDeepDive,
   isActive,
   cardWidth,
 }: {
   productId: ProductId;
   onExplore: () => void;
+  onDeepDive?: () => void;
   isActive: boolean;
   cardWidth: string;
 }) {
-
-
   const product = products[productId];
   const idx = (["invoice", "ventures", "startup"] as ProductId[]).indexOf(productId) + 1;
 
   return (
     <motion.div
-
       style={{
         width: cardWidth,
         minWidth: cardWidth,
@@ -927,7 +927,6 @@ function ChapterCard({
         display: "grid",
         gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 300px), 1fr))",
       }}
-
       animate={{ opacity: isActive ? 1 : 0.38, scale: isActive ? 1 : 0.92, y: isActive ? 0 : 18, boxShadow: isActive ? "0 24px 72px rgba(30,58,95,0.18), 0 2px 12px rgba(20,20,43,0.06)" : "0 2px 20px rgba(30,58,95,0.07)" }}
       transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
     >
@@ -947,19 +946,53 @@ function ChapterCard({
           <h3 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.6rem, 2.2vw, 2.1rem)", fontWeight: 700, color: "var(--primary-foreground)", letterSpacing: "-0.025em", lineHeight: 1.1, marginBottom: "0.75rem" }}>
             {product.title}
           </h3>
-          <p style={{ fontFamily: "var(--font-display)", fontSize: "0.88rem", color: "rgba(255,255,255,0.6)", fontStyle: "italic", lineHeight: 1.5, marginBottom: "2.75rem" }}>
+          <p style={{ fontFamily: "var(--font-display)", fontSize: "0.88rem", color: "rgba(255,255,255,0.6)", fontStyle: "italic", lineHeight: 1.5, marginBottom: "2.25rem" }}>
             {product.tagline}
           </p>
-          <button
-            onClick={onExplore}
-            style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.95rem", fontWeight: 600, padding: "0.75rem 1.75rem", borderRadius: "9999px", border: "1.5px solid rgba(255,255,255,0.5)", color: "var(--primary-foreground)", background: "rgba(255,255,255,0.1)", cursor: "pointer", transition: "background 0.18s, border-color 0.18s" }}
-            onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,255,255,0.22)"; (e.currentTarget as HTMLButtonElement).style.borderColor = "rgba(255,255,255,0.8)"; }}
-            onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,255,255,0.1)"; (e.currentTarget as HTMLButtonElement).style.borderColor = "rgba(255,255,255,0.5)"; }}
-          >
-            {product.cta} <ArrowRight size={14} />
-          </button>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem", alignItems: "center" }}>
+            <button
+              onClick={onExplore}
+              style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.92rem", fontWeight: 600, padding: "0.75rem 1.5rem", borderRadius: "9999px", border: "1.5px solid rgba(255,255,255,0.5)", color: "var(--primary-foreground)", background: "rgba(255,255,255,0.1)", cursor: "pointer", transition: "background 0.18s, border-color 0.18s" }}
+              onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,255,255,0.22)"; (e.currentTarget as HTMLButtonElement).style.borderColor = "rgba(255,255,255,0.8)"; }}
+              onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,255,255,0.1)"; (e.currentTarget as HTMLButtonElement).style.borderColor = "rgba(255,255,255,0.5)"; }}
+            >
+              {product.cta} <ArrowRight size={14} />
+            </button>
+            {onDeepDive && (
+              <button
+                onClick={onDeepDive}
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "0.5rem",
+                  fontFamily: "var(--font-sans)",
+                  fontSize: "0.92rem",
+                  fontWeight: 600,
+                  padding: "0.75rem 1.5rem",
+                  borderRadius: "9999px",
+                  border: "1.5px solid var(--cta)",
+                  color: "#ffffff",
+                  background: "var(--cta)",
+                  cursor: "pointer",
+                  boxShadow: "0 4px 14px rgba(255,105,0,0.35)",
+                  transition: "all 0.18s ease"
+                }}
+                onMouseEnter={(e) => {
+                  (e.currentTarget as HTMLButtonElement).style.transform = "translateY(-1px)";
+                  (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 6px 18px rgba(255,105,0,0.45)";
+                }}
+                onMouseLeave={(e) => {
+                  (e.currentTarget as HTMLButtonElement).style.transform = "translateY(0)";
+                  (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 4px 14px rgba(255,105,0,0.35)";
+                }}
+              >
+                Deep dive <BookOpen size={14} />
+              </button>
+            )}
+          </div>
         </div>
       </div>
+
       <div style={{ background: "rgba(255,255,255,0.97)", backdropFilter: "blur(10px)", padding: "clamp(2rem, 5vw, 4.4rem) clamp(1.5rem, 4vw, 3.5rem)", display: "flex", flexDirection: "column" }}>
         <p className="mobile-hide-desc" style={{ fontFamily: "var(--font-sans)", fontSize: "0.85rem", color: "var(--muted-foreground)", lineHeight: 1.72, marginBottom: "2rem" }}>{product.description}</p>
         <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "1.4rem" }}>
@@ -985,7 +1018,7 @@ function ChapterCard({
 
 // ─── Sticky horizontal chapters — per-card wheel snap ────────────────────────
 
-function ChaptersScroll({ onOpen, onAction }: { onOpen?: (id: ProductId) => void; onAction?: (type: ModalType) => void }) {
+function ChaptersScroll({ onOpen, onAction, onDeepDive }: { onOpen?: (id: ProductId) => void; onAction?: (type: ModalType) => void; onDeepDive?: (id: ProductId) => void }) {
   const outerRef = useRef<HTMLDivElement>(null);
   const [activeCard, setActiveCard] = useState(0);
   // Always-current refs — never stale inside event handlers
@@ -1171,6 +1204,7 @@ function ChaptersScroll({ onOpen, onAction }: { onOpen?: (id: ProductId) => void
                       document.getElementById("why-karncy")?.scrollIntoView({ behavior: "smooth" });
                     }
                   }}
+                  onDeepDive={() => onDeepDive?.(pid)}
                   isActive={activeCard === i}
                   cardWidth={cardWidth}
                 />
@@ -1227,6 +1261,7 @@ function ChaptersScroll({ onOpen, onAction }: { onOpen?: (id: ProductId) => void
                     onAction(pid === "invoice" ? "funding" : "business");
                   }
                 }}
+                onDeepDive={() => onDeepDive?.(pid)}
                 isActive={true}
                 cardWidth="100%"
               />
@@ -2467,12 +2502,13 @@ export default function App() {
   const [activeProduct, setActiveProduct] = useState<ProductId | null>(null);
   const [activePolicy, setActivePolicy] = useState<PolicyKey | null>(null);
   const [activeModal, setActiveModal] = useState<ModalType | null>(null);
+  const [activeDeepDive, setActiveDeepDive] = useState<ProductId | null>(null);
   const activeSection = useActiveSection();
 
   useEffect(() => {
-    document.body.style.overflow = (activeProduct || activePolicy || activeModal) ? "hidden" : "";
+    document.body.style.overflow = (activeProduct || activePolicy || activeModal || activeDeepDive) ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
-  }, [activeProduct, activePolicy, activeModal]);
+  }, [activeProduct, activePolicy, activeModal, activeDeepDive]);
 
   const scrollTo = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 
@@ -2745,6 +2781,7 @@ export default function App() {
         <ChaptersScroll
           onOpen={(pid) => setActiveModal(pid === "invoice" ? "funding" : "business")}
           onAction={(type) => setActiveModal(type)}
+          onDeepDive={(pid) => setActiveDeepDive(pid)}
         />
 
         {/* ─── Operations ──────────────────────────────────────────────── */}
@@ -3139,6 +3176,16 @@ export default function App() {
       </main>
 
       <AnimatePresence>
+        {activeDeepDive && (
+          <ProductDeepDiveModal
+            id={activeDeepDive}
+            onClose={() => setActiveDeepDive(null)}
+            onOpenContact={(type) => {
+              setActiveDeepDive(null);
+              setActiveModal(type);
+            }}
+          />
+        )}
         {activeProduct && (
           <ProductDetailOverlay
             id={activeProduct}
