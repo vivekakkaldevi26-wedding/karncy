@@ -375,63 +375,172 @@ export function ProductDeepDiveModal({ id, onClose, onOpenContact }: ProductDeep
 
           {/* JOINT VENTURES DEEP DIVE */}
           {isVentures && (
-            <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
-              {/* What Makes Us Different & Non-Equity */}
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "1rem" }}>
-                <div style={{ padding: "1.25rem", background: "#ffffff", border: "1px solid var(--border)", borderRadius: "calc(var(--radius) * 1.2)" }}>
-                  <h4 style={{ fontFamily: "var(--font-display)", fontSize: "1rem", fontWeight: 700, color: "#0f172a", marginBottom: "0.5rem" }}>
-                    Non-Equity Project Capital
-                  </h4>
-                  <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.84rem", color: "#475569", lineHeight: 1.6, margin: 0 }}>
-                    Every investment is linked to a defined commercial project — POs, contracts, manufacturing cycles, or infrastructure builds. The business retains 100% equity, valuation, and cap table control.
-                  </p>
-                </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: "3rem" }}>
+              {/* Non-Equity Project Capital — Full Width, No Background Box */}
+              <div style={{ width: "100%", borderTop: "1px solid var(--border)", paddingTop: "2rem" }}>
+                <h4 style={{ fontFamily: "var(--font-display)", fontSize: "1.15rem", fontWeight: 700, color: "#0f172a", marginBottom: "0.75rem" }}>
+                  Non-Equity Project Capital
+                </h4>
+                <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.9rem", color: "#334155", lineHeight: 1.7, margin: 0 }}>
+                  Every investment is linked to a defined commercial project — purchase orders, supply contracts, manufacturing cycles, or infrastructure builds. The business retains 100% equity, valuation integrity, and cap table control without dilution or board seats.
+                </p>
+              </div>
 
-                <div style={{ padding: "1.25rem", background: "#ffffff", border: "1px solid var(--border)", borderRadius: "calc(var(--radius) * 1.2)" }}>
-                  <h4 style={{ fontFamily: "var(--font-display)", fontSize: "1rem", fontWeight: 700, color: "#0f172a", marginBottom: "0.5rem" }}>
-                    Flexible Investment Duration
-                  </h4>
-                  <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.84rem", color: "#475569", lineHeight: 1.6, margin: 0 }}>
-                    <strong>Short-Cycle (3–6 months):</strong> PO financing, export transactions, trading cycles.<br />
-                    <strong>Long-Cycle (up to 24 months):</strong> Construction milestones, equipment deployment, renewable energy.
+              {/* Flexible Investment Duration — Full Width, No Background Box */}
+              <div style={{ width: "100%", borderTop: "1px solid var(--border)", paddingTop: "2rem" }}>
+                <h4 style={{ fontFamily: "var(--font-display)", fontSize: "1.15rem", fontWeight: 700, color: "#0f172a", marginBottom: "0.75rem" }}>
+                  Flexible Investment Duration
+                </h4>
+                <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
+                  <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.9rem", color: "#334155", lineHeight: 1.7, margin: 0 }}>
+                    <strong>Short-Cycle (3–6 months):</strong> Purchase order financing, export fulfillment, inventory trading cycles.<br />
+                    <strong>Long-Cycle (up to 24 months):</strong> Construction milestones, industrial equipment deployment, renewable energy infrastructure.
                   </p>
                 </div>
               </div>
 
-              {/* 10 Milestone Deployment Steps */}
-              <div>
-                <h3 style={{ fontFamily: "var(--font-display)", fontSize: "1.15rem", fontWeight: 700, color: "#0f172a", marginBottom: "0.85rem" }}>
-                  10 Milestone-Based Capital Deployment Steps
-                </h3>
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "0.5rem" }}>
-                  {[
-                    "01 Procurement", "02 Manufacturing", "03 Site Mobilisation", "04 Delivery",
-                    "05 Installation", "06 Inspection", "07 Customer Acceptance", "08 Invoice Generation",
-                    "09 Collections", "10 Final Completion"
-                  ].map((m, i) => (
-                    <div key={i} style={{ padding: "0.5rem 0.75rem", background: "#f8fafc", border: "1px solid var(--border)", borderRadius: "var(--radius)", fontFamily: "var(--font-sans)", fontSize: "0.78rem", fontWeight: 600, color: "#334155" }}>
-                      {m}
-                    </div>
-                  ))}
+              {/* 10 Milestone-Based Capital Deployment Steps — Timeline UI Design */}
+              <div style={{ width: "100%", borderTop: "1px solid var(--border)", paddingTop: "2.5rem" }}>
+                <div style={{ textAlign: "center", marginBottom: "2.5rem" }}>
+                  <h3 style={{ fontFamily: "var(--font-display)", fontSize: "1.4rem", fontWeight: 700, color: "#0f172a", margin: "0 0 0.4rem 0", display: "inline-block", position: "relative" }}>
+                    10 Milestone-Based <span style={{ color: "var(--cta)" }}>Capital Deployment</span>
+                    <div style={{ width: "50%", height: "3px", background: "var(--cta)", borderRadius: "9999px", margin: "0.4rem auto 0" }} />
+                  </h3>
+                  <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.85rem", color: "var(--muted-foreground)", margin: 0 }}>
+                    Tranche disbursal and risk mitigation tied to verifiable operational milestones
+                  </p>
+                </div>
+
+                <div style={{ position: "relative", maxWidth: "48rem", margin: "0 auto" }}>
+                  {/* Vertical Accent Line */}
+                  <div
+                    aria-hidden
+                    style={{
+                      position: "absolute",
+                      top: "1.5rem",
+                      bottom: "1.5rem",
+                      left: "calc(clamp(3.5rem, 14vw, 5.25rem) + 0.75rem + 1.25rem)",
+                      transform: "translateX(-50%)",
+                      width: "2px",
+                      background: "rgba(255, 105, 0, 0.35)",
+                      zIndex: 0,
+                    }}
+                  />
+
+                  <div style={{ display: "flex", flexDirection: "column", gap: "1.35rem" }}>
+                    {[
+                      { icon: <Layers size={16} />, title: "Procurement", desc: "Raw material & equipment sourcing linked to verified project POs." },
+                      { icon: <Zap size={16} />, title: "Manufacturing", desc: "Fabrication & assembly executed in controlled facility environment." },
+                      { icon: <TrendingUp size={16} />, title: "Site Mobilisation", desc: "Logistics, transport, and site prep deployment." },
+                      { icon: <CheckCircle size={16} />, title: "Delivery", desc: "On-site shipment receipt & delivery verification sign-off." },
+                      { icon: <Scale size={16} />, title: "Installation", desc: "Engineering setup, mounting, and mechanical integration." },
+                      { icon: <ShieldCheck size={16} />, title: "Inspection", desc: "Quality control audit, safety checks, and compliance sign-off." },
+                      { icon: <Check size={16} />, title: "Customer Acceptance", desc: "Formal buyer operational acceptance certificate issued." },
+                      { icon: <FileText size={16} />, title: "Invoice Generation", desc: "Receivable billing generated directly against contract terms." },
+                      { icon: <DollarSign size={16} />, title: "Collections", desc: "Buyer payment deposited into designated project escrow." },
+                      { icon: <CheckCircle size={16} />, title: "Final Completion", desc: "Escrow payout, principal return, yield distribution & SPV release." },
+                    ].map((s, i) => (
+                      <div
+                        key={i}
+                        style={{
+                          display: "grid",
+                          gridTemplateColumns: "clamp(3.5rem, 14vw, 5.25rem) 2.5rem 1fr",
+                          gap: "0.75rem",
+                          alignItems: "center",
+                          position: "relative",
+                          zIndex: 1,
+                        }}
+                      >
+                        {/* Left Step indicator */}
+                        <div
+                          style={{
+                            textAlign: "right",
+                            fontFamily: "var(--font-sans)",
+                            fontSize: "clamp(0.72rem, 2vw, 0.8rem)",
+                            fontWeight: 700,
+                            color: "var(--muted-foreground)",
+                            letterSpacing: "0.02em",
+                            whiteSpace: "nowrap",
+                          }}
+                        >
+                          Step {String(i + 1).padStart(2, "0")}
+                        </div>
+
+                        {/* Node Icon Circle */}
+                        <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                          <div
+                            style={{
+                              width: "2.5rem",
+                              height: "2.5rem",
+                              borderRadius: "50%",
+                              background: "#ffffff",
+                              border: "2px solid var(--cta)",
+                              color: "var(--cta)",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              boxShadow: "0 0 0 4px rgba(255, 105, 0, 0.12)",
+                              flexShrink: 0,
+                            }}
+                          >
+                            {s.icon}
+                          </div>
+                        </div>
+
+                        {/* Right Card Box with Left Pointer */}
+                        <div
+                          style={{
+                            position: "relative",
+                            background: "#ffffff",
+                            border: "1px solid var(--border)",
+                            borderRadius: "calc(var(--radius) * 1.2)",
+                            padding: "clamp(0.75rem, 2.5vw, 1.1rem) clamp(0.85rem, 3vw, 1.35rem)",
+                            boxShadow: "0 4px 18px rgba(15, 23, 42, 0.05)",
+                          }}
+                        >
+                          <div
+                            style={{
+                              position: "absolute",
+                              top: "50%",
+                              left: "-6px",
+                              transform: "translateY(-50%) rotate(45deg)",
+                              width: "10px",
+                              height: "10px",
+                              background: "#ffffff",
+                              borderLeft: "1px solid var(--border)",
+                              borderBottom: "1px solid var(--border)",
+                            }}
+                          />
+
+                          <h4 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(0.92rem, 2.5vw, 1.05rem)", fontWeight: 700, color: "#0f172a", margin: "0 0 0.25rem 0", lineHeight: 1.2 }}>
+                            {s.title}
+                          </h4>
+                          <p style={{ fontFamily: "var(--font-sans)", fontSize: "clamp(0.78rem, 2vw, 0.85rem)", color: "#475569", margin: 0, lineHeight: 1.5 }}>
+                            {s.desc}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
 
-              {/* Priority Waterfall Distribution */}
-              <div style={{ padding: "1.25rem", background: "#f8fafc", border: "1px solid var(--border)", borderRadius: "calc(var(--radius) * 1.2)" }}>
-                <h4 style={{ fontFamily: "var(--font-display)", fontSize: "1rem", fontWeight: 700, color: "#0f172a", marginBottom: "0.75rem" }}>
+              {/* Priority Waterfall Distribution — Full Width, No Background Box */}
+              <div style={{ width: "100%", borderTop: "1px solid var(--border)", paddingTop: "2rem" }}>
+                <h4 style={{ fontFamily: "var(--font-display)", fontSize: "1.1rem", fontWeight: 700, color: "#0f172a", marginBottom: "1rem" }}>
                   Priority Waterfall Cash-Flow Distribution
                 </h4>
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "0.75rem" }}>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "1rem" }}>
                   {[
                     { num: "01", title: "Statutory & Essential Ops", desc: "Statutory obligations and essential project operating expenses paid first." },
                     { num: "02", title: "Investor Principal", desc: "100% repayment of investor principal." },
                     { num: "03", title: "Agreed Investor Returns", desc: "Distribution of agreed commercial investor returns." },
                     { num: "04", title: "Residual Surplus", desc: "Residual project surplus released entirely to the business." },
                   ].map((w, i) => (
-                    <div key={i} style={{ padding: "0.75rem", background: "#ffffff", borderRadius: "var(--radius)", border: "1px solid var(--border)" }}>
-                      <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.7rem", fontWeight: 700, color: "var(--cta)" }}>{w.num}</span>
-                      <h5 style={{ fontFamily: "var(--font-display)", fontSize: "0.85rem", fontWeight: 700, color: "#0f172a", margin: "0.2rem 0" }}>{w.title}</h5>
-                      <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.78rem", color: "#64748b", margin: 0, lineHeight: 1.4 }}>{w.desc}</p>
+                    <div key={i} style={{ padding: "1rem", background: "#f8fafc", borderRadius: "calc(var(--radius) * 1.2)", border: "1px solid var(--border)" }}>
+                      <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.72rem", fontWeight: 700, color: "var(--cta)", display: "block", marginBottom: "0.2rem" }}>Step {w.num}</span>
+                      <h5 style={{ fontFamily: "var(--font-display)", fontSize: "0.92rem", fontWeight: 700, color: "#0f172a", margin: "0.2rem 0 0.4rem 0" }}>{w.title}</h5>
+                      <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.8rem", color: "#64748b", margin: 0, lineHeight: 1.5 }}>{w.desc}</p>
                     </div>
                   ))}
                 </div>
