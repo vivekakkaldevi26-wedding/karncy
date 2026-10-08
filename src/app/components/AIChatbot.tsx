@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { MessageSquare, Send, X, Sparkles, RefreshCw, Bot, User, ArrowRight, Zap, HelpCircle } from "lucide-react";
+import { MessageSquare, Send, X, RefreshCw, ArrowRight } from "lucide-react";
 
 interface Message {
   id: string;
@@ -24,35 +24,35 @@ interface PreexistingQuestion {
 const PREEXISTING_QUESTIONS: PreexistingQuestion[] = [
   {
     id: "funding-speed",
-    question: "⚡ How fast can I get invoice funding?",
+    question: "How fast can I get invoice funding?",
     answer: "Our automated risk underwriting engine evaluates verified invoices within 24 to 48 hours. Once approved, working capital is disbursed directly into your business bank account with zero equity dilution.",
     actionLabel: "Let's Unlock Capital",
     modalType: "funding",
   },
   {
     id: "eligibility",
-    question: "📋 What criteria are required for Karncy Financing?",
+    question: "What criteria are required for Karncy Financing?",
     answer: "To qualify for invoice financing: 1) Active B2B/MSME business operating in India, 2) Verified unpaid customer invoices or purchase orders, 3) Minimum 6 months banking history. Capital ranges from ₹5 Lakhs up to ₹5 Crores.",
     actionLabel: "Apply for Funding",
     modalType: "funding",
   },
   {
     id: "ventures",
-    question: "🚀 How does Karncy Equity venture partnership work?",
+    question: "How does Karncy Equity venture partnership work?",
     answer: "Karncy Equity collaborates with early and growth-stage startups. We provide growth capital, institutional credit access, and strategic mentorship in exchange for equity ownership.",
     actionLabel: "Let's Partner",
     modalType: "business",
   },
   {
     id: "documents",
-    question: "📄 What documents are needed to apply?",
+    question: "What documents are needed to apply?",
     answer: "You only need: 1) GST Returns & Bank Statements (last 6 months), 2) Copy of unpaid customer invoices/POs, and 3) Basic business registration (GST/Udyam/PAN).",
-    actionLabel: "Talk to Risk Team",
+    actionLabel: "Talk to Karncy directly",
     modalType: "funding",
   },
   {
     id: "contact",
-    question: "📞 How can I reach the Karncy team?",
+    question: "How can I reach the Karncy team?",
     answer: "You can click 'Reach Us' to submit a direct inquiry, or email our support team directly at privacy@karncy.com for general assistance.",
     actionLabel: "Reach Us Now",
     modalType: "contact",
@@ -73,7 +73,7 @@ export function AIChatbot({ onOpenModal }: AIChatbotProps) {
   const initialMessage: Message = {
     id: "welcome-1",
     sender: "bot",
-    text: "Hello! I am Karncy AI Assistant. How can I help unlock your business growth today?",
+    text: "Hello! I am Karncy Assistant. How can I help unlock your business growth today?",
     timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
   };
 
@@ -150,10 +150,10 @@ export function AIChatbot({ onOpenModal }: AIChatbotProps) {
         actionObj = { label: "Reach Us", modalType: "contact" };
       } else if (lower.includes("doc") || lower.includes("gst") || lower.includes("require") || lower.includes("eligib")) {
         replyText = "Required documents include GST returns, bank statements for the last 6 months, and verified invoice/purchase order copies.";
-        actionObj = { label: "Request Requirements", modalType: "funding" };
+        actionObj = { label: "Talk to Karncy directly", modalType: "funding" };
       } else {
         replyText = "Thank you for reaching out! Our team is available to assist you with tailored credit solutions or venture partnerships.";
-        actionObj = { label: "Speak with Our Team", modalType: "contact" };
+        actionObj = { label: "Talk to Karncy directly", modalType: "contact" };
       }
 
       const botMsg: Message = {
@@ -203,8 +203,7 @@ export function AIChatbot({ onOpenModal }: AIChatbotProps) {
               border: "1px solid rgba(255,255,255,0.15)",
             }}
           >
-            <Sparkles size={13} style={{ color: "var(--cta)" }} />
-            Ask Karncy AI
+            Ask Karncy
           </motion.div>
         )}
 
@@ -213,7 +212,7 @@ export function AIChatbot({ onOpenModal }: AIChatbotProps) {
           onClick={() => setIsOpen(!isOpen)}
           whileHover={{ scale: 1.08 }}
           whileTap={{ scale: 0.92 }}
-          aria-label="Toggle Karncy AI Chatbot"
+          aria-label="Toggle Karncy Chatbot"
           style={{
             width: "3.6rem",
             height: "3.6rem",
@@ -278,61 +277,44 @@ export function AIChatbot({ onOpenModal }: AIChatbotProps) {
               zIndex: 260,
             }}
           >
-            {/* Header */}
+            {/* Header (No robot head icon, Header title: Karncy Assistant) */}
             <div
               style={{
                 background: "linear-gradient(135deg, #0f172a 0%, #1e293b 100%)",
                 color: "#ffffff",
-                padding: "1rem 1.25rem",
+                padding: "1.1rem 1.25rem",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "space-between",
                 borderBottom: "1px solid rgba(255,255,255,0.1)",
               }}
             >
-              <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
-                <div
-                  style={{
-                    width: "2.25rem",
-                    height: "2.25rem",
-                    borderRadius: "50%",
-                    background: "rgba(255,105,0,0.15)",
-                    border: "1px solid rgba(255,105,0,0.3)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    color: "var(--cta)",
-                  }}
-                >
-                  <Bot size={18} />
+              <div>
+                <div style={{ display: "flex", alignItems: "center", gap: "0.45rem" }}>
+                  <h4
+                    style={{
+                      fontFamily: "var(--font-display)",
+                      fontSize: "1.05rem",
+                      fontWeight: 700,
+                      color: "#ffffff",
+                      margin: 0,
+                    }}
+                  >
+                    Karncy Assistant
+                  </h4>
+                  <span
+                    style={{
+                      width: "7px",
+                      height: "7px",
+                      borderRadius: "50%",
+                      background: "#22c55e",
+                      display: "inline-block",
+                    }}
+                  />
                 </div>
-                <div>
-                  <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
-                    <h4
-                      style={{
-                        fontFamily: "var(--font-display)",
-                        fontSize: "0.98rem",
-                        fontWeight: 700,
-                        color: "#ffffff",
-                        margin: 0,
-                      }}
-                    >
-                      Karncy AI Assistant
-                    </h4>
-                    <span
-                      style={{
-                        width: "7px",
-                        height: "7px",
-                        borderRadius: "50%",
-                        background: "#22c55e",
-                        display: "inline-block",
-                      }}
-                    />
-                  </div>
-                  <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.72rem", color: "#94a3b8" }}>
-                    Instant SME & Capital Advisor
-                  </span>
-                </div>
+                <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.72rem", color: "#94a3b8" }}>
+                  Instant SME & Capital Advisor
+                </span>
               </div>
 
               <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
@@ -401,7 +383,7 @@ export function AIChatbot({ onOpenModal }: AIChatbotProps) {
                 >
                   <div
                     style={{
-                      maxWidth: "84%",
+                      maxWidth: "88%",
                       padding: "0.75rem 0.95rem",
                       borderRadius: msg.sender === "user" ? "1.1rem 1.1rem 0.2rem 1.1rem" : "1.1rem 1.1rem 1.1rem 0.2rem",
                       background: msg.sender === "user" ? "var(--primary)" : "#ffffff",
@@ -415,7 +397,7 @@ export function AIChatbot({ onOpenModal }: AIChatbotProps) {
                   >
                     {msg.text}
 
-                    {/* Action Button inside reply */}
+                    {/* Action Button inside reply (Text Left, Icon Right) */}
                     {msg.action && (
                       <div style={{ marginTop: "0.6rem" }}>
                         <button
@@ -427,11 +409,11 @@ export function AIChatbot({ onOpenModal }: AIChatbotProps) {
                           style={{
                             display: "inline-flex",
                             alignItems: "center",
-                            gap: "0.4rem",
+                            gap: "0.45rem",
                             fontFamily: "var(--font-sans)",
                             fontSize: "0.78rem",
                             fontWeight: 700,
-                            padding: "0.45rem 0.85rem",
+                            padding: "0.45rem 0.9rem",
                             background: "var(--cta)",
                             color: "var(--cta-foreground)",
                             borderRadius: "9999px",
@@ -440,7 +422,8 @@ export function AIChatbot({ onOpenModal }: AIChatbotProps) {
                             boxShadow: "0 2px 8px rgba(255,105,0,0.25)",
                           }}
                         >
-                          {msg.action.label} <ArrowRight size={13} />
+                          <span>{msg.action.label}</span>
+                          <ArrowRight size={13} style={{ flexShrink: 0 }} />
                         </button>
                       </div>
                     )}
@@ -458,6 +441,62 @@ export function AIChatbot({ onOpenModal }: AIChatbotProps) {
                   </span>
                 </div>
               ))}
+
+              {/* Suggested Questions List displayed directly in Chat Body */}
+              {messages.length === 1 && (
+                <div style={{ marginTop: "0.2rem", display: "flex", flexDirection: "column", gap: "0.45rem", maxWidth: "92%" }}>
+                  <span
+                    style={{
+                      fontFamily: "var(--font-sans)",
+                      fontSize: "0.68rem",
+                      fontWeight: 700,
+                      color: "#64748b",
+                      textTransform: "uppercase",
+                      letterSpacing: "0.06em",
+                      marginBottom: "0.1rem",
+                    }}
+                  >
+                    Suggested Questions
+                  </span>
+                  {PREEXISTING_QUESTIONS.map((q) => (
+                    <button
+                      key={q.id}
+                      type="button"
+                      onClick={() => handleSelectQuestion(q)}
+                      style={{
+                        fontFamily: "var(--font-sans)",
+                        fontSize: "0.82rem",
+                        fontWeight: 600,
+                        color: "var(--primary)",
+                        background: "#ffffff",
+                        border: "1px solid rgba(13,31,130,0.16)",
+                        borderRadius: "0.65rem",
+                        padding: "0.55rem 0.85rem",
+                        textAlign: "left",
+                        cursor: "pointer",
+                        boxShadow: "0 2px 6px rgba(15,23,42,0.03)",
+                        transition: "all 0.15s ease",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        gap: "0.5rem",
+                      }}
+                      onMouseEnter={(e) => {
+                        const btn = e.currentTarget as HTMLButtonElement;
+                        btn.style.background = "rgba(13,31,130,0.04)";
+                        btn.style.borderColor = "var(--primary)";
+                      }}
+                      onMouseLeave={(e) => {
+                        const btn = e.currentTarget as HTMLButtonElement;
+                        btn.style.background = "#ffffff";
+                        btn.style.borderColor = "rgba(13,31,130,0.16)";
+                      }}
+                    >
+                      <span>{q.question}</span>
+                    </button>
+                  ))}
+                </div>
+              )}
 
               {/* Typing Indicator */}
               {isTyping && (
@@ -493,77 +532,6 @@ export function AIChatbot({ onOpenModal }: AIChatbotProps) {
               )}
 
               <div ref={messagesEndRef} />
-            </div>
-
-            {/* Quick Pre-existing Questions Chips */}
-            <div
-              style={{
-                padding: "0.6rem 0.85rem",
-                background: "#ffffff",
-                borderTop: "1px solid var(--border)",
-                display: "flex",
-                flexDirection: "column",
-                gap: "0.4rem",
-              }}
-            >
-              <div style={{ display: "flex", alignItems: "center", gap: "0.35rem" }}>
-                <HelpCircle size={12} style={{ color: "var(--muted-foreground)" }} />
-                <span
-                  style={{
-                    fontFamily: "var(--font-sans)",
-                    fontSize: "0.68rem",
-                    fontWeight: 700,
-                    textTransform: "uppercase",
-                    letterSpacing: "0.08em",
-                    color: "var(--muted-foreground)",
-                  }}
-                >
-                  Suggested Questions
-                </span>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  gap: "0.4rem",
-                  overflowX: "auto",
-                  paddingBottom: "0.2rem",
-                  whiteSpace: "nowrap",
-                  scrollbarWidth: "none",
-                }}
-              >
-                {PREEXISTING_QUESTIONS.map((q) => (
-                  <button
-                    key={q.id}
-                    type="button"
-                    onClick={() => handleSelectQuestion(q)}
-                    style={{
-                      fontFamily: "var(--font-sans)",
-                      fontSize: "0.74rem",
-                      fontWeight: 600,
-                      color: "var(--primary)",
-                      background: "rgba(13,31,130,0.06)",
-                      border: "1px solid rgba(13,31,130,0.12)",
-                      borderRadius: "9999px",
-                      padding: "0.35rem 0.75rem",
-                      cursor: "pointer",
-                      transition: "background 0.15s, transform 0.15s",
-                      flexShrink: 0,
-                    }}
-                    onMouseEnter={(e) => {
-                      const btn = e.currentTarget as HTMLButtonElement;
-                      btn.style.background = "rgba(13,31,130,0.12)";
-                      btn.style.transform = "translateY(-1px)";
-                    }}
-                    onMouseLeave={(e) => {
-                      const btn = e.currentTarget as HTMLButtonElement;
-                      btn.style.background = "rgba(13,31,130,0.06)";
-                      btn.style.transform = "translateY(0)";
-                    }}
-                  >
-                    {q.question}
-                  </button>
-                ))}
-              </div>
             </div>
 
             {/* Input Bar */}
