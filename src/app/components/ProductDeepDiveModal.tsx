@@ -223,21 +223,22 @@ export function ProductDeepDiveModal({ id, onClose, onOpenContact }: ProductDeep
                 </div>
 
                 <div style={{ position: "relative", maxWidth: "48rem", margin: "0 auto" }}>
-                  {/* Vertical Accent Line */}
+                  {/* Vertical Accent Line — Dead-center aligned with node circles */}
                   <div
                     aria-hidden
                     style={{
                       position: "absolute",
                       top: "1.5rem",
                       bottom: "1.5rem",
-                      left: "calc(5.5rem + 1.25rem)",
+                      left: "calc(clamp(3.5rem, 14vw, 5.25rem) + 0.75rem + 1.25rem)",
+                      transform: "translateX(-50%)",
                       width: "2px",
-                      background: "rgba(255, 105, 0, 0.25)",
+                      background: "rgba(255, 105, 0, 0.35)",
                       zIndex: 0,
                     }}
                   />
 
-                  <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "1.35rem" }}>
                     {[
                       { icon: <Users size={16} />, title: "Onboard", desc: "KYC, GST, banking, and buyer references submitted once." },
                       { icon: <FileText size={16} />, title: "List Invoice", desc: "Upload invoice, PO, and proof of delivery / acceptance." },
@@ -246,9 +247,29 @@ export function ProductDeepDiveModal({ id, onClose, onOpenContact }: ProductDeep
                       { icon: <DollarSign size={16} />, title: "Fund", desc: "80% of invoice value released directly to your account." },
                       { icon: <CheckCircle size={16} />, title: "Settle", desc: "Buyer pays into escrow on due date; balance released same day." },
                     ].map((s, i) => (
-                      <div key={i} style={{ display: "grid", gridTemplateColumns: "5.5rem 2.5rem 1fr", gap: "1rem", alignItems: "center", position: "relative", zIndex: 1 }}>
+                      <div
+                        key={i}
+                        style={{
+                          display: "grid",
+                          gridTemplateColumns: "clamp(3.5rem, 14vw, 5.25rem) 2.5rem 1fr",
+                          gap: "0.75rem",
+                          alignItems: "center",
+                          position: "relative",
+                          zIndex: 1,
+                        }}
+                      >
                         {/* Left Step indicator */}
-                        <div style={{ textAlign: "right", fontFamily: "var(--font-sans)", fontSize: "0.8rem", fontWeight: 700, color: "var(--muted-foreground)", letterSpacing: "0.03em" }}>
+                        <div
+                          style={{
+                            textAlign: "right",
+                            fontFamily: "var(--font-sans)",
+                            fontSize: "clamp(0.72rem, 2vw, 0.8rem)",
+                            fontWeight: 700,
+                            color: "var(--muted-foreground)",
+                            letterSpacing: "0.02em",
+                            whiteSpace: "nowrap",
+                          }}
+                        >
                           Step 0{i + 1}
                         </div>
 
@@ -266,6 +287,7 @@ export function ProductDeepDiveModal({ id, onClose, onOpenContact }: ProductDeep
                               alignItems: "center",
                               justifyContent: "center",
                               boxShadow: "0 0 0 4px rgba(255, 105, 0, 0.12)",
+                              flexShrink: 0,
                             }}
                           >
                             {s.icon}
@@ -279,7 +301,7 @@ export function ProductDeepDiveModal({ id, onClose, onOpenContact }: ProductDeep
                             background: "#ffffff",
                             border: "1px solid var(--border)",
                             borderRadius: "calc(var(--radius) * 1.2)",
-                            padding: "1rem 1.35rem",
+                            padding: "clamp(0.75rem, 2.5vw, 1.1rem) clamp(0.85rem, 3vw, 1.35rem)",
                             boxShadow: "0 4px 18px rgba(15, 23, 42, 0.05)",
                           }}
                         >
@@ -288,20 +310,20 @@ export function ProductDeepDiveModal({ id, onClose, onOpenContact }: ProductDeep
                             style={{
                               position: "absolute",
                               top: "50%",
-                              left: "-7px",
+                              left: "-6px",
                               transform: "translateY(-50%) rotate(45deg)",
-                              width: "12px",
-                              height: "12px",
+                              width: "10px",
+                              height: "10px",
                               background: "#ffffff",
                               borderLeft: "1px solid var(--border)",
                               borderBottom: "1px solid var(--border)",
                             }}
                           />
 
-                          <h4 style={{ fontFamily: "var(--font-display)", fontSize: "1.02rem", fontWeight: 700, color: "#0f172a", margin: "0 0 0.35rem 0", lineHeight: 1.2 }}>
+                          <h4 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(0.92rem, 2.5vw, 1.05rem)", fontWeight: 700, color: "#0f172a", margin: "0 0 0.25rem 0", lineHeight: 1.2 }}>
                             {s.title}
                           </h4>
-                          <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.85rem", color: "#475569", margin: 0, lineHeight: 1.55 }}>
+                          <p style={{ fontFamily: "var(--font-sans)", fontSize: "clamp(0.78rem, 2vw, 0.85rem)", color: "#475569", margin: 0, lineHeight: 1.5 }}>
                             {s.desc}
                           </p>
                         </div>
