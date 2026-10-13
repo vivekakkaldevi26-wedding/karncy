@@ -16,6 +16,7 @@ export function ProductDeepDiveModal({ id, onClose, onOpenContact }: ProductDeep
 
   return (
     <motion.div
+      className="mobile-modal-overlay"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -34,6 +35,7 @@ export function ProductDeepDiveModal({ id, onClose, onOpenContact }: ProductDeep
       onClick={onClose}
     >
       <motion.div
+        className="mobile-modal-card"
         initial={{ opacity: 0, scale: 0.95, y: 24 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.95, y: 24 }}
@@ -68,18 +70,6 @@ export function ProductDeepDiveModal({ id, onClose, onOpenContact }: ProductDeep
           }}
         >
           <div>
-            <span
-              style={{
-                fontFamily: "var(--font-sans)",
-                fontSize: "0.68rem",
-                fontWeight: 700,
-                letterSpacing: "0.12em",
-                textTransform: "uppercase",
-                color: "var(--cta)",
-              }}
-            >
-              Karncy Deep Dive
-            </span>
             <h2
               style={{
                 fontFamily: "var(--font-display)",
@@ -240,12 +230,12 @@ export function ProductDeepDiveModal({ id, onClose, onOpenContact }: ProductDeep
 
                   <div style={{ display: "flex", flexDirection: "column", gap: "1.35rem" }}>
                     {[
-                      { icon: <Users size={16} />, title: "Onboard", desc: "KYC, GST, banking, and buyer references submitted once." },
-                      { icon: <FileText size={16} />, title: "List Invoice", desc: "Upload invoice, PO, and proof of delivery / acceptance." },
-                      { icon: <ShieldCheck size={16} />, title: "Buyer Verification", desc: "We confirm the payable directly with the buyer AP team." },
-                      { icon: <Scale size={16} />, title: "Underwrite", desc: "Risk desk approves advance rate and tenor within 24–48 hours." },
-                      { icon: <DollarSign size={16} />, title: "Fund", desc: "80% of invoice value released directly to your account." },
-                      { icon: <CheckCircle size={16} />, title: "Settle", desc: "Buyer pays into escrow on due date; balance released same day." },
+                      { title: "Onboard", desc: "KYC, GST, banking, and buyer references submitted once." },
+                      { title: "List Invoice", desc: "Upload invoice, PO, and proof of delivery / acceptance." },
+                      { title: "Buyer Verification", desc: "We confirm the payable directly with the buyer AP team." },
+                      { title: "Underwrite", desc: "Risk desk approves advance rate and tenor within 24–48 hours." },
+                      { title: "Fund", desc: "80% of invoice value released directly to your account." },
+                      { title: "Settle", desc: "Buyer pays into escrow on due date; balance released same day." },
                     ].map((s, i) => (
                       <div
                         key={i}
@@ -273,25 +263,19 @@ export function ProductDeepDiveModal({ id, onClose, onOpenContact }: ProductDeep
                           Step 0{i + 1}
                         </div>
 
-                        {/* Node Icon Circle */}
+                        {/* Node Circle */}
                         <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
                           <div
                             style={{
-                              width: "2.5rem",
-                              height: "2.5rem",
+                              width: "1rem",
+                              height: "1rem",
                               borderRadius: "50%",
                               background: "#ffffff",
-                              border: "2px solid var(--cta)",
-                              color: "var(--cta)",
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "center",
-                              boxShadow: "0 0 0 4px rgba(255, 105, 0, 0.12)",
+                              border: "3px solid var(--cta)",
+                              boxShadow: "0 0 0 3px rgba(255, 105, 0, 0.15)",
                               flexShrink: 0,
                             }}
-                          >
-                            {s.icon}
-                          </div>
+                          />
                         </div>
 
                         {/* Right Card Box with Left Triangle Pointer */}
@@ -429,16 +413,16 @@ export function ProductDeepDiveModal({ id, onClose, onOpenContact }: ProductDeep
 
                   <div style={{ display: "flex", flexDirection: "column", gap: "1.35rem" }}>
                     {[
-                      { icon: <Layers size={16} />, title: "Procurement", desc: "Raw material & equipment sourcing linked to verified project POs." },
-                      { icon: <Zap size={16} />, title: "Manufacturing", desc: "Fabrication & assembly executed in controlled facility environment." },
-                      { icon: <TrendingUp size={16} />, title: "Site Mobilisation", desc: "Logistics, transport, and site prep deployment." },
-                      { icon: <CheckCircle size={16} />, title: "Delivery", desc: "On-site shipment receipt & delivery verification sign-off." },
-                      { icon: <Scale size={16} />, title: "Installation", desc: "Engineering setup, mounting, and mechanical integration." },
-                      { icon: <ShieldCheck size={16} />, title: "Inspection", desc: "Quality control audit, safety checks, and compliance sign-off." },
-                      { icon: <Check size={16} />, title: "Customer Acceptance", desc: "Formal buyer operational acceptance certificate issued." },
-                      { icon: <FileText size={16} />, title: "Invoice Generation", desc: "Receivable billing generated directly against contract terms." },
-                      { icon: <DollarSign size={16} />, title: "Collections", desc: "Buyer payment deposited into designated project escrow." },
-                      { icon: <CheckCircle size={16} />, title: "Final Completion", desc: "Escrow payout, principal return, yield distribution & SPV release." },
+                      { title: "Procurement", desc: "Raw material & equipment sourcing linked to verified project POs." },
+                      { title: "Manufacturing", desc: "Fabrication & assembly executed in controlled facility environment." },
+                      { title: "Site Mobilisation", desc: "Logistics, transport, and site prep deployment." },
+                      { title: "Delivery", desc: "On-site shipment receipt & delivery verification sign-off." },
+                      { title: "Installation", desc: "Engineering setup, mounting, and mechanical integration." },
+                      { title: "Inspection", desc: "Quality control audit, safety checks, and compliance sign-off." },
+                      { title: "Customer Acceptance", desc: "Formal buyer operational acceptance certificate issued." },
+                      { title: "Invoice Generation", desc: "Receivable billing generated directly against contract terms." },
+                      { title: "Collections", desc: "Buyer payment deposited into designated project escrow." },
+                      { title: "Final Completion", desc: "Escrow payout, principal return, yield distribution & SPV release." },
                     ].map((s, i) => (
                       <div
                         key={i}
@@ -466,25 +450,19 @@ export function ProductDeepDiveModal({ id, onClose, onOpenContact }: ProductDeep
                           Step {String(i + 1).padStart(2, "0")}
                         </div>
 
-                        {/* Node Icon Circle */}
+                        {/* Node Circle */}
                         <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
                           <div
                             style={{
-                              width: "2.5rem",
-                              height: "2.5rem",
+                              width: "1rem",
+                              height: "1rem",
                               borderRadius: "50%",
                               background: "#ffffff",
-                              border: "2px solid var(--cta)",
-                              color: "var(--cta)",
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "center",
-                              boxShadow: "0 0 0 4px rgba(255, 105, 0, 0.12)",
+                              border: "3px solid var(--cta)",
+                              boxShadow: "0 0 0 3px rgba(255, 105, 0, 0.15)",
                               flexShrink: 0,
                             }}
-                          >
-                            {s.icon}
-                          </div>
+                          />
                         </div>
 
                         {/* Right Card Box with Left Pointer */}
@@ -537,9 +515,10 @@ export function ProductDeepDiveModal({ id, onClose, onOpenContact }: ProductDeep
                 </div>
 
                 <div
+                  className="grid-2x2"
                   style={{
                     display: "grid",
-                    gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 280px), 1fr))",
+                    gridTemplateColumns: "repeat(2, 1fr)",
                     gap: "1.25rem",
                   }}
                 >
@@ -639,123 +618,71 @@ export function ProductDeepDiveModal({ id, onClose, onOpenContact }: ProductDeep
                 </ul>
               </div>
 
-              {/* Milestone Tranche Deployment — Timeline UI Design */}
-              <div style={{ width: "100%", borderTop: "1px solid var(--border)", paddingTop: "2.5rem" }}>
-                <div style={{ textAlign: "center", marginBottom: "2.5rem" }}>
-                  <h3 style={{ fontFamily: "var(--font-display)", fontSize: "1.4rem", fontWeight: 700, color: "#0f172a", margin: "0 0 0.4rem 0", display: "inline-block", position: "relative" }}>
-                    Milestone Tranche <span style={{ color: "var(--cta)" }}>Deployment</span>
-                    <div style={{ width: "50%", height: "3px", background: "var(--cta)", borderRadius: "9999px", margin: "0.4rem auto 0" }} />
-                  </h3>
+              {/* Milestone Tranche Deployment — Balanced 2x2 Grid Layout */}
+              <div style={{ width: "100%", borderTop: "1px solid var(--border)", paddingTop: "2.25rem" }}>
+                <div style={{ marginBottom: "1.5rem" }}>
+                  <h4 style={{ fontFamily: "var(--font-display)", fontSize: "1.2rem", fontWeight: 700, color: "#0f172a", margin: "0 0 0.35rem 0" }}>
+                    Milestone Tranche Deployment
+                  </h4>
                   <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.85rem", color: "var(--muted-foreground)", margin: 0 }}>
                     Capital released strictly against pre-agreed operational and commercial milestones
                   </p>
                 </div>
 
-                <div style={{ position: "relative", maxWidth: "48rem", margin: "0 auto" }}>
-                  {/* Vertical Accent Line */}
-                  <div
-                    aria-hidden
-                    style={{
-                      position: "absolute",
-                      top: "1.5rem",
-                      bottom: "1.5rem",
-                      left: "calc(clamp(3.5rem, 14vw, 5.25rem) + 0.75rem + 1.25rem)",
-                      transform: "translateX(-50%)",
-                      width: "2px",
-                      background: "rgba(255, 105, 0, 0.35)",
-                      zIndex: 0,
-                    }}
-                  />
-
-                  <div style={{ display: "flex", flexDirection: "column", gap: "1.35rem" }}>
-                    {[
-                      { icon: <Layers size={16} />, title: "Seed Tranche", desc: "Core team assembly, MVP product iteration, and foundational ops setup." },
-                      { icon: <TrendingUp size={16} />, title: "Traction Tranche", desc: "Key revenue target validation, unit economic validation, and customer retention." },
-                      { icon: <Zap size={16} />, title: "Scale Tranche", desc: "Capex deployment, geographic channel expansion, and key executive hiring." },
-                      { icon: <CheckCircle size={16} />, title: "Growth Tranche", desc: "Institutional round bridge, cap table cleanup & Series A readiness." },
-                    ].map((s, i) => (
-                      <div
-                        key={i}
-                        style={{
-                          display: "grid",
-                          gridTemplateColumns: "clamp(3.5rem, 14vw, 5.25rem) 2.5rem 1fr",
-                          gap: "0.75rem",
-                          alignItems: "center",
-                          position: "relative",
-                          zIndex: 1,
-                        }}
-                      >
-                        {/* Left Step indicator */}
-                        <div
+                <div
+                  className="grid-2x2"
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(2, 1fr)",
+                    gap: "1.25rem",
+                  }}
+                >
+                  {[
+                    { num: "01", title: "Seed", desc: "Core team assembly, MVP product iteration, and foundational ops setup." },
+                    { num: "02", title: "Traction", desc: "Key revenue target validation, unit economic validation, and customer retention." },
+                    { num: "03", title: "Scale", desc: "Capex deployment, geographic channel expansion, and key executive hiring." },
+                    { num: "04", title: "Growth", desc: "Institutional round bridge, cap table cleanup & Series A readiness." },
+                  ].map((t, i) => (
+                    <div
+                      key={i}
+                      style={{
+                        padding: "1.25rem 1.4rem",
+                        background: "#ffffff",
+                        border: "1px solid var(--border)",
+                        borderRadius: "calc(var(--radius) * 1.2)",
+                        boxShadow: "0 4px 18px rgba(15, 23, 42, 0.04)",
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: "0.5rem",
+                        position: "relative",
+                        overflow: "hidden",
+                      }}
+                    >
+                      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                        <span
                           style={{
-                            textAlign: "right",
                             fontFamily: "var(--font-sans)",
-                            fontSize: "clamp(0.72rem, 2vw, 0.8rem)",
+                            fontSize: "0.72rem",
                             fontWeight: 700,
-                            color: "var(--muted-foreground)",
-                            letterSpacing: "0.02em",
-                            whiteSpace: "nowrap",
+                            letterSpacing: "0.06em",
+                            textTransform: "uppercase",
+                            color: "var(--cta)",
+                            background: "rgba(255,105,0,0.08)",
+                            padding: "0.25rem 0.65rem",
+                            borderRadius: "9999px",
                           }}
                         >
-                          Step 0{i + 1}
-                        </div>
-
-                        {/* Node Icon Circle */}
-                        <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-                          <div
-                            style={{
-                              width: "2.5rem",
-                              height: "2.5rem",
-                              borderRadius: "50%",
-                              background: "#ffffff",
-                              border: "2px solid var(--cta)",
-                              color: "var(--cta)",
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "center",
-                              boxShadow: "0 0 0 4px rgba(255, 105, 0, 0.12)",
-                              flexShrink: 0,
-                            }}
-                          >
-                            {s.icon}
-                          </div>
-                        </div>
-
-                        {/* Right Card Box with Left Pointer */}
-                        <div
-                          style={{
-                            position: "relative",
-                            background: "#ffffff",
-                            border: "1px solid var(--border)",
-                            borderRadius: "calc(var(--radius) * 1.2)",
-                            padding: "clamp(0.75rem, 2.5vw, 1.1rem) clamp(0.85rem, 3vw, 1.35rem)",
-                            boxShadow: "0 4px 18px rgba(15, 23, 42, 0.05)",
-                          }}
-                        >
-                          <div
-                            style={{
-                              position: "absolute",
-                              top: "50%",
-                              left: "-6px",
-                              transform: "translateY(-50%) rotate(45deg)",
-                              width: "10px",
-                              height: "10px",
-                              background: "#ffffff",
-                              borderLeft: "1px solid var(--border)",
-                              borderBottom: "1px solid var(--border)",
-                            }}
-                          />
-
-                          <h4 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(0.92rem, 2.5vw, 1.05rem)", fontWeight: 700, color: "#0f172a", margin: "0 0 0.25rem 0", lineHeight: 1.2 }}>
-                            {s.title}
-                          </h4>
-                          <p style={{ fontFamily: "var(--font-sans)", fontSize: "clamp(0.78rem, 2vw, 0.85rem)", color: "#475569", margin: 0, lineHeight: 1.5 }}>
-                            {s.desc}
-                          </p>
-                        </div>
+                          Step {t.num}
+                        </span>
                       </div>
-                    ))}
-                  </div>
+                      <h5 style={{ fontFamily: "var(--font-display)", fontSize: "1.02rem", fontWeight: 700, color: "#0f172a", margin: 0, lineHeight: 1.25 }}>
+                        {t.title}
+                      </h5>
+                      <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.85rem", color: "#475569", margin: 0, lineHeight: 1.55 }}>
+                        {t.desc}
+                      </p>
+                    </div>
+                  ))}
                 </div>
               </div>
 

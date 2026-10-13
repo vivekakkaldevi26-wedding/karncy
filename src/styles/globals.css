@@ -6,7 +6,19 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+  .grid-2x2 {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 1.25rem !important;
+  }
 }
+
+@media (max-width: 640px) {
+  .grid-2x2 {
+    grid-template-columns: 1fr !important;
+  }
+}
+
 /* =========================================================
    KARNcy — Responsive System
    ========================================================= */
@@ -74,7 +86,183 @@ body,
   display: none !important;
 }
 
+/* ---------------------------------
+   Product Chapter Cards Responsive Sizing
+   --------------------------------- */
+
+.chapters-scroll-track-container {
+  position: absolute;
+  top: 4.5rem;
+  bottom: 1.85rem;
+  left: 0;
+  right: 0;
+  width: 100%;
+  margin: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.chapter-card-container {
+  height: 100%;
+  max-height: calc(100vh - 6.5rem);
+  min-height: min(540px, 78vh);
+}
+
+.chapter-card-left,
+.chapter-card-right {
+  padding: clamp(1.5rem, 4vh, 3rem) clamp(1.5rem, 3.5vw, 2.5rem);
+}
+
+.chapter-card-title {
+  font-size: clamp(1.4rem, 2.2vw, 2.1rem);
+  margin-bottom: 0.5rem;
+}
+
+.chapter-card-tagline {
+  font-size: 0.88rem;
+  margin-bottom: 1.5rem;
+}
+
+.chapter-card-desc {
+  font-size: 0.85rem;
+  line-height: 1.65;
+  margin-bottom: 1.25rem;
+}
+
+.chapter-card-step-gap {
+  gap: 1rem;
+}
+
+/* MacBook and short display viewports (max-height: 830px) */
+@media (max-height: 830px) and (min-width: 769px) {
+  .chapters-section-header {
+    padding: 0.65rem 0 0.25rem !important;
+  }
+
+  .chapters-scroll-track-container {
+    top: 3.6rem !important;
+    bottom: 0.85rem !important;
+  }
+
+  .chapter-card-container {
+    max-height: calc(100vh - 4.8rem) !important;
+    min-height: 420px !important;
+  }
+
+  .chapter-card-left,
+  .chapter-card-right {
+    padding: clamp(1.75rem, 4.2vh, 2.75rem) clamp(1.25rem, 2.5vw, 1.85rem) !important;
+  }
+
+  .chapter-card-title {
+    font-size: clamp(1.2rem, 1.7vw, 1.55rem) !important;
+    margin-bottom: 0.3rem !important;
+  }
+
+  .chapter-card-tagline {
+    font-size: 0.78rem !important;
+    margin-bottom: 1rem !important;
+  }
+
+  .chapter-card-desc {
+    margin-bottom: 0.75rem !important;
+    font-size: 0.78rem !important;
+    line-height: 1.45 !important;
+  }
+
+  .chapter-card-step-gap {
+    gap: 0.55rem !important;
+  }
+}
+
+/* Windows laptops and tall display viewports (min-height: 831px) */
+@media (min-height: 831px) and (min-width: 769px) {
+  .chapters-section-header {
+    padding: 1.5rem 0 0.5rem !important;
+  }
+
+  .chapters-scroll-track-container {
+    top: 4.8rem !important;
+    bottom: 1.5rem !important;
+  }
+
+  .chapter-card-container {
+    max-height: calc(100vh - 6rem) !important;
+    min-height: 600px !important;
+  }
+
+  .chapter-card-left,
+  .chapter-card-right {
+    padding: clamp(2.5rem, 5.5vh, 3.75rem) clamp(2rem, 3.8vw, 3rem) !important;
+  }
+
+  .chapter-card-title {
+    font-size: clamp(1.75rem, 2.6vw, 2.4rem) !important;
+    margin-bottom: 0.75rem !important;
+  }
+
+  .chapter-card-tagline {
+    font-size: 0.95rem !important;
+    margin-bottom: 1.85rem !important;
+  }
+
+  .chapter-card-desc {
+    font-size: 0.9rem !important;
+    line-height: 1.7 !important;
+    margin-bottom: 1.5rem !important;
+  }
+
+  .chapter-card-step-gap {
+    gap: 1.4rem !important;
+  }
+}
+
+.projects-category-badge-mobile {
+  display: none !important;
+}
+
+.projects-category-badge-desktop {
+  display: inline-block !important;
+}
+
 @media (max-width: 768px) {
+  .projects-filter-tabs {
+    display: none !important;
+  }
+
+  .projects-category-badge-mobile {
+    display: inline-block !important;
+  }
+
+  .projects-category-badge-desktop {
+    display: none !important;
+  }
+
+  .top-header-bar {
+    left: 1rem !important;
+    right: 1rem !important;
+    top: 1rem !important;
+  }
+
+  .mobile-modal-overlay {
+    padding-top: 1.75rem !important;
+    padding-bottom: 1.75rem !important;
+    padding-left: 0.85rem !important;
+    padding-right: 0.85rem !important;
+  }
+
+  .mobile-modal-card {
+    margin-top: 1.5rem !important;
+    margin-bottom: 1.5rem !important;
+    max-height: calc(100vh - 3.5rem) !important;
+    height: auto !important;
+  }
+
+  .card-info-tip {
+    display: none !important;
+  }
+
   .chapters-desktop-wrapper {
     display: none !important;
   }
@@ -100,6 +288,10 @@ body,
   }
 
   .security-warning-desktop {
+    display: none !important;
+  }
+
+  .chatbot-badge-desktop {
     display: none !important;
   }
 

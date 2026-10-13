@@ -12,7 +12,18 @@ export interface Message {
     label: string;
     modalType: "funding" | "business" | "contact";
   };
+  qrCode?: {
+    phone: string;
+    url: string;
+    qrImageUrl: string;
+  };
 }
+
+const WHATSAPP_QR_CODE = {
+  phone: "+1 (646) 796-2040",
+  url: "https://wa.me/16467962040",
+  qrImageUrl: "https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=https%3A%2F%2Fwa.me%2F16467962040",
+};
 
 interface UserData {
   product?: string;
@@ -73,6 +84,7 @@ const MAIN_MENU_OPTIONS = [
   "I want to invest",
   "General Question",
   "Talk to the Team",
+  "Quick contact through WhatsApp",
 ];
 
 interface AIChatbotProps {
@@ -117,7 +129,13 @@ export function AIChatbot({ onOpenModal }: AIChatbotProps) {
     setMessages([initialMessage]);
   };
 
-  const addBotReply = (text: string, options?: string[], action?: Message["action"], delay = 500) => {
+  const addBotReply = (
+    text: string,
+    options?: string[],
+    action?: Message["action"],
+    qrCode?: Message["qrCode"],
+    delay = 500
+  ) => {
     setIsTyping(true);
     setTimeout(() => {
       const botMsg: Message = {
@@ -127,6 +145,7 @@ export function AIChatbot({ onOpenModal }: AIChatbotProps) {
         timestamp: getTimestamp(),
         options,
         action,
+        qrCode,
       };
       setMessages((prev) => [...prev, botMsg]);
       setIsTyping(false);
@@ -147,6 +166,15 @@ export function AIChatbot({ onOpenModal }: AIChatbotProps) {
     const lower = optionText.toLowerCase();
 
     // Check Global Handoff or Menu triggers
+    if (optionText === "Quick contact through WhatsApp" || optionText === "WhatsApp Contact" || optionText === "WhatsApp") {
+      addBotReply(
+        "📱 Quick Contact via WhatsApp\n\nScan the QR code below or tap the button to chat directly with our team on WhatsApp:",
+        ["Main Menu", "Talk to the Team"],
+        undefined,
+        WHATSAPP_QR_CODE
+      );
+      return;
+    }
     if (optionText === "Talk to the Team" || optionText === "Talk to Team" || optionText === "Connect with the Team" || optionText === "Request a Callback") {
       startHandoffFlow();
       return;
@@ -349,6 +377,16 @@ export function AIChatbot({ onOpenModal }: AIChatbotProps) {
 
     const lower = query.toLowerCase();
 
+    if (lower.includes("whatsapp") || lower.includes("qr") || lower.includes("6467962040")) {
+      addBotReply(
+        "📱 Quick Contact via WhatsApp\n\nScan the QR code below or tap the button to chat directly with our team on WhatsApp:",
+        ["Main Menu", "Talk to the Team"],
+        undefined,
+        WHATSAPP_QR_CODE
+      );
+      return;
+    }
+
     // Check for Human Handoff Triggers
     const humanTriggers = ["human", "talk to someone", "contact team", "call me", "speak to someone", "contact karncy", "need help", "expert", "talk to an expert"];
     if (humanTriggers.some((t) => lower.includes(t))) {
@@ -430,31 +468,46 @@ export function AIChatbot({ onOpenModal }: AIChatbotProps) {
       <div style={{ position: "fixed", bottom: "1.75rem", right: "1.75rem", zIndex: 250 }}>
         {!isOpen && hasUnread && (
           <motion.div
+            className="chatbot-badge-desktop"
             initial={{ opacity: 0, scale: 0.8, y: 10 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
+            animate={{
+              opacity: 1,
+              scale: 1,
+              y: 0,
+              x: [0, -7, 7, -7, 7, -4, 4, 0],
+              rotate: [0, -5, 5, -5, 5, -3, 3, 0],
+            }}
             exit={{ opacity: 0, scale: 0.8 }}
+            transition={{
+              opacity: { duration: 0.3 },
+              scale: { duration: 0.3 },
+              y: { duration: 0.3 },
+              x: { duration: 2, ease: "easeInOut", delay: 0.4 },
+              rotate: { duration: 2, ease: "easeInOut", delay: 0.4 },
+            }}
             onClick={() => setIsOpen(true)}
             style={{
               position: "absolute",
-              bottom: "4rem",
+              bottom: "4.2rem",
               right: 0,
               background: "#0f172a",
               color: "#ffffff",
-              padding: "0.5rem 0.9rem",
+              padding: "0.55rem 1rem",
               borderRadius: "9999px",
-              boxShadow: "0 10px 25px rgba(15,23,42,0.3)",
+              boxShadow: "0 10px 25px rgba(15,23,42,0.35)",
               fontFamily: "var(--font-sans)",
-              fontSize: "0.78rem",
-              fontWeight: 600,
+              fontSize: "0.82rem",
+              fontWeight: 700,
               whiteSpace: "nowrap",
               display: "flex",
               alignItems: "center",
-              gap: "0.4rem",
+              gap: "0.45rem",
               cursor: "pointer",
-              border: "1px solid rgba(255,255,255,0.15)",
+              border: "1.5px solid rgba(255,255,255,0.2)",
             }}
           >
-            Ask Karncy
+            <span style={{ width: "7px", height: "7px", borderRadius: "50%", background: "#22c55e", display: "inline-block" }} />
+            Need Help?
           </motion.div>
         )}
 
@@ -649,6 +702,75 @@ export function AIChatbot({ onOpenModal }: AIChatbotProps) {
                   >
                     {msg.text}
 
+                    {/* WhatsApp QR Code Card */}
+                    {msg.qrCode && (
+                      <div
+                        style={{
+                          marginTop: "0.75rem",
+                          padding: "0.9rem",
+                          background: "#f0fdf4",
+                          border: "1px solid #bbf7d0",
+                          borderRadius: "0.75rem",
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                          gap: "0.65rem",
+                          textAlign: "center",
+                        }}
+                      >
+                        <div
+                          style={{
+                            padding: "0.5rem",
+                            background: "#ffffff",
+                            borderRadius: "0.5rem",
+                            boxShadow: "0 4px 12px rgba(0,0,0,0.06)",
+                            border: "1px solid #dcfce7",
+                          }}
+                        >
+                          <img
+                            src={msg.qrCode.qrImageUrl}
+                            alt="WhatsApp QR Code (+1 6467962040)"
+                            style={{
+                              width: "140px",
+                              height: "140px",
+                              display: "block",
+                              borderRadius: "0.25rem",
+                            }}
+                          />
+                        </div>
+                        <div>
+                          <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.7rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", color: "#166534", display: "block" }}>
+                            Direct WhatsApp
+                          </span>
+                          <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.92rem", fontWeight: 700, color: "#14532d", letterSpacing: "0.02em" }}>
+                            {msg.qrCode.phone}
+                          </span>
+                        </div>
+                        <a
+                          href={msg.qrCode.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          style={{
+                            display: "inline-flex",
+                            alignItems: "center",
+                            gap: "0.4rem",
+                            fontFamily: "var(--font-sans)",
+                            padding: "0.45rem 1.1rem",
+                            background: "#25D366",
+                            color: "#ffffff",
+                            fontWeight: 700,
+                            fontSize: "0.78rem",
+                            borderRadius: "9999px",
+                            textDecoration: "none",
+                            boxShadow: "0 3px 10px rgba(37,211,102,0.3)",
+                          }}
+                        >
+                          <span>Chat on WhatsApp</span>
+                          <ArrowRight size={13} style={{ flexShrink: 0 }} />
+                        </a>
+                      </div>
+                    )}
+
                     {/* Action Button inside reply (Text Left, Icon Right) */}
                     {msg.action && (
                       <div style={{ marginTop: "0.6rem" }}>
@@ -684,44 +806,57 @@ export function AIChatbot({ onOpenModal }: AIChatbotProps) {
                   {/* Options List directly in chat message */}
                   {msg.sender === "bot" && msg.options && msg.options.length > 0 && (
                     <div style={{ marginTop: "0.5rem", display: "flex", flexDirection: "column", gap: "0.4rem", width: "90%" }}>
-                      {msg.options.map((opt) => (
-                        <button
-                          key={opt}
-                          type="button"
-                          onClick={() => handleOptionClick(opt)}
-                          style={{
-                            fontFamily: "var(--font-sans)",
-                            fontSize: "0.82rem",
-                            fontWeight: 600,
-                            color: "var(--primary)",
-                            background: "#ffffff",
-                            border: "1px solid rgba(13,31,130,0.16)",
-                            borderRadius: "0.65rem",
-                            padding: "0.55rem 0.85rem",
-                            textAlign: "left",
-                            cursor: "pointer",
-                            boxShadow: "0 2px 6px rgba(15,23,42,0.03)",
-                            transition: "all 0.15s ease",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "space-between",
-                            gap: "0.5rem",
-                          }}
-                          onMouseEnter={(e) => {
-                            const btn = e.currentTarget as HTMLButtonElement;
-                            btn.style.background = "rgba(13,31,130,0.04)";
-                            btn.style.borderColor = "var(--primary)";
-                          }}
-                          onMouseLeave={(e) => {
-                            const btn = e.currentTarget as HTMLButtonElement;
-                            btn.style.background = "#ffffff";
-                            btn.style.borderColor = "rgba(13,31,130,0.16)";
-                          }}
-                        >
-                          <span>{opt}</span>
-                          <ArrowRight size={12} style={{ color: "var(--primary)", flexShrink: 0 }} />
-                        </button>
-                      ))}
+                      {msg.options.map((opt) => {
+                        const isWhatsApp = opt === "Quick contact through WhatsApp";
+                        return (
+                          <button
+                            key={opt}
+                            type="button"
+                            onClick={() => handleOptionClick(opt)}
+                            style={{
+                              fontFamily: "var(--font-sans)",
+                              fontSize: "0.82rem",
+                              fontWeight: isWhatsApp ? 700 : 600,
+                              color: isWhatsApp ? "#15803d" : "var(--primary)",
+                              background: isWhatsApp ? "#f0fdf4" : "#ffffff",
+                              border: isWhatsApp ? "2px solid #25D366" : "1px solid rgba(13,31,130,0.16)",
+                              borderRadius: "0.65rem",
+                              padding: "0.55rem 0.85rem",
+                              textAlign: "left",
+                              cursor: "pointer",
+                              boxShadow: isWhatsApp ? "0 3px 10px rgba(37,211,102,0.18)" : "0 2px 6px rgba(15,23,42,0.03)",
+                              transition: "all 0.15s ease",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "space-between",
+                              gap: "0.5rem",
+                            }}
+                            onMouseEnter={(e) => {
+                              const btn = e.currentTarget as HTMLButtonElement;
+                              if (isWhatsApp) {
+                                btn.style.background = "#dcfce7";
+                                btn.style.borderColor = "#16a34a";
+                              } else {
+                                btn.style.background = "rgba(13,31,130,0.04)";
+                                btn.style.borderColor = "var(--primary)";
+                              }
+                            }}
+                            onMouseLeave={(e) => {
+                              const btn = e.currentTarget as HTMLButtonElement;
+                              if (isWhatsApp) {
+                                btn.style.background = "#f0fdf4";
+                                btn.style.borderColor = "#25D366";
+                              } else {
+                                btn.style.background = "#ffffff";
+                                btn.style.borderColor = "rgba(13,31,130,0.16)";
+                              }
+                            }}
+                          >
+                            <span>{opt}</span>
+                            <ArrowRight size={12} style={{ color: isWhatsApp ? "#16a34a" : "var(--primary)", flexShrink: 0 }} />
+                          </button>
+                        );
+                      })}
                     </div>
                   )}
 

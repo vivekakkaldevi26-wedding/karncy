@@ -8,7 +8,7 @@ import {
   BookOpen, Lock, Scale, FileCheck, Layers, Handshake, DollarSign, ShieldCheck, Sparkles, Check
 } from "lucide-react";
 import * as TooltipPrimitive from "@radix-ui/react-tooltip";
-import bgImage from "../imports/debora-pilati-dOG0z4-gqp0-unsplash_1.png";
+import bgImage from "../imports/debora-pilati-compressed.jpg";
 import logoSrc from "../imports/Group_1171280047.png";
 import { ImageWithFallback } from "./components/figma/ImageWithFallback";
 import msmeForge from "../imports/Forre-Logo_1.png";
@@ -22,8 +22,14 @@ import certSoc2 from "../imports/images-1.png";
 import certIso27001 from "../imports/iso2001-logo-300x200-1.png";
 import certDuns from "../imports/duns-registered-logo.png";
 import ingrainLogo from "../imports/ingrain-logo.jpg";
+import qbicLogo from "../imports/qbic-logo.png";
+import ashalubeLogo from "../imports/ashalube-logo.png";
+import googleReviewBtn from "../imports/google-review-btn.png";
 import { AIChatbot } from "./components/AIChatbot";
 import { ProductDeepDiveModal } from "./components/ProductDeepDiveModal";
+import { FAQModal } from "./components/FAQModal";
+import { ProjectsModal } from "./components/ProjectsModal";
+import { HowItWorksModal } from "./components/HowItWorksModal";
 
 export type ProductId = "invoice" | "ventures" | "startup";
 export type PolicyKey = "about" | "privacy" | "terms" | "risk" | "cookies" | "grievance" | "fund-terms";
@@ -211,39 +217,20 @@ const testimonials = [
     isLogo: true,
   },
   {
-    quote: "Karncy unlocked working capital against our receivables within 48 hours. The process was cleaner than any bank we had approached in three years of trying.",
-    author: "Rahul Mehta",
-    role: "CFO",
-    company: "PrecisionParts Manufacturing",
-    photo: "https://images.unsplash.com/photo-1627401632925-a4c565d08a80?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=200&w=200&q=80",
+    quote: "Karncy played a key role in establishing our manufacturing facility in India. From regulatory compliance, government liaisoning, cross-border transaction advisory and end-to-end facility setup, Karncy's support helped us navigate the complexities of establishing and running manufacturing operations in India. I appreciate their practical advice, professionalism and commitment to executing within time/budget.",
+    author: "Krishna Nadella, Ph.D.",
+    role: "Co-founder & CEO",
+    company: "Qbic Materials, Inc. | United States",
+    photo: qbicLogo,
+    isLogo: true,
   },
   {
-    quote: "They didn't just bring capital to the joint venture — they brought structure, governance, and a network we couldn't have built on our own in three years.",
-    author: "Divya Krishnan",
-    role: "Founder",
-    company: "LogiScale Ventures",
-    photo: "https://images.unsplash.com/flagged/photo-1570607008863-da87b9deefa7?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=200&w=200&q=80",
-  },
-  {
-    quote: "From compliance setup to investor introductions, Karncy handled everything we didn't have time to. We closed our first funding round six months after onboarding.",
-    author: "Arjun Shetty",
-    role: "Co-founder",
-    company: "NovaTech Solutions",
-    photo: "https://images.unsplash.com/photo-1771244670407-42e9585ab333?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=200&w=200&q=80",
-  },
-  {
-    quote: "The tranche-based deployment model gave our board confidence that capital would be used responsibly. Karncy's monthly reporting is better than what most listed companies produce.",
-    author: "Priya Nambiar",
-    role: "Managing Director",
-    company: "GreenLine Logistics",
-    photo: "https://images.unsplash.com/photo-1729157661483-ed21901ed892?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=200&w=200&q=80",
-  },
-  {
-    quote: "As an investor, the deal flow from Karncy is genuinely curated — every opportunity comes with a thorough brief. It's not a shotgun approach. I trust the process.",
-    author: "Vikram Rao",
-    role: "HNI Investor",
-    company: "Independent Capital",
-    photo: "https://images.unsplash.com/photo-1623662346414-af98877cab19?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=200&w=200&q=80",
+    quote: "Karncy has been a valuable partner in our growth journey at Asha Lube Solutions, supporting us with our facility setup, funding requirements and go-to-market strategy. Their practical, hands-on approach helped us address critical business needs and work towards scaling our manufacturing capabilities and market presence. We appreciate Karncy’s commitment to understanding our business and supporting our long-term vision.",
+    author: "Usha Kiran Varma Indukuri",
+    role: "Director",
+    company: "Asha Lube Solutions Private Limited",
+    photo: ashalubeLogo,
+    isLogo: true,
   },
 ];
 
@@ -375,6 +362,7 @@ function Tip({ content }: { content: string }) {
         <TooltipPrimitive.Trigger asChild>
           <button
             type="button"
+            className="card-info-tip"
             style={{ display: "inline-flex", alignItems: "center", color: "var(--muted-foreground)", background: "none", border: "none", cursor: "pointer", padding: 0, transition: "color 0.15s" }}
             onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.color = "var(--primary)")}
             onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.color = "var(--muted-foreground)")}
@@ -569,8 +557,8 @@ export const policiesData: Record<PolicyKey, {
         heading: "1. Grievance Officer Details",
         text: "In accordance with Information Technology rules and financial service standards, the details of our Principal Grievance Officer are:",
         bullets: [
-          "Officer: Nithin S. (Principal Grievance & Compliance Officer)",
-          "Email: grievance@karncy.com / hello@karncy.com",
+          "Officer: Srinivas Rao Palla (Principal Grievance & Compliance Officer)",
+          "Email: info@karncy.com",
           "Telephone: 040-42011067 (Mon–Fri, 10:00 AM – 6:00 PM IST)",
           "Address: 5th Floor, The Park View, Gachibowli, Hyderabad, Telangana 500032, India",
         ],
@@ -744,6 +732,13 @@ function TestimonialCarousel() {
   const next = () => setIdx((i) => (i + 1) % total);
   const t = testimonials[idx];
 
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setIdx((i) => (i + 1) % total);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [total]);
+
   return (
     <div style={{ position: "relative" }}>
       <AnimatePresence mode="wait">
@@ -757,11 +752,11 @@ function TestimonialCarousel() {
           style={{ background: "rgba(255,255,255,0.97)", border: "1px solid var(--border)", borderRadius: "calc(var(--radius) * 2)", padding: "clamp(1.5rem, 5vw, 2.75rem) clamp(1.25rem, 4vw, 3rem)" }}
         >
           {/* Photo / Logo */}
-          <div className="testimonial-photo" style={{ width: "80px", height: "80px", borderRadius: "50%", overflow: "hidden", flexShrink: 0, border: "3px solid var(--border)", background: "#ffffff", padding: (t as any).isLogo ? "0.6rem" : 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <div className="testimonial-photo" style={{ width: "90px", height: "90px", flexShrink: 0, background: "transparent", display: "flex", alignItems: "center", justifyContent: "center" }}>
             <img
               src={t.photo}
-              alt={t.author}
-              style={{ width: "100%", height: "100%", objectFit: (t as any).isLogo ? "contain" : "cover" }}
+              alt={t.author || t.company}
+              style={{ width: "100%", height: "100%", objectFit: "contain" }}
             />
           </div>
 
@@ -770,10 +765,18 @@ function TestimonialCarousel() {
             <TestimonialQuote key={idx} quote={t.quote} />
             <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
               <div>
-                <p style={{ fontFamily: "var(--font-display)", fontSize: "0.875rem", fontWeight: 700, color: "var(--foreground)" }}>{t.author}</p>
-                <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.78rem", color: "var(--muted-foreground)", marginTop: "0.15rem" }}>
-                  {t.role}, {t.company}
-                </p>
+                {t.author ? (
+                  <>
+                    <p style={{ fontFamily: "var(--font-display)", fontSize: "0.875rem", fontWeight: 700, color: "var(--foreground)" }}>{t.author}</p>
+                    <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.78rem", color: "var(--muted-foreground)", marginTop: "0.15rem" }}>
+                      {t.role ? `${t.role} • ` : ""}{t.company}
+                    </p>
+                  </>
+                ) : (
+                  <p style={{ fontFamily: "var(--font-display)", fontSize: "0.925rem", fontWeight: 700, color: "var(--foreground)" }}>
+                    {t.company}
+                  </p>
+                )}
               </div>
             </div>
           </div>
@@ -917,25 +920,26 @@ function ChapterCard({
 
   return (
     <motion.div
+      className="chapter-card-container"
       style={{
         width: cardWidth,
         minWidth: cardWidth,
         maxWidth: cardWidth,
         flexShrink: 0,
-        borderRadius: "calc(var(--radius) * 3)",
+        borderRadius: "calc(var(--radius) * 2.5)",
         border: "1px solid rgba(255,255,255,0.55)",
         overflow: "hidden",
         display: "grid",
-        gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 300px), 1fr))",
+        gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 280px), 1fr))",
       }}
       animate={{ opacity: isActive ? 1 : 0.38, scale: isActive ? 1 : 0.92, y: isActive ? 0 : 18, boxShadow: isActive ? "0 24px 72px rgba(30,58,95,0.18), 0 2px 12px rgba(20,20,43,0.06)" : "0 2px 20px rgba(30,58,95,0.07)" }}
       transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
     >
-      <div style={{ background: "var(--primary)", padding: "clamp(2rem, 5vw, 4.4rem) clamp(1.5rem, 4vw, 3rem)", display: "flex", flexDirection: "column", position: "relative", overflow: "hidden" }}>
-        <div aria-hidden style={{ position: "absolute", bottom: "2rem", right: "2rem", color: "rgba(255,255,255,0.07)", userSelect: "none", pointerEvents: "none" }}>
-          <span style={{ display: "block", transform: "scale(4)", transformOrigin: "bottom right" }}>{productIcons[productId]}</span>
+      <div className="chapter-card-left" style={{ background: "var(--primary)", display: "flex", flexDirection: "column", position: "relative", overflow: "hidden", justifyContent: "space-between", height: "100%", boxSizing: "border-box" }}>
+        <div aria-hidden style={{ position: "absolute", bottom: "1.5rem", right: "1.5rem", color: "rgba(255,255,255,0.07)", userSelect: "none", pointerEvents: "none" }}>
+          <span style={{ display: "block", transform: "scale(3.8)", transformOrigin: "bottom right" }}>{productIcons[productId]}</span>
         </div>
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "auto" }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1rem" }}>
           <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.67rem", letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)" }}>
             {String(idx).padStart(2, "0")} / 03
           </span>
@@ -943,17 +947,17 @@ function ChapterCard({
             {productIcons[productId]}
           </div>
         </div>
-        <div style={{ position: "relative", zIndex: 1, marginTop: "2.5rem" }}>
-          <h3 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.6rem, 2.2vw, 2.1rem)", fontWeight: 700, color: "var(--primary-foreground)", letterSpacing: "-0.025em", lineHeight: 1.1, marginBottom: "0.75rem" }}>
+        <div style={{ position: "relative", zIndex: 1, marginTop: "auto" }}>
+          <h3 className="chapter-card-title" style={{ fontFamily: "var(--font-display)", fontWeight: 700, color: "var(--primary-foreground)", letterSpacing: "-0.025em", lineHeight: 1.15 }}>
             {product.title}
           </h3>
-          <p style={{ fontFamily: "var(--font-display)", fontSize: "0.88rem", color: "rgba(255,255,255,0.6)", fontStyle: "italic", lineHeight: 1.5, marginBottom: "2.25rem" }}>
+          <p className="chapter-card-tagline" style={{ fontFamily: "var(--font-display)", color: "rgba(255,255,255,0.65)", fontStyle: "italic", lineHeight: 1.5 }}>
             {product.tagline}
           </p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem", alignItems: "center" }}>
             <button
               onClick={onExplore}
-              style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.92rem", fontWeight: 600, padding: "0.75rem 1.5rem", borderRadius: "9999px", border: "1.5px solid rgba(255,255,255,0.5)", color: "var(--primary-foreground)", background: "rgba(255,255,255,0.1)", cursor: "pointer", transition: "background 0.18s, border-color 0.18s" }}
+              style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.9rem", fontWeight: 600, padding: "0.7rem 1.45rem", borderRadius: "9999px", border: "1.5px solid rgba(255,255,255,0.5)", color: "var(--primary-foreground)", background: "rgba(255,255,255,0.1)", cursor: "pointer", transition: "background 0.18s, border-color 0.18s" }}
               onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,255,255,0.22)"; (e.currentTarget as HTMLButtonElement).style.borderColor = "rgba(255,255,255,0.8)"; }}
               onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,255,255,0.1)"; (e.currentTarget as HTMLButtonElement).style.borderColor = "rgba(255,255,255,0.5)"; }}
             >
@@ -967,9 +971,9 @@ function ChapterCard({
                   alignItems: "center",
                   gap: "0.5rem",
                   fontFamily: "var(--font-sans)",
-                  fontSize: "0.92rem",
+                  fontSize: "0.9rem",
                   fontWeight: 600,
-                  padding: "0.75rem 1.5rem",
+                  padding: "0.7rem 1.45rem",
                   borderRadius: "9999px",
                   border: "1.5px solid var(--cta)",
                   color: "#ffffff",
@@ -994,20 +998,20 @@ function ChapterCard({
         </div>
       </div>
 
-      <div style={{ background: "rgba(255,255,255,0.97)", backdropFilter: "blur(10px)", padding: "clamp(2rem, 5vw, 4.4rem) clamp(1.5rem, 4vw, 3.5rem)", display: "flex", flexDirection: "column" }}>
-        <p className="mobile-hide-desc" style={{ fontFamily: "var(--font-sans)", fontSize: "0.85rem", color: "var(--muted-foreground)", lineHeight: 1.72, marginBottom: "2rem" }}>{product.description}</p>
-        <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "1.4rem" }}>
+      <div className="chapter-card-right" style={{ background: "rgba(255,255,255,0.97)", backdropFilter: "blur(10px)", display: "flex", flexDirection: "column", overflowY: "auto", height: "100%", boxSizing: "border-box" }}>
+        <p className="mobile-hide-desc chapter-card-desc" style={{ fontFamily: "var(--font-sans)", color: "var(--muted-foreground)" }}>{product.description}</p>
+        <div className="chapter-card-step-gap" style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
           {product.steps.map((step, i) => (
-            <div key={i} style={{ display: "grid", gridTemplateColumns: "1.75rem 1fr", gap: "0.875rem", alignItems: "flex-start" }}>
-              <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.67rem", color: "var(--primary)", paddingTop: "0.2rem", fontWeight: 600, opacity: 0.65 }}>
+            <div key={i} style={{ display: "grid", gridTemplateColumns: "1.75rem 1fr", gap: "0.85rem", alignItems: "flex-start" }}>
+              <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.67rem", color: "var(--primary)", paddingTop: "0.15rem", fontWeight: 600, opacity: 0.65 }}>
                 {String(i + 1).padStart(2, "0")}
               </span>
               <div>
                 <div style={{ display: "flex", alignItems: "center", gap: "0.35rem", marginBottom: "0.2rem" }}>
-                  <span style={{ fontFamily: "var(--font-display)", fontSize: "1.05rem", fontWeight: 600, color: "var(--foreground)" }}>{step.title}</span>
+                  <span style={{ fontFamily: "var(--font-display)", fontSize: "1.02rem", fontWeight: 600, color: "var(--foreground)" }}>{step.title}</span>
                   <Tip content={step.tooltip} />
                 </div>
-                <p className="mobile-hide-desc" style={{ fontFamily: "var(--font-sans)", fontSize: "0.79rem", color: "var(--muted-foreground)", lineHeight: 1.65 }}>{step.desc}</p>
+                <p className="mobile-hide-desc" style={{ fontFamily: "var(--font-sans)", fontSize: "0.8rem", color: "var(--muted-foreground)", lineHeight: 1.58 }}>{step.desc}</p>
               </div>
             </div>
           ))}
@@ -1028,7 +1032,7 @@ function ChaptersScroll({ onOpen, onAction, onDeepDive }: { onOpen?: (id: Produc
   const ids: ProductId[] = ["invoice", "ventures", "startup"];
   const NUM = ids.length;
   const CARD_GAP = 28;
-  const CARD_WIDTH = "clamp(320px, 75vw, 1120px)";
+  const CARD_WIDTH = "clamp(300px, 76vw, 1040px)";
 
   const [viewportWidth, setViewportWidth] = useState(
     typeof window !== "undefined" ? window.innerWidth : 1440
@@ -1146,34 +1150,23 @@ function ChaptersScroll({ onOpen, onAction, onDeepDive }: { onOpen?: (id: Produc
           }}
         >
           {/* Section header */}
-          <div style={{ position: "absolute", top: 0, left: 0, right: 0, padding: "2.5rem 0 1.25rem", zIndex: 2 }}>
+          <div className="chapters-section-header" style={{ position: "absolute", top: 0, left: 0, right: 0, padding: "1.25rem 0 0.5rem", zIndex: 2 }}>
             <div style={{ width: SECTION_W, margin: AUTO }}>
-              <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "0.4rem" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "0.25rem" }}>
                 <div style={{ width: "1.5rem", height: "1px", background: "var(--primary)" }} />
                 <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.67rem", letterSpacing: "0.13em", textTransform: "uppercase", color: "var(--muted-foreground)" }}>03</span>
               </div>
-              <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.4rem, 2.2vw, 1.9rem)", fontWeight: 700, color: "var(--foreground)", letterSpacing: "-0.02em", marginBottom: "0.25rem" }}>
+              <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.3rem, 2vw, 1.8rem)", fontWeight: 700, color: "var(--foreground)", letterSpacing: "-0.02em", marginBottom: "0.15rem" }}>
                 Our Products
               </h2>
-              <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.95rem", color: "var(--muted-foreground)", display: "flex", alignItems: "center", gap: "0.35rem", fontWeight: 600, margin: 0 }}>
+              <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.88rem", color: "var(--muted-foreground)", display: "flex", alignItems: "center", gap: "0.35rem", fontWeight: 600, margin: 0 }}>
                 Scroll to View <ArrowDown size={14} style={{ color: "var(--cta)" }} />
               </p>
             </div>
           </div>
 
           <div
-            style={{
-              position: "absolute",
-              top: "7rem",
-              bottom: "4rem",
-              left: 0,
-              right: 0,
-              width: "100%",
-              margin: 0,
-              overflow: "hidden",
-              display: "flex",
-              alignItems: "center",
-            }}
+            className="chapters-scroll-track-container"
           >
             <div
               style={{
@@ -1290,6 +1283,7 @@ function ProductDetailOverlay({
 
   return (
     <motion.div
+      className="mobile-modal-overlay"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -1308,6 +1302,7 @@ function ProductDetailOverlay({
       onClick={onClose}
     >
       <motion.div
+        className="mobile-modal-card"
         initial={{ opacity: 0, scale: 0.95, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.95, y: 20 }}
@@ -1771,6 +1766,7 @@ function PolicyStorytellingOverlay({
 
   return (
     <motion.div
+      className="mobile-modal-overlay"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -1789,6 +1785,7 @@ function PolicyStorytellingOverlay({
       onClick={onClose}
     >
       <motion.div
+        className="mobile-modal-card"
         initial={{ opacity: 0, scale: 0.95, y: 24 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.95, y: 24 }}
@@ -2004,9 +2001,13 @@ function PolicyStorytellingOverlay({
 function QuickLinksMenu({
   onSelectProduct,
   onSelectPolicy,
+  onSelectFAQ,
+  onSelectProjects,
 }: {
   onSelectProduct?: (pid: ProductId) => void;
   onSelectPolicy?: (pkey: PolicyKey) => void;
+  onSelectFAQ?: () => void;
+  onSelectProjects?: () => void;
 }) {
   const [open, setOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -2023,10 +2024,12 @@ function QuickLinksMenu({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [open]);
 
-  const items: { label: string; pid?: ProductId; pkey?: PolicyKey }[] = [
+  const items: { label: string; pid?: ProductId; pkey?: PolicyKey; isFAQ?: boolean; isProjects?: boolean }[] = [
     { label: "Karncy Financing", pid: "invoice" },
     { label: "Karncy Ventures", pid: "ventures" },
     { label: "Karncy Equity", pid: "startup" },
+    { label: "Featured Projects", isProjects: true },
+    { label: "Frequently Asked Questions (FAQ)", isFAQ: true },
     { label: "Privacy Policy", pkey: "privacy" },
     { label: "Terms & Conditions", pkey: "terms" },
     { label: "Risk Disclosure policy", pkey: "risk" },
@@ -2090,7 +2093,11 @@ function QuickLinksMenu({
                 type="button"
                 onClick={() => {
                   setOpen(false);
-                  if (item.pid && onSelectProduct) {
+                  if (item.isProjects && onSelectProjects) {
+                    onSelectProjects();
+                  } else if (item.isFAQ && onSelectFAQ) {
+                    onSelectFAQ();
+                  } else if (item.pid && onSelectProduct) {
                     onSelectProduct(item.pid);
                   } else if (item.pkey && onSelectPolicy) {
                     onSelectPolicy(item.pkey);
@@ -2156,6 +2163,7 @@ function ContactModal({ type, onClose }: { type: ModalType; onClose: () => void 
 
   return (
     <motion.div
+      className="mobile-modal-overlay"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -2174,6 +2182,7 @@ function ContactModal({ type, onClose }: { type: ModalType; onClose: () => void 
       onClick={onClose}
     >
       <motion.div
+        className="mobile-modal-card"
         initial={{ opacity: 0, scale: 0.95, y: 16 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.95, y: 16 }}
@@ -2246,6 +2255,15 @@ function ContactModal({ type, onClose }: { type: ModalType; onClose: () => void 
               </p>
             </motion.div>
           ) : (
+            <>
+            {!isContact && (
+              <div style={{ marginBottom: "1.5rem", paddingRight: "2.5rem" }}>
+                <h3 style={{ fontFamily: "var(--font-display)", fontSize: "1.45rem", fontWeight: 700, color: "#0f172a", letterSpacing: "-0.02em", lineHeight: 1.2, margin: 0 }}>
+                  {isFunding ? "Apply for Funding" : "Apply for Business"}
+                </h3>
+                <div style={{ width: "2.5rem", height: "3px", borderRadius: "2px", background: isFunding ? "var(--cta)" : "var(--primary)", marginTop: "0.65rem" }} />
+              </div>
+            )}
             <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "1.1rem" }}>
               {/* Full Name */}
               <div>
@@ -2479,6 +2497,7 @@ function ContactModal({ type, onClose }: { type: ModalType; onClose: () => void 
                 {isFunding ? "Request Funding" : isContact ? "Reach Us" : "Connect With Us"} <ArrowRight size={16} />
               </button>
             </form>
+            </>
           )}
         </div>
       </motion.div>
@@ -2497,6 +2516,123 @@ function SectionLabel({ n }: { n: string }) {
   );
 }
 
+// ─── Policies Mega Menu Component ─────────────────────────────────────────────
+
+function PoliciesMegaMenu({ onSelectPolicy }: { onSelectPolicy: (key: PolicyKey) => void }) {
+  const [isOpen, setIsOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const policiesList: { key: PolicyKey; label: string }[] = [
+    { key: "about", label: "About Karncy" },
+    { key: "privacy", label: "Privacy Policy" },
+    { key: "terms", label: "Terms & Conditions" },
+    { key: "risk", label: "Disclaimer & Risk Disclosures" },
+    { key: "cookies", label: "Cookie Policy" },
+    { key: "grievance", label: "Grievance Redressal" },
+    { key: "fund-terms", label: "Fund Terms" },
+  ];
+
+  return (
+    <div ref={menuRef} style={{ position: "relative", display: "inline-block" }}>
+      <button
+        type="button"
+        onClick={() => setIsOpen(!isOpen)}
+        style={{
+          background: "none",
+          border: "none",
+          padding: 0,
+          fontFamily: "var(--font-sans)",
+          fontSize: "0.88rem",
+          fontWeight: 700,
+          color: "var(--primary)",
+          cursor: "pointer",
+          display: "inline-flex",
+          alignItems: "center",
+          gap: "0.35rem",
+          transition: "opacity 0.15s",
+        }}
+        onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.opacity = "0.85")}
+        onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.opacity = "1")}
+      >
+        All Policies <ChevronDown size={14} style={{ transform: isOpen ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.2s ease" }} />
+      </button>
+
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: 10, scale: 0.96 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 10, scale: 0.96 }}
+            transition={{ duration: 0.18 }}
+            style={{
+              position: "absolute",
+              bottom: "calc(100% + 0.75rem)",
+              left: "50%",
+              transform: "translateX(-50%)",
+              width: "clamp(210px, 60vw, 250px)",
+              background: "#ffffff",
+              border: "1px solid var(--border)",
+              borderRadius: "calc(var(--radius) * 1.2)",
+              boxShadow: "0 18px 45px rgba(15, 23, 42, 0.2)",
+              padding: "0.5rem",
+              zIndex: 150,
+              display: "flex",
+              flexDirection: "column",
+              gap: "0.15rem",
+            }}
+          >
+            {policiesList.map((p) => (
+              <button
+                key={p.key}
+                type="button"
+                onClick={() => {
+                  setIsOpen(false);
+                  onSelectPolicy(p.key);
+                }}
+                style={{
+                  display: "block",
+                  width: "100%",
+                  textAlign: "left",
+                  padding: "0.5rem 0.75rem",
+                  borderRadius: "6px",
+                  background: "transparent",
+                  border: "none",
+                  cursor: "pointer",
+                  fontFamily: "var(--font-sans)",
+                  fontSize: "0.85rem",
+                  fontWeight: 600,
+                  color: "#0f172a",
+                  transition: "background 0.15s ease, color 0.15s ease",
+                }}
+                onMouseEnter={(e) => {
+                  (e.currentTarget as HTMLButtonElement).style.background = "#f8fafc";
+                  (e.currentTarget as HTMLButtonElement).style.color = "var(--primary)";
+                }}
+                onMouseLeave={(e) => {
+                  (e.currentTarget as HTMLButtonElement).style.background = "transparent";
+                  (e.currentTarget as HTMLButtonElement).style.color = "#0f172a";
+                }}
+              >
+                {p.label}
+              </button>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
 // ─── App ──────────────────────────────────────────────────────────────────────
 
 export default function App() {
@@ -2504,12 +2640,15 @@ export default function App() {
   const [activePolicy, setActivePolicy] = useState<PolicyKey | null>(null);
   const [activeModal, setActiveModal] = useState<ModalType | null>(null);
   const [activeDeepDive, setActiveDeepDive] = useState<ProductId | null>(null);
+  const [isFAQOpen, setIsFAQOpen] = useState(false);
+  const [isProjectsOpen, setIsProjectsOpen] = useState(false);
+  const [isHowItWorksOpen, setIsHowItWorksOpen] = useState(false);
   const activeSection = useActiveSection();
 
   useEffect(() => {
-    document.body.style.overflow = (activeProduct || activePolicy || activeModal || activeDeepDive) ? "hidden" : "";
+    document.body.style.overflow = (activeProduct || activePolicy || activeModal || activeDeepDive || isFAQOpen || isProjectsOpen || isHowItWorksOpen) ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
-  }, [activeProduct, activePolicy, activeModal, activeDeepDive]);
+  }, [activeProduct, activePolicy, activeModal, activeDeepDive, isFAQOpen, isProjectsOpen, isHowItWorksOpen]);
 
   const scrollTo = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 
@@ -2915,6 +3054,60 @@ export default function App() {
               <TestimonialCarousel />
             </FadeUp>
 
+            {/* Google Review CTA Banner */}
+            <FadeUp delay={0.1}>
+              <div
+                style={{
+                  marginTop: "2.5rem",
+                  padding: "1.25rem 0",
+                  display: "flex",
+                  flexDirection: "row",
+                  flexWrap: "wrap",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  textAlign: "center",
+                  gap: "1.75rem",
+                  background: "transparent",
+                }}
+              >
+                <h3
+                  style={{
+                    fontFamily: "var(--font-display)",
+                    fontSize: "clamp(1.2rem, 2.2vw, 1.7rem)",
+                    fontWeight: 700,
+                    color: "var(--foreground)",
+                    margin: 0,
+                    letterSpacing: "-0.02em",
+                  }}
+                >
+                  Want to read more reviews or write a review?
+                </h3>
+                <a
+                  href="https://g.page/r/CWvDN_n9VnEREAI/review"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    transition: "transform 0.2s ease",
+                  }}
+                  onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.04)")}
+                  onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
+                >
+                  <img
+                    src={googleReviewBtn}
+                    alt="Click here to leave us a review on Google!"
+                    style={{
+                      maxHeight: "64px",
+                      width: "auto",
+                      cursor: "pointer",
+                      background: "transparent",
+                    }}
+                  />
+                </a>
+              </div>
+            </FadeUp>
+
             {/* MSME Empowered */}
             <FadeUp delay={0.12}>
               <div className="msme-container" style={{ marginTop: "4rem", paddingTop: "3rem", borderTop: "1px solid var(--border)" }}>
@@ -2925,6 +3118,33 @@ export default function App() {
                   </span>
                 </div>
                 <MsmeMarquee />
+
+                {/* Interactive link to projects popup */}
+                <div style={{ marginTop: "1.75rem", textAlign: "center" }}>
+                  <p style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.05rem, 2vw, 1.3rem)", fontWeight: 600, color: "var(--foreground)", lineHeight: 1.5, margin: 0 }}>
+                    <button
+                      type="button"
+                      onClick={() => setIsProjectsOpen(true)}
+                      style={{
+                        background: "none",
+                        border: "none",
+                        padding: 0,
+                        fontFamily: "var(--font-display)",
+                        fontSize: "inherit",
+                        fontWeight: 700,
+                        color: "var(--primary)",
+                        textDecoration: "underline",
+                        cursor: "pointer",
+                        transition: "color 0.15s ease",
+                      }}
+                      onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.color = "var(--cta)")}
+                      onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.color = "var(--primary)")}
+                    >
+                      click here
+                    </button>{" "}
+                    to view the of projects and ventures presented in the KN Advisors & Karncy story
+                  </p>
+                </div>
               </div>
             </FadeUp>
           </div>
@@ -2949,14 +3169,17 @@ export default function App() {
                     The journey begins with a conversation. Let's talk about where your business is headed.
                   </p>
                   <div style={{ display: "flex", flexDirection: "column", gap: "0.875rem", alignSelf: "flex-start" }}>
+                    <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.8rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--muted-foreground)", margin: 0 }}>
+                      Login / Sign up as:
+                    </p>
                     <button onClick={() => setActiveModal("funding")} style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.875rem", fontWeight: 700, padding: "0.9rem 2.25rem", background: "var(--cta)", color: "var(--cta-foreground)", borderRadius: "var(--radius)", border: "none", cursor: "pointer" }}>
-                      Apply for Funding <ArrowRight size={14} />
+                      Investor <ArrowRight size={14} />
                     </button>
                     <button onClick={() => setActiveModal("business")} style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.875rem", fontWeight: 600, padding: "0.9rem 2.25rem", background: "transparent", color: "var(--primary)", borderRadius: "var(--radius)", border: "1.5px solid var(--primary)", cursor: "pointer" }}>
-                      Apply for Business <ArrowRight size={14} />
+                      Business <ArrowRight size={14} />
                     </button>
-                    <a href="tel:04042011067" style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-sans)", fontSize: "0.875rem", fontWeight: 600, padding: "0.9rem 2.25rem", background: "var(--foreground)", color: "var(--background)", borderRadius: "var(--radius)", border: "none", cursor: "pointer", textDecoration: "none" }}>
-                      <Phone size={14} /> Talk to Karncy directly
+                    <a href="tel:04042011067" style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-sans)", fontSize: "0.875rem", fontWeight: 600, padding: "0.9rem 2.25rem", background: "var(--foreground)", color: "var(--background)", borderRadius: "var(--radius)", border: "none", cursor: "pointer", textDecoration: "none" }}>
+                      Talk to Karncy directly
                     </a>
                   </div>
                 </div>
@@ -3055,61 +3278,40 @@ export default function App() {
                   }}
                 >
                   <button
-                    onClick={() => setActivePolicy("about")}
-                    style={{ background: "none", border: "none", padding: 0, fontFamily: "var(--font-sans)", fontSize: "0.88rem", fontWeight: 600, color: "#334155", cursor: "pointer", transition: "color 0.15s" }}
-                    onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.color = "var(--primary)")}
-                    onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.color = "#334155")}
-                  >
-                    About Karncy
-                  </button>
-                  <button
-                    onClick={() => setActivePolicy("privacy")}
-                    style={{ background: "none", border: "none", padding: 0, fontFamily: "var(--font-sans)", fontSize: "0.88rem", fontWeight: 600, color: "#334155", cursor: "pointer", transition: "color 0.15s" }}
-                    onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.color = "var(--primary)")}
-                    onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.color = "#334155")}
-                  >
-                    Privacy Policy
-                  </button>
-                  <button
-                    onClick={() => setActivePolicy("terms")}
-                    style={{ background: "none", border: "none", padding: 0, fontFamily: "var(--font-sans)", fontSize: "0.88rem", fontWeight: 600, color: "#334155", cursor: "pointer", transition: "color 0.15s" }}
-                    onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.color = "var(--primary)")}
-                    onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.color = "#334155")}
-                  >
-                    Terms & Conditions
-                  </button>
-                  <button
-                    onClick={() => setActivePolicy("risk")}
-                    style={{ background: "none", border: "none", padding: 0, fontFamily: "var(--font-sans)", fontSize: "0.88rem", fontWeight: 700, color: "var(--cta)", cursor: "pointer", transition: "color 0.15s" }}
-                    onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.opacity = "0.8")}
+                    onClick={() => setIsProjectsOpen(true)}
+                    style={{ background: "none", border: "none", padding: 0, fontFamily: "var(--font-sans)", fontSize: "0.88rem", fontWeight: 700, color: "var(--primary)", cursor: "pointer", transition: "opacity 0.15s" }}
+                    onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.opacity = "0.85")}
                     onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.opacity = "1")}
                   >
-                    Disclaimer & Risk Disclosures
+                    Projects
                   </button>
                   <button
-                    onClick={() => setActivePolicy("cookies")}
-                    style={{ background: "none", border: "none", padding: 0, fontFamily: "var(--font-sans)", fontSize: "0.88rem", fontWeight: 600, color: "#334155", cursor: "pointer", transition: "color 0.15s" }}
-                    onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.color = "var(--primary)")}
-                    onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.color = "#334155")}
+                    onClick={() => setIsHowItWorksOpen(true)}
+                    style={{ background: "none", border: "none", padding: 0, fontFamily: "var(--font-sans)", fontSize: "0.88rem", fontWeight: 700, color: "var(--primary)", cursor: "pointer", transition: "opacity 0.15s" }}
+                    onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.opacity = "0.85")}
+                    onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.opacity = "1")}
                   >
-                    Cookie Policy
+                    How it works
                   </button>
+                  <a
+                    href="https://smefund.karncy.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ background: "none", border: "none", padding: 0, fontFamily: "var(--font-sans)", fontSize: "0.88rem", fontWeight: 700, color: "var(--primary)", textDecoration: "none", cursor: "pointer", transition: "opacity 0.15s" }}
+                    onMouseEnter={(e) => ((e.currentTarget as HTMLAnchorElement).style.opacity = "0.85")}
+                    onMouseLeave={(e) => ((e.currentTarget as HTMLAnchorElement).style.opacity = "1")}
+                  >
+                    SME Funding
+                  </a>
                   <button
-                    onClick={() => setActivePolicy("grievance")}
-                    style={{ background: "none", border: "none", padding: 0, fontFamily: "var(--font-sans)", fontSize: "0.88rem", fontWeight: 600, color: "#334155", cursor: "pointer", transition: "color 0.15s" }}
-                    onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.color = "var(--primary)")}
-                    onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.color = "#334155")}
+                    onClick={() => setIsFAQOpen(true)}
+                    style={{ background: "none", border: "none", padding: 0, fontFamily: "var(--font-sans)", fontSize: "0.88rem", fontWeight: 700, color: "var(--cta)", cursor: "pointer", transition: "opacity 0.15s" }}
+                    onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.opacity = "0.85")}
+                    onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.opacity = "1")}
                   >
-                    Grievance Redressal
+                    FAQ
                   </button>
-                  <button
-                    onClick={() => setActivePolicy("fund-terms")}
-                    style={{ background: "none", border: "none", padding: 0, fontFamily: "var(--font-sans)", fontSize: "0.88rem", fontWeight: 600, color: "#334155", cursor: "pointer", transition: "color 0.15s" }}
-                    onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.color = "var(--primary)")}
-                    onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.color = "#334155")}
-                  >
-                    Fund Terms
-                  </button>
+                  <PoliciesMegaMenu onSelectPolicy={(key) => setActivePolicy(key)} />
                   <button
                     onClick={() => setActiveModal("contact")}
                     style={{ background: "none", border: "none", padding: 0, fontFamily: "var(--font-sans)", fontSize: "0.88rem", fontWeight: 600, color: "#334155", cursor: "pointer", transition: "color 0.15s" }}
@@ -3141,7 +3343,7 @@ export default function App() {
                   <div style={{ display: "flex", alignItems: "center", gap: "1.5rem" }}>
                     {/* Social icons */}
                     <div style={{ display: "flex", gap: "0.5rem" }}>
-                      <a href="https://www.linkedin.com/karncy" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"
+                      <a href="https://www.linkedin.com/company/karncy" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"
                         style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: "2rem", height: "2rem", borderRadius: "50%", background: "#0077B5", color: "#fff", textDecoration: "none", transition: "opacity 0.15s, transform 0.15s" }}
                         onMouseEnter={(e) => { const el = e.currentTarget as HTMLAnchorElement; el.style.opacity = "0.85"; el.style.transform = "translateY(-1px)"; }}
                         onMouseLeave={(e) => { const el = e.currentTarget as HTMLAnchorElement; el.style.opacity = "1"; el.style.transform = "translateY(0)"; }}
@@ -3155,7 +3357,7 @@ export default function App() {
                       >
                         <Facebook size={13} />
                       </a>
-                      <a href="https://x.com/karncy" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)"
+                      <a href="https://x.com/Karncy2023" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)"
                         style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: "2rem", height: "2rem", borderRadius: "50%", background: "var(--foreground)", color: "var(--background)", textDecoration: "none", transition: "opacity 0.15s, transform 0.15s" }}
                         onMouseEnter={(e) => { const el = e.currentTarget as HTMLAnchorElement; el.style.opacity = "0.85"; el.style.transform = "translateY(-1px)"; }}
                         onMouseLeave={(e) => { const el = e.currentTarget as HTMLAnchorElement; el.style.opacity = "1"; el.style.transform = "translateY(0)"; }}
@@ -3207,6 +3409,33 @@ export default function App() {
         )}
         {activeModal && (
           <ContactModal type={activeModal} onClose={() => setActiveModal(null)} />
+        )}
+        {isFAQOpen && (
+          <FAQModal
+            onClose={() => setIsFAQOpen(false)}
+            onOpenContact={(type) => {
+              setIsFAQOpen(false);
+              setActiveModal(type);
+            }}
+          />
+        )}
+        {isProjectsOpen && (
+          <ProjectsModal
+            onClose={() => setIsProjectsOpen(false)}
+            onOpenContact={(type) => {
+              setIsProjectsOpen(false);
+              setActiveModal(type);
+            }}
+          />
+        )}
+        {isHowItWorksOpen && (
+          <HowItWorksModal
+            onClose={() => setIsHowItWorksOpen(false)}
+            onOpenContact={(type) => {
+              setIsHowItWorksOpen(false);
+              setActiveModal(type);
+            }}
+          />
         )}
       </AnimatePresence>
 
