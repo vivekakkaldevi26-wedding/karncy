@@ -2256,14 +2256,12 @@ function ContactModal({ type, onClose }: { type: ModalType; onClose: () => void 
             </motion.div>
           ) : (
             <>
-            {!isContact && (
-              <div style={{ marginBottom: "1.5rem", paddingRight: "2.5rem" }}>
-                <h3 style={{ fontFamily: "var(--font-display)", fontSize: "1.45rem", fontWeight: 700, color: "#0f172a", letterSpacing: "-0.02em", lineHeight: 1.2, margin: 0 }}>
-                  {isFunding ? "Apply for Funding" : "Apply for Business"}
-                </h3>
-                <div style={{ width: "2.5rem", height: "3px", borderRadius: "2px", background: isFunding ? "var(--cta)" : "var(--primary)", marginTop: "0.65rem" }} />
-              </div>
-            )}
+            <div style={{ marginBottom: "1.5rem", paddingRight: "2.5rem" }}>
+              <h3 style={{ fontFamily: "var(--font-display)", fontSize: "1.45rem", fontWeight: 700, color: "#0f172a", letterSpacing: "-0.02em", lineHeight: 1.2, margin: 0 }}>
+                {isFunding ? "Apply for Funding" : isContact ? "Get in touch" : "Apply for Business"}
+              </h3>
+              <div style={{ width: "2.5rem", height: "3px", borderRadius: "2px", background: isFunding ? "var(--cta)" : "var(--primary)", marginTop: "0.65rem" }} />
+            </div>
             <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "1.1rem" }}>
               {/* Full Name */}
               <div>
