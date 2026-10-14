@@ -2717,57 +2717,6 @@ export default function App() {
           <ImageWithFallback src={logoSrc} alt="Karncy" style={{ height: "3rem", width: "auto", objectFit: "contain" }} />
         </div>
 
-        {/* Top Header Quick Navigation */}
-        <div
-          className="site-top-nav"
-          style={{
-            position: "fixed",
-            top: "22px",
-            right: "22px",
-            zIndex: 49,
-            display: "flex",
-            alignItems: "center",
-            gap: "0.6rem",
-          }}
-        >
-          <button
-            type="button"
-            onClick={() => setIsResourcesOpen(true)}
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "0.45rem",
-              fontFamily: "var(--font-sans)",
-              fontSize: "0.82rem",
-              fontWeight: 700,
-              padding: "0.5rem 1.15rem",
-              borderRadius: "9999px",
-              background: "rgba(255, 255, 255, 0.92)",
-              backdropFilter: "blur(12px)",
-              color: "var(--primary)",
-              border: "1.5px solid rgba(13,31,130,0.18)",
-              boxShadow: "0 4px 16px rgba(15,23,42,0.08)",
-              cursor: "pointer",
-              transition: "all 0.18s ease",
-            }}
-            onMouseEnter={(e) => {
-              (e.currentTarget as HTMLButtonElement).style.background = "#ffffff";
-              (e.currentTarget as HTMLButtonElement).style.borderColor = "var(--primary)";
-              (e.currentTarget as HTMLButtonElement).style.transform = "translateY(-1px)";
-              (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 6px 20px rgba(13,31,130,0.18)";
-            }}
-            onMouseLeave={(e) => {
-              (e.currentTarget as HTMLButtonElement).style.background = "rgba(255, 255, 255, 0.92)";
-              (e.currentTarget as HTMLButtonElement).style.borderColor = "rgba(13,31,130,0.18)";
-              (e.currentTarget as HTMLButtonElement).style.transform = "translateY(0)";
-              (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 4px 16px rgba(15,23,42,0.08)";
-            }}
-          >
-            <BookOpen size={13} style={{ color: "var(--cta)" }} />
-            Resources
-          </button>
-        </div>
-
         {/* ─── Prologue ─────────────────────────────────────────────────── */}
         <section id="prologue" style={{ minHeight: "100vh", position: "relative", display: "flex", flexDirection: "column" }}>
           <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", width: SECTION_W, margin: AUTO, paddingTop: "7rem", paddingBottom: "6rem", position: "relative", zIndex: 1 }}>

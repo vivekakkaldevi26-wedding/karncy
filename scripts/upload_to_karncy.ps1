@@ -38,8 +38,10 @@ function Upload-FtpFile($localFilePath, $remoteFileUrl) {
         $resp = $req.GetResponse()
         $resp.Close()
         Write-Host "  [OK] $([System.IO.Path]::GetFileName($localFilePath))"
+        Start-Sleep -Milliseconds 150
     } catch {
         Write-Error "  [FAILED] $localFilePath : $($_.Exception.Message)"
+        Start-Sleep -Milliseconds 500
     }
 }
 

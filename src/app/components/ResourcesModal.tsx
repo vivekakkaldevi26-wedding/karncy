@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { X, Lock, Key, ArrowRight, CheckCircle, ShieldAlert, FileText, Eye, AlertCircle, Sparkles, Building2, Mail, User } from "lucide-react";
+import { X, CheckCircle } from "lucide-react";
 
 export interface ResourceDocument {
   id: string;
@@ -204,102 +204,27 @@ export function ResourcesModal({ onClose }: ResourcesModalProps) {
 
         {/* Modal Scrollable Container */}
         <div style={{ flex: 1, overflowY: "auto", padding: "clamp(1.75rem, 4vw, 3.25rem)" }}>
-          {/* Header Section — Matches Image */}
+          {/* Header Section */}
           <div
             style={{
-              display: "flex",
-              flexWrap: "wrap",
-              alignItems: "flex-end",
-              justifyContent: "space-between",
-              gap: "1.75rem",
-              marginBottom: "3rem",
-              paddingBottom: "2rem",
+              marginBottom: "2.5rem",
+              paddingBottom: "1.5rem",
               borderBottom: "1px solid var(--border)",
             }}
           >
-            <div style={{ maxWidth: "42rem" }}>
-              <div style={{ display: "inline-flex", alignItems: "center", gap: "0.6rem", marginBottom: "0.85rem" }}>
-                <span
-                  style={{
-                    fontFamily: "var(--font-sans)",
-                    fontSize: "0.82rem",
-                    fontWeight: 700,
-                    letterSpacing: "0.14em",
-                    textTransform: "uppercase",
-                    color: "var(--cta)",
-                  }}
-                >
-                  INVESTOR RESOURCES
-                </span>
-                <span
-                  style={{
-                    display: "inline-block",
-                    width: "6px",
-                    height: "6px",
-                    borderRadius: "50%",
-                    background: "var(--cta)",
-                  }}
-                />
-                <span
-                  style={{
-                    fontFamily: "var(--font-sans)",
-                    fontSize: "0.76rem",
-                    fontWeight: 600,
-                    color: "var(--muted-foreground)",
-                  }}
-                >
-                  Confidential Materials
-                </span>
-              </div>
-              <h2
-                style={{
-                  fontFamily: "var(--font-display)",
-                  fontSize: "clamp(2rem, 3.8vw, 3.1rem)",
-                  fontWeight: 700,
-                  color: "#0f172a",
-                  lineHeight: 1.15,
-                  letterSpacing: "-0.03em",
-                  margin: 0,
-                }}
-              >
-                Everything an investor should read first.
-              </h2>
-            </div>
-
-            {/* Top Right CTA Pill Button */}
-            <button
-              type="button"
-              onClick={() => handleOpenRequest()}
+            <h2
               style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "0.6rem",
-                padding: "0.85rem 1.85rem",
-                background: "var(--cta)",
-                color: "#ffffff",
-                fontFamily: "var(--font-sans)",
-                fontSize: "0.82rem",
+                fontFamily: "var(--font-display)",
+                fontSize: "clamp(2rem, 3.8vw, 3.1rem)",
                 fontWeight: 700,
-                letterSpacing: "0.08em",
-                textTransform: "uppercase",
-                border: "none",
-                borderRadius: "9999px",
-                cursor: "pointer",
-                boxShadow: "0 4px 18px rgba(255,105,0,0.3)",
-                transition: "all 0.18s ease",
-                flexShrink: 0,
-              }}
-              onMouseEnter={(e) => {
-                (e.currentTarget as HTMLButtonElement).style.transform = "translateY(-2px)";
-                (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 8px 24px rgba(255,105,0,0.4)";
-              }}
-              onMouseLeave={(e) => {
-                (e.currentTarget as HTMLButtonElement).style.transform = "translateY(0)";
-                (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 4px 18px rgba(255,105,0,0.3)";
+                color: "#0f172a",
+                lineHeight: 1.15,
+                letterSpacing: "-0.03em",
+                margin: 0,
               }}
             >
-              Request Investor Materials <ArrowRight size={14} />
-            </button>
+              Everything an investor should read first.
+            </h2>
           </div>
 
           {/* Cards Grid — Responsive 5-columns or auto-fit */}
@@ -324,31 +249,12 @@ export function ResourcesModal({ onClose }: ResourcesModalProps) {
                   justifyContent: "space-between",
                   boxShadow: "0 2px 8px rgba(15, 23, 42, 0.04)",
                   transition: "all 0.2s ease",
-                  minHeight: "19rem",
+                  minHeight: "17rem",
                   position: "relative",
                 }}
               >
                 {/* Top Card Info */}
                 <div>
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "0.85rem" }}>
-                    <span
-                      style={{
-                        fontFamily: "var(--font-sans)",
-                        fontSize: "0.68rem",
-                        fontWeight: 700,
-                        textTransform: "uppercase",
-                        letterSpacing: "0.06em",
-                        color: "var(--muted-foreground)",
-                        background: "#f1f5f9",
-                        padding: "0.2rem 0.55rem",
-                        borderRadius: "9999px",
-                      }}
-                    >
-                      {doc.pages}
-                    </span>
-                    <Lock size={13} style={{ color: "#94a3b8" }} />
-                  </div>
-
                   <h3
                     style={{
                       fontFamily: "var(--font-display)",
@@ -387,7 +293,6 @@ export function ResourcesModal({ onClose }: ResourcesModalProps) {
                       display: "inline-flex",
                       alignItems: "center",
                       justifyContent: "center",
-                      gap: "0.45rem",
                       fontFamily: "var(--font-sans)",
                       fontSize: "0.82rem",
                       fontWeight: 700,
@@ -408,7 +313,7 @@ export function ResourcesModal({ onClose }: ResourcesModalProps) {
                       (e.currentTarget as HTMLButtonElement).style.transform = "translateY(0)";
                     }}
                   >
-                    <Eye size={13} /> View
+                    View
                   </button>
 
                   {/* Button 2: Request Password */}
@@ -420,7 +325,6 @@ export function ResourcesModal({ onClose }: ResourcesModalProps) {
                       display: "inline-flex",
                       alignItems: "center",
                       justifyContent: "center",
-                      gap: "0.45rem",
                       fontFamily: "var(--font-sans)",
                       fontSize: "0.78rem",
                       fontWeight: 700,
@@ -439,51 +343,11 @@ export function ResourcesModal({ onClose }: ResourcesModalProps) {
                       (e.currentTarget as HTMLButtonElement).style.background = "transparent";
                     }}
                   >
-                    <Key size={12} /> Request Password
+                    Request Password
                   </button>
                 </div>
               </div>
             ))}
-          </div>
-
-          {/* Institutional Compliance Footer Banner */}
-          <div
-            style={{
-              marginTop: "2.5rem",
-              padding: "1.25rem 1.5rem",
-              background: "#f8fafc",
-              border: "1px solid #e2e8f0",
-              borderRadius: "calc(var(--radius) * 1.2)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              flexWrap: "wrap",
-              gap: "1rem",
-            }}
-          >
-            <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
-              <ShieldAlert size={18} style={{ color: "var(--cta)", flexShrink: 0 }} />
-              <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.8rem", color: "#64748b", margin: 0, lineHeight: 1.5 }}>
-                <strong style={{ color: "#1e293b" }}>Restricted Circulation:</strong> These documents contain proprietary underwriting frameworks and structural financial models intended solely for verified accredited counterparties.
-              </p>
-            </div>
-            <button
-              type="button"
-              onClick={() => handleOpenRequest()}
-              style={{
-                fontFamily: "var(--font-sans)",
-                fontSize: "0.78rem",
-                fontWeight: 700,
-                color: "var(--primary)",
-                background: "none",
-                border: "none",
-                cursor: "pointer",
-                textDecoration: "underline",
-                textUnderlineOffset: "3px",
-              }}
-            >
-              Request Full Diligence Room Access →
-            </button>
           </div>
         </div>
       </motion.div>
@@ -553,95 +417,72 @@ export function ResourcesModal({ onClose }: ResourcesModalProps) {
 
               {!isUnlocked ? (
                 <>
-                  <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1.25rem" }}>
-                    <div
-                      style={{
-                        width: "2.75rem",
-                        height: "2.75rem",
-                        borderRadius: "50%",
-                        background: "rgba(13,31,130,0.08)",
-                        color: "var(--primary)",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                      }}
-                    >
-                      <Lock size={20} />
-                    </div>
-                    <div>
-                      <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.72rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", color: "var(--cta)" }}>
-                        Protected Document
-                      </span>
-                      <h4 style={{ fontFamily: "var(--font-display)", fontSize: "1.25rem", fontWeight: 700, color: "#0f172a", margin: 0 }}>
-                        Enter Password
-                      </h4>
-                    </div>
+                  <div style={{ marginBottom: "1.25rem" }}>
+                    <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.72rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", color: "var(--cta)" }}>
+                      Protected Document
+                    </span>
+                    <h4 style={{ fontFamily: "var(--font-display)", fontSize: "1.25rem", fontWeight: 700, color: "#0f172a", margin: 0, marginTop: "0.25rem" }}>
+                      Enter Password
+                    </h4>
                   </div>
 
-                  <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.85rem", color: "#475569", lineHeight: 1.6, marginBottom: "1.5rem" }}>
+                  <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.85rem", color: "#475569", lineHeight: 1.6, marginBottom: "1rem" }}>
                     <strong>{viewDoc.title}</strong> is encrypted and restricted to authorized parties. Enter your key to decrypt and view.
                   </p>
+
+                  <div
+                    style={{
+                      padding: "0.75rem 0.9rem",
+                      background: "#fffbeb",
+                      border: "1px solid #fef3c7",
+                      borderRadius: "calc(var(--radius) * 0.8)",
+                      marginBottom: "1.25rem",
+                    }}
+                  >
+                    <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.76rem", color: "#92400e", margin: 0, lineHeight: 1.55, fontWeight: 500 }}>
+                      <strong style={{ fontWeight: 700 }}>Confidential:</strong> Do not share or disclose this information to any third party without our prior written permission.
+                    </p>
+                  </div>
 
                   <form onSubmit={handleVerifyPassword} style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
                     <div>
                       <label style={{ display: "block", fontFamily: "var(--font-sans)", fontSize: "0.8rem", fontWeight: 600, color: "#334155", marginBottom: "0.4rem" }}>
                         Access Password <span style={{ color: "#e11d48" }}>*</span>
                       </label>
-                      <div style={{ position: "relative" }}>
-                        <input
-                          type="password"
-                          required
-                          autoFocus
-                          placeholder="Enter document password"
-                          value={passwordInput}
-                          onChange={(e) => {
-                            setPasswordInput(e.target.value);
-                            setPasswordError("");
-                          }}
-                          style={{
-                            width: "100%",
-                            padding: "0.75rem 0.9rem 0.75rem 2.4rem",
-                            fontFamily: "var(--font-sans)",
-                            fontSize: "0.9rem",
-                            background: "#f8fafc",
-                            border: passwordError ? "1.5px solid #e11d48" : "1px solid #cbd5e1",
-                            borderRadius: "calc(var(--radius) * 0.8)",
-                            outline: "none",
-                            boxSizing: "border-box",
-                          }}
-                        />
-                        <Key size={14} style={{ position: "absolute", left: "0.85rem", top: "50%", transform: "translateY(-50%)", color: "#94a3b8" }} />
-                      </div>
+                      <input
+                        type="password"
+                        required
+                        autoFocus
+                        placeholder="Enter document password"
+                        value={passwordInput}
+                        onChange={(e) => {
+                          setPasswordInput(e.target.value);
+                          setPasswordError("");
+                        }}
+                        style={{
+                          width: "100%",
+                          padding: "0.75rem 0.9rem",
+                          fontFamily: "var(--font-sans)",
+                          fontSize: "0.9rem",
+                          background: "#f8fafc",
+                          border: passwordError ? "1.5px solid #e11d48" : "1px solid #cbd5e1",
+                          borderRadius: "calc(var(--radius) * 0.8)",
+                          outline: "none",
+                          boxSizing: "border-box",
+                        }}
+                      />
                       {passwordError && (
-                        <p style={{ display: "flex", alignItems: "center", gap: "0.35rem", fontFamily: "var(--font-sans)", fontSize: "0.78rem", color: "#e11d48", marginTop: "0.4rem", margin: 0 }}>
-                          <AlertCircle size={13} /> {passwordError}
+                        <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.78rem", color: "#e11d48", marginTop: "0.4rem", margin: 0 }}>
+                          {passwordError}
                         </p>
                       )}
                     </div>
 
-                    <div style={{ display: "flex", gap: "0.75rem", marginTop: "0.5rem" }}>
-                      <button
-                        type="button"
-                        onClick={() => setViewDoc(null)}
-                        style={{
-                          flex: 1,
-                          padding: "0.75rem",
-                          fontFamily: "var(--font-sans)",
-                          fontSize: "0.85rem",
-                          fontWeight: 600,
-                          background: "#f1f5f9",
-                          color: "#475569",
-                          border: "none",
-                          borderRadius: "calc(var(--radius) * 0.8)",
-                          cursor: "pointer",
-                        }}
-                      >
-                        Cancel
-                      </button>
+                    <div style={{ marginTop: "0.5rem" }}>
                       <button
                         type="submit"
                         style={{
-                          flex: 1.5,
+                          width: "100%",
                           padding: "0.75rem",
                           fontFamily: "var(--font-sans)",
                           fontSize: "0.85rem",
@@ -654,37 +495,10 @@ export function ResourcesModal({ onClose }: ResourcesModalProps) {
                           display: "inline-flex",
                           alignItems: "center",
                           justifyContent: "center",
-                          gap: "0.45rem",
                         }}
                       >
-                        <Lock size={14} /> Unlock & View
+                        Unlock & View
                       </button>
-                    </div>
-
-                    {/* Quick Switch to Request Password */}
-                    <div style={{ textAlign: "center", marginTop: "0.5rem", paddingTop: "1rem", borderTop: "1px solid #e2e8f0" }}>
-                      <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.8rem", color: "#64748b", margin: 0 }}>
-                        Don't have an access key?{" "}
-                        <button
-                          type="button"
-                          onClick={() => {
-                            const d = viewDoc;
-                            setViewDoc(null);
-                            handleOpenRequest(d);
-                          }}
-                          style={{
-                            background: "none",
-                            border: "none",
-                            padding: 0,
-                            color: "var(--cta)",
-                            fontWeight: 700,
-                            cursor: "pointer",
-                            textDecoration: "underline",
-                          }}
-                        >
-                          Request password
-                        </button>
-                      </p>
                     </div>
                   </form>
                 </>
@@ -721,21 +535,15 @@ export function ResourcesModal({ onClose }: ResourcesModalProps) {
                         borderRadius: "calc(var(--radius) * 1)",
                         padding: "1.25rem",
                         marginBottom: "1.5rem",
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "0.85rem",
                         textAlign: "left",
                       }}
                     >
-                      <FileText size={24} style={{ color: "var(--primary)", flexShrink: 0 }} />
-                      <div style={{ flex: 1, minWidth: 0 }}>
-                        <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.85rem", fontWeight: 700, color: "#0f172a", margin: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                          Karncy_{viewDoc.title.replace(/\s+/g, "_")}.pdf
-                        </p>
-                        <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.75rem", color: "#64748b" }}>
-                          {viewDoc.pages} • Verified Institutional Copy
-                        </span>
-                      </div>
+                      <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.85rem", fontWeight: 700, color: "#0f172a", margin: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                        Karncy_{viewDoc.title.replace(/\s+/g, "_")}.pdf
+                      </p>
+                      <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.75rem", color: "#64748b" }}>
+                        Verified Institutional Copy
+                      </span>
                     </div>
 
                     <button
@@ -894,8 +702,7 @@ export function ResourcesModal({ onClose }: ResourcesModalProps) {
                 /* Password Request Form */
                 <>
                   <div style={{ marginBottom: "1.5rem", paddingRight: "2rem" }}>
-                    <div style={{ display: "inline-flex", alignItems: "center", gap: "0.45rem", marginBottom: "0.4rem" }}>
-                      <Key size={14} style={{ color: "var(--cta)" }} />
+                    <div style={{ marginBottom: "0.4rem" }}>
                       <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--cta)" }}>
                         Access Credential Request
                       </span>
@@ -914,27 +721,24 @@ export function ResourcesModal({ onClose }: ResourcesModalProps) {
                       <label style={{ display: "block", fontFamily: "var(--font-sans)", fontSize: "0.82rem", fontWeight: 600, color: "#334155", marginBottom: "0.35rem" }}>
                         Full Name <span style={{ color: "#e11d48" }}>*</span>
                       </label>
-                      <div style={{ position: "relative" }}>
-                        <input
-                          type="text"
-                          required
-                          placeholder="e.g. Rahul Sharma"
-                          value={requestForm.name}
-                          onChange={(e) => setRequestForm({ ...requestForm, name: e.target.value })}
-                          style={{
-                            width: "100%",
-                            padding: "0.72rem 0.9rem 0.72rem 2.3rem",
-                            fontFamily: "var(--font-sans)",
-                            fontSize: "0.88rem",
-                            background: "#f8fafc",
-                            border: "1px solid #cbd5e1",
-                            borderRadius: "calc(var(--radius) * 0.8)",
-                            outline: "none",
-                            boxSizing: "border-box",
-                          }}
-                        />
-                        <User size={14} style={{ position: "absolute", left: "0.85rem", top: "50%", transform: "translateY(-50%)", color: "#94a3b8" }} />
-                      </div>
+                      <input
+                        type="text"
+                        required
+                        placeholder="e.g. Rahul Sharma"
+                        value={requestForm.name}
+                        onChange={(e) => setRequestForm({ ...requestForm, name: e.target.value })}
+                        style={{
+                          width: "100%",
+                          padding: "0.72rem 0.9rem",
+                          fontFamily: "var(--font-sans)",
+                          fontSize: "0.88rem",
+                          background: "#f8fafc",
+                          border: "1px solid #cbd5e1",
+                          borderRadius: "calc(var(--radius) * 0.8)",
+                          outline: "none",
+                          boxSizing: "border-box",
+                        }}
+                      />
                     </div>
 
                     {/* Field 2: Email */}
@@ -942,27 +746,24 @@ export function ResourcesModal({ onClose }: ResourcesModalProps) {
                       <label style={{ display: "block", fontFamily: "var(--font-sans)", fontSize: "0.82rem", fontWeight: 600, color: "#334155", marginBottom: "0.35rem" }}>
                         Work Email <span style={{ color: "#e11d48" }}>*</span>
                       </label>
-                      <div style={{ position: "relative" }}>
-                        <input
-                          type="email"
-                          required
-                          placeholder="name@institution.com"
-                          value={requestForm.email}
-                          onChange={(e) => setRequestForm({ ...requestForm, email: e.target.value })}
-                          style={{
-                            width: "100%",
-                            padding: "0.72rem 0.9rem 0.72rem 2.3rem",
-                            fontFamily: "var(--font-sans)",
-                            fontSize: "0.88rem",
-                            background: "#f8fafc",
-                            border: "1px solid #cbd5e1",
-                            borderRadius: "calc(var(--radius) * 0.8)",
-                            outline: "none",
-                            boxSizing: "border-box",
-                          }}
-                        />
-                        <Mail size={14} style={{ position: "absolute", left: "0.85rem", top: "50%", transform: "translateY(-50%)", color: "#94a3b8" }} />
-                      </div>
+                      <input
+                        type="email"
+                        required
+                        placeholder="name@institution.com"
+                        value={requestForm.email}
+                        onChange={(e) => setRequestForm({ ...requestForm, email: e.target.value })}
+                        style={{
+                          width: "100%",
+                          padding: "0.72rem 0.9rem",
+                          fontFamily: "var(--font-sans)",
+                          fontSize: "0.88rem",
+                          background: "#f8fafc",
+                          border: "1px solid #cbd5e1",
+                          borderRadius: "calc(var(--radius) * 0.8)",
+                          outline: "none",
+                          boxSizing: "border-box",
+                        }}
+                      />
                     </div>
 
                     {/* Field 3: Company */}
@@ -970,27 +771,24 @@ export function ResourcesModal({ onClose }: ResourcesModalProps) {
                       <label style={{ display: "block", fontFamily: "var(--font-sans)", fontSize: "0.82rem", fontWeight: 600, color: "#334155", marginBottom: "0.35rem" }}>
                         Company / Institution <span style={{ color: "#e11d48" }}>*</span>
                       </label>
-                      <div style={{ position: "relative" }}>
-                        <input
-                          type="text"
-                          required
-                          placeholder="e.g. Apex Family Office / Capital Partners"
-                          value={requestForm.company}
-                          onChange={(e) => setRequestForm({ ...requestForm, company: e.target.value })}
-                          style={{
-                            width: "100%",
-                            padding: "0.72rem 0.9rem 0.72rem 2.3rem",
-                            fontFamily: "var(--font-sans)",
-                            fontSize: "0.88rem",
-                            background: "#f8fafc",
-                            border: "1px solid #cbd5e1",
-                            borderRadius: "calc(var(--radius) * 0.8)",
-                            outline: "none",
-                            boxSizing: "border-box",
-                          }}
-                        />
-                        <Building2 size={14} style={{ position: "absolute", left: "0.85rem", top: "50%", transform: "translateY(-50%)", color: "#94a3b8" }} />
-                      </div>
+                      <input
+                        type="text"
+                        required
+                        placeholder="e.g. Apex Family Office / Capital Partners"
+                        value={requestForm.company}
+                        onChange={(e) => setRequestForm({ ...requestForm, company: e.target.value })}
+                        style={{
+                          width: "100%",
+                          padding: "0.72rem 0.9rem",
+                          fontFamily: "var(--font-sans)",
+                          fontSize: "0.88rem",
+                          background: "#f8fafc",
+                          border: "1px solid #cbd5e1",
+                          borderRadius: "calc(var(--radius) * 0.8)",
+                          outline: "none",
+                          boxSizing: "border-box",
+                        }}
+                      />
                     </div>
 
                     {/* Field 4: Select Document Dropdown */}
@@ -998,54 +796,34 @@ export function ResourcesModal({ onClose }: ResourcesModalProps) {
                       <label style={{ display: "block", fontFamily: "var(--font-sans)", fontSize: "0.82rem", fontWeight: 600, color: "#334155", marginBottom: "0.35rem" }}>
                         Select Document <span style={{ color: "#e11d48" }}>*</span>
                       </label>
-                      <div style={{ position: "relative" }}>
-                        <select
-                          required
-                          value={requestForm.selectedDocId}
-                          onChange={(e) => setRequestForm({ ...requestForm, selectedDocId: e.target.value })}
-                          style={{
-                            width: "100%",
-                            padding: "0.72rem 0.9rem 0.72rem 2.3rem",
-                            fontFamily: "var(--font-sans)",
-                            fontSize: "0.88rem",
-                            color: "#0f172a",
-                            background: "#f8fafc",
-                            border: "1px solid #cbd5e1",
-                            borderRadius: "calc(var(--radius) * 0.8)",
-                            outline: "none",
-                            boxSizing: "border-box",
-                            cursor: "pointer",
-                          }}
-                        >
-                          <option value="all">All Investor Materials (Complete Pack)</option>
-                          {RESOURCE_DOCUMENTS.map((d) => (
-                            <option key={d.id} value={d.id}>
-                              {d.title} ({d.pages})
-                            </option>
-                          ))}
-                        </select>
-                        <FileText size={14} style={{ position: "absolute", left: "0.85rem", top: "50%", transform: "translateY(-50%)", color: "#94a3b8" }} />
-                      </div>
+                      <select
+                        required
+                        value={requestForm.selectedDocId}
+                        onChange={(e) => setRequestForm({ ...requestForm, selectedDocId: e.target.value })}
+                        style={{
+                          width: "100%",
+                          padding: "0.72rem 0.9rem",
+                          fontFamily: "var(--font-sans)",
+                          fontSize: "0.88rem",
+                          color: "#0f172a",
+                          background: "#f8fafc",
+                          border: "1px solid #cbd5e1",
+                          borderRadius: "calc(var(--radius) * 0.8)",
+                          outline: "none",
+                          boxSizing: "border-box",
+                          cursor: "pointer",
+                        }}
+                      >
+                        <option value="all">All Investor Materials (Complete Pack)</option>
+                        {RESOURCE_DOCUMENTS.map((d) => (
+                          <option key={d.id} value={d.id}>
+                            {d.title}
+                          </option>
+                        ))}
+                      </select>
                     </div>
 
-                    {/* Security Note — Requested Note */}
-                    <div
-                      style={{
-                        padding: "0.85rem 1rem",
-                        background: "#fffbeb",
-                        border: "1px solid #fef3c7",
-                        borderRadius: "calc(var(--radius) * 0.8)",
-                        display: "flex",
-                        alignItems: "flex-start",
-                        gap: "0.6rem",
-                        marginTop: "0.25rem",
-                      }}
-                    >
-                      <AlertCircle size={16} style={{ color: "#d97706", flexShrink: 0, marginTop: "0.1rem" }} />
-                      <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.78rem", color: "#92400e", margin: 0, lineHeight: 1.5, fontWeight: 500 }}>
-                        <strong style={{ fontWeight: 700 }}>Note:</strong> Do not share with anyone, without our permission.
-                      </p>
-                    </div>
+
 
                     {/* Action Buttons: Cancel and Request Password */}
                     <div style={{ display: "flex", gap: "0.75rem", marginTop: "0.75rem" }}>
@@ -1090,17 +868,10 @@ export function ResourcesModal({ onClose }: ResourcesModalProps) {
                           display: "inline-flex",
                           alignItems: "center",
                           justifyContent: "center",
-                          gap: "0.45rem",
                           boxShadow: "0 4px 14px rgba(255,105,0,0.25)",
                         }}
                       >
-                        {isSubmitting ? (
-                          "Submitting..."
-                        ) : (
-                          <>
-                            <Key size={14} /> Request Password
-                          </>
-                        )}
+                        {isSubmitting ? "Submitting..." : "Request Password"}
                       </button>
                     </div>
                   </form>
