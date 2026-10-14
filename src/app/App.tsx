@@ -2155,19 +2155,48 @@ function ContactModal({ type, onClose }: { type: ModalType; onClose: () => void 
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formError, setFormError] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setFormError("");
+
+    const trimmedName = formData.fullName.trim();
+    const trimmedEmail = formData.workEmail.trim();
+    const phoneDigits = formData.phone.replace(/\D/g, "");
+
+    if (trimmedName.length < 2) {
+      setFormError("Please enter your full name (at least 2 characters).");
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(trimmedEmail)) {
+      setFormError("Please enter a valid work email address.");
+      return;
+    }
+    if (phoneDigits.length < 7 || phoneDigits.length > 15) {
+      setFormError("Please enter a valid phone number (7 to 15 digits).");
+      return;
+    }
+
     setIsSubmitting(true);
     try {
-      await fetch("./send-mail.php", {
+      const response = await fetch("./send-mail.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           type,
           ...formData,
+          fullName: trimmedName,
+          workEmail: trimmedEmail,
         }),
       });
+
+      const result = await response.json().catch(() => null);
+      if (!response.ok && result && result.details) {
+        setFormError(Array.isArray(result.details) ? result.details.join(" ") : result.error || "Submission failed.");
+        setIsSubmitting(false);
+        return;
+      }
     } catch (err) {
       console.warn("Mail dispatch failed:", err);
     } finally {
@@ -2289,9 +2318,14 @@ function ContactModal({ type, onClose }: { type: ModalType; onClose: () => void 
                 <input
                   type="text"
                   required
+                  minLength={2}
+                  maxLength={80}
                   placeholder="e.g. Rahul Sharma"
                   value={formData.fullName}
-                  onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+                  onChange={(e) => {
+                    setFormData({ ...formData, fullName: e.target.value });
+                    if (formError) setFormError("");
+                  }}
                   style={{
                     width: "100%",
                     padding: "0.7rem 0.9rem",
@@ -2317,7 +2351,10 @@ function ContactModal({ type, onClose }: { type: ModalType; onClose: () => void 
                   required
                   placeholder="name@company.com"
                   value={formData.workEmail}
-                  onChange={(e) => setFormData({ ...formData, workEmail: e.target.value })}
+                  onChange={(e) => {
+                    setFormData({ ...formData, workEmail: e.target.value });
+                    if (formError) setFormError("");
+                  }}
                   style={{
                     width: "100%",
                     padding: "0.7rem 0.9rem",
@@ -2341,9 +2378,16 @@ function ContactModal({ type, onClose }: { type: ModalType; onClose: () => void 
                 <input
                   type="tel"
                   required
+                  pattern="[0-9+\s\-\(\)]{7,18}"
+                  minLength={7}
+                  maxLength={18}
+                  title="Please enter a valid phone number (at least 7 digits)"
                   placeholder="+91 98765 43210"
                   value={formData.phone}
-                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                  onChange={(e) => {
+                    setFormData({ ...formData, phone: e.target.value });
+                    if (formError) setFormError("");
+                  }}
                   style={{
                     width: "100%",
                     padding: "0.7rem 0.9rem",
@@ -2484,6 +2528,24 @@ function ContactModal({ type, onClose }: { type: ModalType; onClose: () => void 
                   }}
                 />
               </div>
+
+              {/* Validation / Submission Error Alert */}
+              {formError && (
+                <div
+                  style={{
+                    padding: "0.65rem 0.85rem",
+                    background: "#fef2f2",
+                    border: "1px solid #fee2e2",
+                    borderRadius: "calc(var(--radius) * 0.7)",
+                    color: "#b91c1c",
+                    fontSize: "0.82rem",
+                    lineHeight: 1.45,
+                    fontWeight: 500,
+                  }}
+                >
+                  {formError}
+                </div>
+              )}
 
               {/* Submit CTA Button */}
               <button

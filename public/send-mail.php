@@ -50,23 +50,52 @@ if (!$data) {
 }
 
 $type = isset($data['type']) ? trim($data['type']) : 'General';
-$fullName = isset($data['fullName']) ? trim($data['fullName']) : (isset($data['name']) ? trim($data['name']) : 'Not provided');
-$email = isset($data['email']) ? trim($data['email']) : (isset($data['workEmail']) ? trim($data['workEmail']) : 'Not provided');
-$phone = isset($data['phone']) ? trim($data['phone']) : 'Not provided';
-$company = isset($data['company']) ? trim($data['company']) : (isset($data['companyName']) ? trim($data['companyName']) : 'Not provided');
+$fullName = isset($data['fullName']) ? trim($data['fullName']) : (isset($data['name']) ? trim($data['name']) : '');
+$email = isset($data['email']) ? trim($data['email']) : (isset($data['workEmail']) ? trim($data['workEmail']) : '');
+$phone = isset($data['phone']) ? trim($data['phone']) : '';
+$company = isset($data['company']) ? trim($data['company']) : (isset($data['companyName']) ? trim($data['companyName']) : '');
 $message = isset($data['message']) ? trim($data['message']) : '';
 $fundingReq = isset($data['fundingRequirement']) ? trim($data['fundingRequirement']) : '';
 $howHelp = isset($data['howCanWeHelp']) ? trim($data['howCanWeHelp']) : '';
 $document = isset($data['document']) ? trim($data['document']) : '';
 
+// Server-side field validation
+$validationErrors = [];
+if (mb_strlen($fullName) < 2) {
+    $validationErrors[] = "Full name must be at least 2 characters long.";
+}
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    $validationErrors[] = "A valid email address is required.";
+}
+$phoneDigits = preg_replace('/\D/', '', $phone);
+if (strlen($phoneDigits) < 7 || strlen($phoneDigits) > 15) {
+    $validationErrors[] = "A valid phone number with 7 to 15 digits is required.";
+}
+if ($type === 'password_request' && mb_strlen($company) < 2) {
+    $validationErrors[] = "Company or institution name is required.";
+}
+
+if (!empty($validationErrors)) {
+    http_response_code(422);
+    echo json_encode([
+        "success" => false,
+        "error" => "Validation failed",
+        "details" => $validationErrors
+    ]);
+    exit;
+}
+
+// Fallbacks for display
+$displayCompany = $company ?: 'Not provided';
+
 // Subject determination
 switch ($type) {
     case 'funding':
-        $subject = "[Karncy Funding] Application from " . ($fullName ?: 'Applicant') . " - " . ($company ?: 'Organization');
+        $subject = "[Karncy Funding] Application from " . ($fullName ?: 'Applicant') . " - " . ($displayCompany);
         $headline = "New Funding Application";
         break;
     case 'business':
-        $subject = "[Karncy Business] Inquiry from " . ($fullName ?: 'Client') . " - " . ($company ?: 'Enterprise');
+        $subject = "[Karncy Business] Inquiry from " . ($fullName ?: 'Client') . " - " . ($displayCompany);
         $headline = "New Business Partnership Inquiry";
         break;
     case 'password_request':
@@ -97,7 +126,6 @@ $html = '<!DOCTYPE html>
   .val { display: table-cell; width: 65%; color: #0f172a; }
   .val a { color: #0D1F82; text-decoration: none; font-weight: 600; }
   .message-box { margin-top: 20px; padding: 14px 16px; background: #f8fafc; border-left: 3px solid #ff6900; border-radius: 6px; font-size: 14px; line-height: 1.6; color: #334155; }
-  .footer { background: #f8fafc; padding: 16px 28px; font-size: 12px; color: #94a3b8; text-align: center; border-top: 1px solid #e2e8f0; }
 </style>
 </head>
 <body>
@@ -110,7 +138,7 @@ $html = '<!DOCTYPE html>
     <div class="row"><div class="label">Full Name</div><div class="val"><strong>' . htmlspecialchars($fullName) . '</strong></div></div>
     <div class="row"><div class="label">Email Address</div><div class="val"><a href="mailto:' . htmlspecialchars($email) . '">' . htmlspecialchars($email) . '</a></div></div>
     <div class="row"><div class="label">Phone Number</div><div class="val">' . htmlspecialchars($phone) . '</div></div>
-    <div class="row"><div class="label">Company / Institution</div><div class="val">' . htmlspecialchars($company) . '</div></div>';
+    <div class="row"><div class="label">Company / Institution</div><div class="val">' . htmlspecialchars($displayCompany) . '</div></div>';
 
 if ($fundingReq) {
     $html .= '<div class="row"><div class="label">Funding Requirement</div><div class="val" style="color: #ff6900; font-weight: 700;">' . htmlspecialchars($fundingReq) . '</div></div>';
@@ -127,9 +155,6 @@ if ($message) {
 }
 
 $html .= '
-  </div>
-  <div class="footer">
-    Karncy Institutional Portal &bull; Dispatcher Notification &bull; Direct Reply Enabled
   </div>
 </div>
 </body>

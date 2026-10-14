@@ -80,6 +80,7 @@ export function ResourcesModal({ onClose }: ResourcesModalProps) {
   });
   const [requestSubmitted, setRequestSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [requestError, setRequestError] = useState("");
 
   // Open "View Document" popup
   const handleOpenView = (doc: ResourceDocument) => {
@@ -102,6 +103,7 @@ export function ResourcesModal({ onClose }: ResourcesModalProps) {
     }
     setRequestSubmitted(false);
     setIsSubmitting(false);
+    setRequestError("");
   };
 
   // Verify entered password
@@ -120,6 +122,30 @@ export function ResourcesModal({ onClose }: ResourcesModalProps) {
   // Submit password request form
   const handlePasswordRequestSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setRequestError("");
+
+    const trimmedName = requestForm.name.trim();
+    const trimmedEmail = requestForm.email.trim();
+    const phoneDigits = requestForm.phone.replace(/\D/g, "");
+    const trimmedCompany = requestForm.company.trim();
+
+    if (trimmedName.length < 2) {
+      setRequestError("Please enter your full name (at least 2 characters).");
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(trimmedEmail)) {
+      setRequestError("Please enter a valid work email address.");
+      return;
+    }
+    if (phoneDigits.length < 7 || phoneDigits.length > 15) {
+      setRequestError("Please enter a valid phone number (7 to 15 digits).");
+      return;
+    }
+    if (trimmedCompany.length < 2) {
+      setRequestError("Please enter your company or institution name.");
+      return;
+    }
+
     setIsSubmitting(true);
     try {
       const selectedDocTitle =
@@ -127,18 +153,25 @@ export function ResourcesModal({ onClose }: ResourcesModalProps) {
           ? "All Investor Materials (Complete Pack)"
           : RESOURCE_DOCUMENTS.find((d) => d.id === requestForm.selectedDocId)?.title || requestForm.selectedDocId;
 
-      await fetch("./send-mail.php", {
+      const response = await fetch("./send-mail.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           type: "password_request",
-          name: requestForm.name,
-          email: requestForm.email,
-          phone: requestForm.phone,
-          company: requestForm.company,
+          name: trimmedName,
+          email: trimmedEmail,
+          phone: requestForm.phone.trim(),
+          company: trimmedCompany,
           document: selectedDocTitle,
         }),
       });
+
+      const result = await response.json().catch(() => null);
+      if (!response.ok && result && result.details) {
+        setRequestError(Array.isArray(result.details) ? result.details.join(" ") : result.error || "Submission failed.");
+        setIsSubmitting(false);
+        return;
+      }
     } catch (err) {
       console.warn("Password request mail dispatch error:", err);
     } finally {
@@ -730,9 +763,14 @@ export function ResourcesModal({ onClose }: ResourcesModalProps) {
                       <input
                         type="text"
                         required
+                        minLength={2}
+                        maxLength={80}
                         placeholder="e.g. Rahul Sharma"
                         value={requestForm.name}
-                        onChange={(e) => setRequestForm({ ...requestForm, name: e.target.value })}
+                        onChange={(e) => {
+                          setRequestForm({ ...requestForm, name: e.target.value });
+                          if (requestError) setRequestError("");
+                        }}
                         style={{
                           width: "100%",
                           padding: "0.72rem 0.9rem",
@@ -757,7 +795,10 @@ export function ResourcesModal({ onClose }: ResourcesModalProps) {
                         required
                         placeholder="name@institution.com"
                         value={requestForm.email}
-                        onChange={(e) => setRequestForm({ ...requestForm, email: e.target.value })}
+                        onChange={(e) => {
+                          setRequestForm({ ...requestForm, email: e.target.value });
+                          if (requestError) setRequestError("");
+                        }}
                         style={{
                           width: "100%",
                           padding: "0.72rem 0.9rem",
@@ -780,9 +821,16 @@ export function ResourcesModal({ onClose }: ResourcesModalProps) {
                       <input
                         type="tel"
                         required
+                        pattern="[0-9+\s\-\(\)]{7,18}"
+                        minLength={7}
+                        maxLength={18}
+                        title="Please enter a valid phone number (at least 7 digits)"
                         placeholder="+91 98765 43210"
                         value={requestForm.phone}
-                        onChange={(e) => setRequestForm({ ...requestForm, phone: e.target.value })}
+                        onChange={(e) => {
+                          setRequestForm({ ...requestForm, phone: e.target.value });
+                          if (requestError) setRequestError("");
+                        }}
                         style={{
                           width: "100%",
                           padding: "0.72rem 0.9rem",
@@ -797,7 +845,7 @@ export function ResourcesModal({ onClose }: ResourcesModalProps) {
                       />
                     </div>
 
-                    {/* Field 3: Company */}
+                    {/* Field 4: Company */}
                     <div>
                       <label style={{ display: "block", fontFamily: "var(--font-sans)", fontSize: "0.82rem", fontWeight: 600, color: "#334155", marginBottom: "0.35rem" }}>
                         Company / Institution <span style={{ color: "#e11d48" }}>*</span>
@@ -805,9 +853,14 @@ export function ResourcesModal({ onClose }: ResourcesModalProps) {
                       <input
                         type="text"
                         required
+                        minLength={2}
+                        maxLength={120}
                         placeholder="e.g. Apex Family Office / Capital Partners"
                         value={requestForm.company}
-                        onChange={(e) => setRequestForm({ ...requestForm, company: e.target.value })}
+                        onChange={(e) => {
+                          setRequestForm({ ...requestForm, company: e.target.value });
+                          if (requestError) setRequestError("");
+                        }}
                         style={{
                           width: "100%",
                           padding: "0.72rem 0.9rem",
@@ -822,7 +875,7 @@ export function ResourcesModal({ onClose }: ResourcesModalProps) {
                       />
                     </div>
 
-                    {/* Field 4: Select Document Dropdown */}
+                    {/* Field 5: Select Document Dropdown */}
                     <div>
                       <label style={{ display: "block", fontFamily: "var(--font-sans)", fontSize: "0.82rem", fontWeight: 600, color: "#334155", marginBottom: "0.35rem" }}>
                         Select Document <span style={{ color: "#e11d48" }}>*</span>
@@ -854,7 +907,23 @@ export function ResourcesModal({ onClose }: ResourcesModalProps) {
                       </select>
                     </div>
 
-
+                    {/* Validation / Submission Error Alert */}
+                    {requestError && (
+                      <div
+                        style={{
+                          padding: "0.65rem 0.85rem",
+                          background: "#fef2f2",
+                          border: "1px solid #fee2e2",
+                          borderRadius: "calc(var(--radius) * 0.7)",
+                          color: "#b91c1c",
+                          fontSize: "0.82rem",
+                          lineHeight: 1.45,
+                          fontWeight: 500,
+                        }}
+                      >
+                        {requestError}
+                      </div>
+                    )}
 
                     {/* Action Buttons: Cancel and Request Password */}
                     <div style={{ display: "flex", gap: "0.75rem", marginTop: "0.75rem" }}>
