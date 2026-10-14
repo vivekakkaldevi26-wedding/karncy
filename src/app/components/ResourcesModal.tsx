@@ -74,6 +74,7 @@ export function ResourcesModal({ onClose }: ResourcesModalProps) {
   const [requestForm, setRequestForm] = useState({
     name: "",
     email: "",
+    phone: "",
     company: "",
     selectedDocId: "all",
   });
@@ -430,19 +431,9 @@ export function ResourcesModal({ onClose }: ResourcesModalProps) {
                     <strong>{viewDoc.title}</strong> is encrypted and restricted to authorized parties. Enter your key to decrypt and view.
                   </p>
 
-                  <div
-                    style={{
-                      padding: "0.75rem 0.9rem",
-                      background: "#fffbeb",
-                      border: "1px solid #fef3c7",
-                      borderRadius: "calc(var(--radius) * 0.8)",
-                      marginBottom: "1.25rem",
-                    }}
-                  >
-                    <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.76rem", color: "#92400e", margin: 0, lineHeight: 1.55, fontWeight: 500 }}>
-                      <strong style={{ fontWeight: 700 }}>Confidential:</strong> Do not share or disclose this information to any third party without our prior written permission.
-                    </p>
-                  </div>
+                  <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.78rem", color: "#64748b", margin: "0 0 1.25rem 0", lineHeight: 1.55 }}>
+                    <strong style={{ fontWeight: 600, color: "#334155" }}>Confidential:</strong> Do not share or disclose this information to any third party without our prior written permission.
+                  </p>
 
                   <form onSubmit={handleVerifyPassword} style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
                     <div>
@@ -702,11 +693,6 @@ export function ResourcesModal({ onClose }: ResourcesModalProps) {
                 /* Password Request Form */
                 <>
                   <div style={{ marginBottom: "1.5rem", paddingRight: "2rem" }}>
-                    <div style={{ marginBottom: "0.4rem" }}>
-                      <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--cta)" }}>
-                        Access Credential Request
-                      </span>
-                    </div>
                     <h3 style={{ fontFamily: "var(--font-display)", fontSize: "1.55rem", fontWeight: 700, color: "#0f172a", margin: 0, letterSpacing: "-0.02em" }}>
                       Password Request
                     </h3>
@@ -752,6 +738,31 @@ export function ResourcesModal({ onClose }: ResourcesModalProps) {
                         placeholder="name@institution.com"
                         value={requestForm.email}
                         onChange={(e) => setRequestForm({ ...requestForm, email: e.target.value })}
+                        style={{
+                          width: "100%",
+                          padding: "0.72rem 0.9rem",
+                          fontFamily: "var(--font-sans)",
+                          fontSize: "0.88rem",
+                          background: "#f8fafc",
+                          border: "1px solid #cbd5e1",
+                          borderRadius: "calc(var(--radius) * 0.8)",
+                          outline: "none",
+                          boxSizing: "border-box",
+                        }}
+                      />
+                    </div>
+
+                    {/* Field 3: Phone Number */}
+                    <div>
+                      <label style={{ display: "block", fontFamily: "var(--font-sans)", fontSize: "0.82rem", fontWeight: 600, color: "#334155", marginBottom: "0.35rem" }}>
+                        Phone Number <span style={{ color: "#e11d48" }}>*</span>
+                      </label>
+                      <input
+                        type="tel"
+                        required
+                        placeholder="+91 98765 43210"
+                        value={requestForm.phone}
+                        onChange={(e) => setRequestForm({ ...requestForm, phone: e.target.value })}
                         style={{
                           width: "100%",
                           padding: "0.72rem 0.9rem",
