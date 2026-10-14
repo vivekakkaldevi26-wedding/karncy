@@ -27,13 +27,12 @@ jobs:
       - name: 🔨 Build Production Bundle
         run: npm run build
 
-      - name: 🚀 Deploy to Hostinger via SFTP
-        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
+      - name: 🚀 Deploy to Hostinger via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          username: 'u985529326'
-          server: '46.28.45.159'
-          port: '65002'
-          password: 'Akkaldevi26$'
-          local_path: './dist/*'
-          remote_path: 'domains/karncy.com/public_html/live/'
-          sftpArgs: '-o StrictHostKeyChecking=no -o ConnectTimeout=15'
+          server: 46.28.45.159
+          username: u985529326
+          password: ${{ secrets.FTP_PASSWORD || 'Access4int@' }}
+          local-dir: ./dist/
+          server-dir: ./domains/karncy.com/public_html/live/
+          dangerous-clean-slate: false
