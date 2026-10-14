@@ -5,7 +5,7 @@ $baseRemoteDir = "ftp://$ftpHost/domains/karncy.com/public_html/live"
 $scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 $localDistDir = Join-Path (Split-Path -Parent $scriptDir) "dist"
 
-function Make-FtpDir($dirUrl) {
+function New-FtpDir($dirUrl) {
     try {
         $req = [System.Net.FtpWebRequest]::Create($dirUrl)
         $req.Credentials = New-Object System.Net.NetworkCredential($ftpUser, $ftpPass)
@@ -19,7 +19,7 @@ function Make-FtpDir($dirUrl) {
     }
 }
 
-function Upload-FtpFile($localFilePath, $remoteFileUrl, $force = $false) {
+function Send-FtpFile($localFilePath, $remoteFileUrl, $force = $false) {
     try {
         $fileName = [System.IO.Path]::GetFileName($localFilePath)
         $fileBytes = [System.IO.File]::ReadAllBytes($localFilePath)
@@ -66,19 +66,19 @@ function Upload-FtpFile($localFilePath, $remoteFileUrl, $force = $false) {
 }
 
 Write-Host "Connecting to Hostinger ($ftpHost)..."
-Make-FtpDir $baseRemoteDir
-Make-FtpDir "$baseRemoteDir/assets"
+New-FtpDir $baseRemoteDir
+New-FtpDir "$baseRemoteDir/assets"
 
 Write-Host "Uploading HTML & configuration files..."
 Get-ChildItem -Path $localDistDir -File | ForEach-Object {
     $remoteUrl = "$baseRemoteDir/$($_.Name)"
-    Upload-FtpFile $_.FullName $remoteUrl $true
+    Send-FtpFile $_.FullName $remoteUrl $true
 }
 
 Write-Host "Uploading bundled assets (JS/CSS/Images)..."
 Get-ChildItem -Path "$localDistDir\assets" -File | ForEach-Object {
     $remoteUrl = "$baseRemoteDir/assets/$($_.Name)"
-    Upload-FtpFile $_.FullName $remoteUrl $false
+    Send-FtpFile $_.FullName $remoteUrl $false
 }
 
 Write-Host "`n Deployment complete! Visit https://karncy.com/live/"
