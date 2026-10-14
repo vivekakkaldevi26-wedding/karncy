@@ -2452,7 +2452,7 @@ function ContactModal({ type, onClose }: { type: ModalType; onClose: () => void 
                       cursor: "pointer",
                     }}
                   >
-                    <option value="₹0 - ₹5L">₹0L–₹25L</option>
+                    <option value="₹0 - ₹5L">₹0L–₹5L</option>
                     <option value="₹5L–₹25L">₹5L–₹25L</option>
                     <option value="₹25L–₹50L">₹25L–₹50L</option>
                     <option value="₹50L–₹1Cr">₹50L–₹1Cr</option>
