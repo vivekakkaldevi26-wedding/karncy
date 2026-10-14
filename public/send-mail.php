@@ -91,8 +91,8 @@ $displayCompany = $company ?: 'Not provided';
 // Subject determination
 switch ($type) {
     case 'funding':
-        $subject = "[Karncy Funding] Application from " . ($fullName ?: 'Applicant') . " - " . ($displayCompany);
-        $headline = "New Funding Application";
+        $subject = "[Karncy Funding] Application Inquiry from " . ($fullName ?: 'Applicant') . " - " . ($displayCompany);
+        $headline = "New Funding Application Inquiry";
         break;
     case 'business':
         $subject = "[Karncy Business] Inquiry from " . ($fullName ?: 'Client') . " - " . ($displayCompany);
