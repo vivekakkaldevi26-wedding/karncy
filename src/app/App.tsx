@@ -30,6 +30,7 @@ import { ProductDeepDiveModal } from "./components/ProductDeepDiveModal";
 import { FAQModal } from "./components/FAQModal";
 import { ProjectsModal } from "./components/ProjectsModal";
 import { HowItWorksModal } from "./components/HowItWorksModal";
+import { ResourcesModal } from "./components/ResourcesModal";
 
 export type ProductId = "invoice" | "ventures" | "startup";
 export type PolicyKey = "about" | "privacy" | "terms" | "risk" | "cookies" | "grievance" | "fund-terms";
@@ -2641,12 +2642,13 @@ export default function App() {
   const [isFAQOpen, setIsFAQOpen] = useState(false);
   const [isProjectsOpen, setIsProjectsOpen] = useState(false);
   const [isHowItWorksOpen, setIsHowItWorksOpen] = useState(false);
+  const [isResourcesOpen, setIsResourcesOpen] = useState(false);
   const activeSection = useActiveSection();
 
   useEffect(() => {
-    document.body.style.overflow = (activeProduct || activePolicy || activeModal || activeDeepDive || isFAQOpen || isProjectsOpen || isHowItWorksOpen) ? "hidden" : "";
+    document.body.style.overflow = (activeProduct || activePolicy || activeModal || activeDeepDive || isFAQOpen || isProjectsOpen || isHowItWorksOpen || isResourcesOpen) ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
-  }, [activeProduct, activePolicy, activeModal, activeDeepDive, isFAQOpen, isProjectsOpen, isHowItWorksOpen]);
+  }, [activeProduct, activePolicy, activeModal, activeDeepDive, isFAQOpen, isProjectsOpen, isHowItWorksOpen, isResourcesOpen]);
 
   const scrollTo = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 
@@ -2713,6 +2715,57 @@ export default function App() {
         {/* Logo — fixed on desktop, 5% left margin on mobile */}
         <div className="site-logo">
           <ImageWithFallback src={logoSrc} alt="Karncy" style={{ height: "3rem", width: "auto", objectFit: "contain" }} />
+        </div>
+
+        {/* Top Header Quick Navigation */}
+        <div
+          className="site-top-nav"
+          style={{
+            position: "fixed",
+            top: "22px",
+            right: "22px",
+            zIndex: 49,
+            display: "flex",
+            alignItems: "center",
+            gap: "0.6rem",
+          }}
+        >
+          <button
+            type="button"
+            onClick={() => setIsResourcesOpen(true)}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "0.45rem",
+              fontFamily: "var(--font-sans)",
+              fontSize: "0.82rem",
+              fontWeight: 700,
+              padding: "0.5rem 1.15rem",
+              borderRadius: "9999px",
+              background: "rgba(255, 255, 255, 0.92)",
+              backdropFilter: "blur(12px)",
+              color: "var(--primary)",
+              border: "1.5px solid rgba(13,31,130,0.18)",
+              boxShadow: "0 4px 16px rgba(15,23,42,0.08)",
+              cursor: "pointer",
+              transition: "all 0.18s ease",
+            }}
+            onMouseEnter={(e) => {
+              (e.currentTarget as HTMLButtonElement).style.background = "#ffffff";
+              (e.currentTarget as HTMLButtonElement).style.borderColor = "var(--primary)";
+              (e.currentTarget as HTMLButtonElement).style.transform = "translateY(-1px)";
+              (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 6px 20px rgba(13,31,130,0.18)";
+            }}
+            onMouseLeave={(e) => {
+              (e.currentTarget as HTMLButtonElement).style.background = "rgba(255, 255, 255, 0.92)";
+              (e.currentTarget as HTMLButtonElement).style.borderColor = "rgba(13,31,130,0.18)";
+              (e.currentTarget as HTMLButtonElement).style.transform = "translateY(0)";
+              (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 4px 16px rgba(15,23,42,0.08)";
+            }}
+          >
+            <BookOpen size={13} style={{ color: "var(--cta)" }} />
+            Resources
+          </button>
         </div>
 
         {/* ─── Prologue ─────────────────────────────────────────────────── */}
@@ -3301,6 +3354,14 @@ export default function App() {
                   >
                     How it works
                   </button>
+                  <button
+                    onClick={() => setIsResourcesOpen(true)}
+                    style={{ background: "none", border: "none", padding: 0, fontFamily: "var(--font-sans)", fontSize: "0.88rem", fontWeight: 700, color: "var(--primary)", cursor: "pointer", transition: "opacity 0.15s" }}
+                    onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.opacity = "0.85")}
+                    onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.opacity = "1")}
+                  >
+                    Resources
+                  </button>
                   <a
                     href="https://smefund.karncy.com/"
                     target="_blank"
@@ -3441,6 +3502,15 @@ export default function App() {
             onClose={() => setIsHowItWorksOpen(false)}
             onOpenContact={(type) => {
               setIsHowItWorksOpen(false);
+              setActiveModal(type);
+            }}
+          />
+        )}
+        {isResourcesOpen && (
+          <ResourcesModal
+            onClose={() => setIsResourcesOpen(false)}
+            onOpenContact={(type) => {
+              setIsResourcesOpen(false);
               setActiveModal(type);
             }}
           />
