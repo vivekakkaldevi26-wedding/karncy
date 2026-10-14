@@ -10,7 +10,7 @@ export interface Message {
   options?: string[];
   action?: {
     label: string;
-    modalType: "funding" | "business" | "contact";
+    modalType: "funding" | "business" | "contact" | "resources";
   };
   qrCode?: {
     phone: string;
@@ -88,10 +88,11 @@ const MAIN_MENU_OPTIONS = [
 ];
 
 interface AIChatbotProps {
-  onOpenModal: (type: "funding" | "business" | "contact") => void;
+  onOpenModal: (type: "funding" | "business" | "contact" | "resources") => void;
+  onOpenResources?: () => void;
 }
 
-export function AIChatbot({ onOpenModal }: AIChatbotProps) {
+export function AIChatbot({ onOpenModal, onOpenResources }: AIChatbotProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
@@ -199,6 +200,20 @@ export function AIChatbot({ onOpenModal }: AIChatbotProps) {
       addBotReply("Opening the Reach Us contact form for you now...", ["Main Menu", "Talk to the Team"]);
       return;
     }
+    if (
+      optionText === "Request Investor Materials" ||
+      optionText === "Request Investor Material" ||
+      optionText === "Investor Materials" ||
+      optionText === "Resources"
+    ) {
+      setIsOpen(false);
+      if (onOpenResources) {
+        onOpenResources();
+      } else {
+        onOpenModal("resources");
+      }
+      return;
+    }
 
     // --- State Machine ---
     switch (flowState) {
@@ -227,8 +242,9 @@ export function AIChatbot({ onOpenModal }: AIChatbotProps) {
         } else if (optionText === "I want to invest") {
           setFlowState("invest_menu");
           addBotReply(
-            "Sure. Karncy also helps users explore investment opportunities.\nTo help you better, would you like to:",
-            ["Explore Opportunities", "Learn How It Works", "Talk to the Team", "Main Menu"]
+            "Karncy SME Synergy Fund connects accredited and institutional investors with curated private credit and project opportunities.\n\nWould you like to review our materials or discuss with our desk?",
+            ["Request Investor Materials", "Explore Opportunities", "Learn How It Works", "Talk to the Team", "Main Menu"],
+            { label: "Request Investor Materials", modalType: "resources" }
           );
         } else if (optionText === "General Question") {
           setFlowState("general_q");
@@ -328,11 +344,23 @@ export function AIChatbot({ onOpenModal }: AIChatbotProps) {
 
       // --- Investment Flow ---
       case "invest_menu":
-        if (optionText === "Explore Opportunities" || optionText === "Learn How It Works") {
+        if (
+          optionText === "Request Investor Materials" ||
+          optionText === "Request Investor Material" ||
+          optionText === "Investor Materials"
+        ) {
+          setIsOpen(false);
+          if (onOpenResources) {
+            onOpenResources();
+          } else {
+            onOpenModal("resources");
+          }
+          return;
+        } else if (optionText === "Explore Opportunities" || optionText === "Learn How It Works") {
           addBotReply(
             "Karncy SME Synergy Fund connects accredited and institutional investors with curated private credit opportunities.\nTarget preferred returns are payable strictly from distributable cash flow.",
-            ["Talk to the Team", "Main Menu"],
-            { label: "Reach Us", modalType: "contact" }
+            ["Request Investor Materials", "Talk to the Team", "Main Menu"],
+            { label: "Request Investor Materials", modalType: "resources" }
           );
         }
         break;
@@ -451,6 +479,19 @@ export function AIChatbot({ onOpenModal }: AIChatbotProps) {
       addBotReply(
         "Karncy provides funding solutions for businesses, ventures, and startups through three main products:\n\n• Invoice Financing\n• Joint Ventures\n• Startup Funding\n\nWhat would you like to know about?",
         ["Invoice Financing", "Joint Ventures", "Startup Funding", "Talk to the Team"]
+      );
+      return;
+    }
+
+    if (
+      lower.includes("material") ||
+      lower.includes("resource") ||
+      (lower.includes("invest") && (lower.includes("deck") || lower.includes("presentation") || lower.includes("doc") || lower.includes("material") || lower.includes("read")))
+    ) {
+      addBotReply(
+        "You can explore our confidential institutional documents, underwriting briefs, and platform overview in the Investor Resources room.",
+        ["Request Investor Materials", "Talk to the Team", "Main Menu"],
+        { label: "Request Investor Materials", modalType: "resources" }
       );
       return;
     }
@@ -778,7 +819,11 @@ export function AIChatbot({ onOpenModal }: AIChatbotProps) {
                           type="button"
                           onClick={() => {
                             setIsOpen(false);
-                            onOpenModal(msg.action!.modalType);
+                            if (msg.action!.modalType === "resources" && onOpenResources) {
+                              onOpenResources();
+                            } else {
+                              onOpenModal(msg.action!.modalType);
+                            }
                           }}
                           style={{
                             display: "inline-flex",

@@ -3518,7 +3518,16 @@ export default function App() {
       </AnimatePresence>
 
       {/* Floating Action Button (FAB) AI Chatbot */}
-      <AIChatbot onOpenModal={(type) => setActiveModal(type)} />
+      <AIChatbot
+        onOpenModal={(type) => {
+          if (type === "resources") {
+            setIsResourcesOpen(true);
+          } else {
+            setActiveModal(type);
+          }
+        }}
+        onOpenResources={() => setIsResourcesOpen(true)}
+      />
     </div>
   );
 }
