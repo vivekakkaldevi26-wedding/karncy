@@ -118,13 +118,33 @@ export function ResourcesModal({ onClose }: ResourcesModalProps) {
   };
 
   // Submit password request form
-  const handlePasswordRequestSubmit = (e: React.FormEvent) => {
+  const handlePasswordRequestSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    setTimeout(() => {
+    try {
+      const selectedDocTitle =
+        requestForm.selectedDocId === "all"
+          ? "All Investor Materials (Complete Pack)"
+          : RESOURCE_DOCUMENTS.find((d) => d.id === requestForm.selectedDocId)?.title || requestForm.selectedDocId;
+
+      await fetch("./send-mail.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          type: "password_request",
+          name: requestForm.name,
+          email: requestForm.email,
+          phone: requestForm.phone,
+          company: requestForm.company,
+          document: selectedDocTitle,
+        }),
+      });
+    } catch (err) {
+      console.warn("Password request mail dispatch error:", err);
+    } finally {
       setIsSubmitting(false);
       setRequestSubmitted(true);
-    }, 600);
+    }
   };
 
   return (

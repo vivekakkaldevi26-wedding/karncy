@@ -2154,9 +2154,26 @@ function ContactModal({ type, onClose }: { type: ModalType; onClose: () => void 
     message: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    setIsSubmitting(true);
+    try {
+      await fetch("./send-mail.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          type,
+          ...formData,
+        }),
+      });
+    } catch (err) {
+      console.warn("Mail dispatch failed:", err);
+    } finally {
+      setIsSubmitting(false);
+      setSubmitted(true);
+    }
   };
 
   const isFunding = type === "funding";
@@ -2471,6 +2488,7 @@ function ContactModal({ type, onClose }: { type: ModalType; onClose: () => void 
               {/* Submit CTA Button */}
               <button
                 type="submit"
+                disabled={isSubmitting}
                 style={{
                   marginTop: "0.5rem",
                   width: "100%",
@@ -2482,7 +2500,8 @@ function ContactModal({ type, onClose }: { type: ModalType; onClose: () => void 
                   background: isFunding ? "var(--cta)" : "var(--primary)",
                   border: "none",
                   borderRadius: "calc(var(--radius) * 0.7)",
-                  cursor: "pointer",
+                  cursor: isSubmitting ? "not-allowed" : "pointer",
+                  opacity: isSubmitting ? 0.75 : 1,
                   display: "inline-flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -2490,10 +2509,11 @@ function ContactModal({ type, onClose }: { type: ModalType; onClose: () => void 
                   boxShadow: isFunding ? "0 4px 14px rgba(255,105,0,0.25)" : "0 4px 14px rgba(13,31,130,0.25)",
                   transition: "opacity 0.15s",
                 }}
-                onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.opacity = "0.92")}
-                onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.opacity = "1")}
+                onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.opacity = isSubmitting ? "0.75" : "0.92")}
+                onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.opacity = isSubmitting ? "0.75" : "1")}
               >
-                {isFunding ? "Request Funding" : isContact ? "Reach Us" : "Connect With Us"} <ArrowRight size={16} />
+                {isSubmitting ? "Sending..." : isFunding ? "Request Funding" : isContact ? "Reach Us" : "Connect With Us"}{" "}
+                <ArrowRight size={16} />
               </button>
             </form>
             </>
