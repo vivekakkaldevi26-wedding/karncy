@@ -1,6 +1,6 @@
 $ftpHost = "46.28.45.159"
 $ftpUser = "u985529326"
-$ftpPass = "Access4int@"
+$ftpPass = 'Akkaldevi26$'
 $baseRemoteDir = "ftp://$ftpHost/domains/karncy.com/public_html/live"
 $scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 $localDistDir = Join-Path (Split-Path -Parent $scriptDir) "dist"
