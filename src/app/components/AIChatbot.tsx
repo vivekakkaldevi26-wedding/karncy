@@ -90,9 +90,10 @@ const MAIN_MENU_OPTIONS = [
 interface AIChatbotProps {
   onOpenModal: (type: "funding" | "business" | "contact" | "resources") => void;
   onOpenResources?: () => void;
+  onOpenFAQ?: () => void;
 }
 
-export function AIChatbot({ onOpenModal, onOpenResources }: AIChatbotProps) {
+export function AIChatbot({ onOpenModal, onOpenResources, onOpenFAQ }: AIChatbotProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
@@ -180,9 +181,32 @@ export function AIChatbot({ onOpenModal, onOpenResources }: AIChatbotProps) {
       startHandoffFlow();
       return;
     }
-    if (optionText === "Main Menu" || optionText === "Ask Another Question" || optionText === "Continue Exploring") {
+    if (optionText === "Main Menu" || optionText === "Continue Exploring") {
       setFlowState("main_menu");
       addBotReply("Hi 👋 Welcome back to Karncy.\nHow can we help you today?", MAIN_MENU_OPTIONS);
+      return;
+    }
+    if (optionText === "View All FAQs") {
+      if (onOpenFAQ) {
+        setIsOpen(false);
+        onOpenFAQ();
+      }
+      return;
+    }
+    if (optionText === "Ask Another Question") {
+      setFlowState("general_q");
+      addBotReply(
+        "Here are some frequently asked questions about Karncy:\n\n• What is Invoice Financing and how does it work?\n• How does Joint Venture project capital work?\n• What stage startups does Karncy fund?\n• Do I need to provide collateral or equity dilution?\n• How fast can funding be disbursed?\n\nChoose any question below to view the answer:",
+        [
+          "What is Invoice Financing?",
+          "How do Joint Ventures work?",
+          "What startups do you fund?",
+          "Is collateral required?",
+          "How fast is funding disbursed?",
+          "View All FAQs",
+          "Main Menu",
+        ]
+      );
       return;
     }
     if (optionText === "Apply Now" || optionText === "Let's Unlock Capital") {
@@ -246,11 +270,19 @@ export function AIChatbot({ onOpenModal, onOpenResources }: AIChatbotProps) {
             ["Explore Opportunities", "Learn How It Works", "Talk to the Team", "Main Menu"],
             { label: "Request Investor Materials", modalType: "resources" }
           );
-        } else if (optionText === "General Question") {
+        } else if (optionText === "General Question" || optionText === "FAQs" || optionText === "Frequently Asked Questions") {
           setFlowState("general_q");
           addBotReply(
-            "Karncy provides funding solutions for businesses, ventures, and startups through three main products:\n\n• Invoice Financing\n• Joint Ventures\n• Startup Funding\n\nWhat would you like to know about?",
-            ["Invoice Financing", "Joint Ventures", "Startup Funding", "Talk to the Team"]
+            "Here are some frequently asked questions about Karncy:\n\n• What is Invoice Financing and how does it work?\n• How does Joint Venture project capital work?\n• What stage startups does Karncy fund?\n• Do I need to provide collateral or equity dilution?\n• How fast can funding be disbursed?\n\nChoose any question below to view the answer:",
+            [
+              "What is Invoice Financing?",
+              "How do Joint Ventures work?",
+              "What startups do you fund?",
+              "Is collateral required?",
+              "How fast is funding disbursed?",
+              "View All FAQs",
+              "Main Menu",
+            ]
           );
         }
         break;
@@ -374,6 +406,67 @@ export function AIChatbot({ onOpenModal, onOpenResources }: AIChatbotProps) {
           ["Main Menu"],
           { label: "Reach Us", modalType: "contact" }
         );
+        break;
+
+      // --- General Questions & FAQs ---
+      case "general_q":
+        if (optionText === "What is Invoice Financing?") {
+          addBotReply(
+            "Karncy Invoice Financing allows GST-registered suppliers to convert approved buyer receivables into immediate cash flow within 48 hours.\n\n• Advance: Up to 80% of invoice value\n• Repayment: 15 to 90 days\n• Non-dilutive: 100% equity retained\n• Facility: ₹5 Lakhs to ₹1 Crore+",
+            ["Is collateral required?", "How fast is funding disbursed?", "Ask Another Question", "Main Menu"],
+            { label: "Apply for Funding", modalType: "funding" }
+          );
+        } else if (optionText === "How do Joint Ventures work?") {
+          addBotReply(
+            "Karncy Joint Ventures provides non-equity, project-specific co-investment for defined commercial contracts, purchase orders, and infrastructure projects.\n\n• Zero equity dilution or board seats in your parent company\n• Repayments follow a strict 4-step priority waterfall\n• Tenors from 3 to 24 months based on project cycle",
+            ["What is Invoice Financing?", "What startups do you fund?", "Ask Another Question", "Main Menu"],
+            { label: "Apply for Business", modalType: "business" }
+          );
+        } else if (optionText === "What startups do you fund?") {
+          addBotReply(
+            "Karncy Equity partners with early-stage and growth startups with validated business models in manufacturing, SaaS, D2C, logistics, and agri-tech.\n\n• Round sizes: ₹1 Crore up to ₹25 Crores\n• Capital deployed in 4 structured milestone tranches\n• Includes weekly FP&A cash-flow support and distributor network",
+            ["How do Joint Ventures work?", "Ask Another Question", "Main Menu"],
+            { label: "Apply for Business", modalType: "business" }
+          );
+        } else if (optionText === "Is collateral required?") {
+          addBotReply(
+            "No collateral is required for approved buyer receivables. Karncy financing is completely non-dilutive — you retain 100% equity in your company. Advance facilities are tied directly to verified buyer commercial invoices and escrow settlement.",
+            ["What is Invoice Financing?", "How fast is funding disbursed?", "Ask Another Question", "Main Menu"],
+            { label: "Apply for Funding", modalType: "funding" }
+          );
+        } else if (optionText === "How fast is funding disbursed?") {
+          addBotReply(
+            "Once your invoice and buyer verification are completed, funds are typically advanced and disbursed within 48 hours directly to your designated project account.",
+            ["What is Invoice Financing?", "Is collateral required?", "Ask Another Question", "Main Menu"],
+            { label: "Apply for Funding", modalType: "funding" }
+          );
+        } else if (optionText === "View All FAQs") {
+          if (onOpenFAQ) {
+            setIsOpen(false);
+            onOpenFAQ();
+          } else {
+            addBotReply(
+              "You can explore all detailed FAQs across Invoice Financing, Joint Ventures, Startup Equity, and General Safety in our FAQ guide.",
+              ["What is Invoice Financing?", "Ask Another Question", "Main Menu"]
+            );
+          }
+        } else if (optionText === "Ask Another Question") {
+          addBotReply(
+            "Here are some frequently asked questions about Karncy:\n\n• What is Invoice Financing and how does it work?\n• How does Joint Venture project capital work?\n• What stage startups does Karncy fund?\n• Do I need to provide collateral or equity dilution?\n• How fast can funding be disbursed?\n\nChoose any question below to view the answer:",
+            [
+              "What is Invoice Financing?",
+              "How do Joint Ventures work?",
+              "What startups do you fund?",
+              "Is collateral required?",
+              "How fast is funding disbursed?",
+              "View All FAQs",
+              "Main Menu",
+            ]
+          );
+        } else {
+          setFlowState("main_menu");
+          addBotReply("How can we help you today?", MAIN_MENU_OPTIONS);
+        }
         break;
 
       default:

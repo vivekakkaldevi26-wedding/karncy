@@ -3558,6 +3558,7 @@ export default function App() {
           }
         }}
         onOpenResources={() => setIsResourcesOpen(true)}
+        onOpenFAQ={() => setIsFAQOpen(true)}
       />
     </div>
   );
