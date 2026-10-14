@@ -243,7 +243,7 @@ export function AIChatbot({ onOpenModal, onOpenResources }: AIChatbotProps) {
           setFlowState("invest_menu");
           addBotReply(
             "Karncy SME Synergy Fund connects accredited and institutional investors with curated private credit and project opportunities.\n\nWould you like to review our materials or discuss with our desk?",
-            ["Request Investor Materials", "Explore Opportunities", "Learn How It Works", "Talk to the Team", "Main Menu"],
+            ["Explore Opportunities", "Learn How It Works", "Talk to the Team", "Main Menu"],
             { label: "Request Investor Materials", modalType: "resources" }
           );
         } else if (optionText === "General Question") {
@@ -359,7 +359,7 @@ export function AIChatbot({ onOpenModal, onOpenResources }: AIChatbotProps) {
         } else if (optionText === "Explore Opportunities" || optionText === "Learn How It Works") {
           addBotReply(
             "Karncy SME Synergy Fund connects accredited and institutional investors with curated private credit opportunities.\nTarget preferred returns are payable strictly from distributable cash flow.",
-            ["Request Investor Materials", "Talk to the Team", "Main Menu"],
+            ["Talk to the Team", "Main Menu"],
             { label: "Request Investor Materials", modalType: "resources" }
           );
         }
@@ -490,7 +490,7 @@ export function AIChatbot({ onOpenModal, onOpenResources }: AIChatbotProps) {
     ) {
       addBotReply(
         "You can explore our confidential institutional documents, underwriting briefs, and platform overview in the Investor Resources room.",
-        ["Request Investor Materials", "Talk to the Team", "Main Menu"],
+        ["Talk to the Team", "Main Menu"],
         { label: "Request Investor Materials", modalType: "resources" }
       );
       return;
